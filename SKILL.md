@@ -1,5 +1,5 @@
 ---
-name: norskmat-design-system
+name: norsk-mat-design-system
 description: The Norsk Mat design system, covering KSL, Nyt Norge, Spesialitet, LokalMat, Beskyttede Betegnelser, and Stiftelsen Norsk Mat. Use this whenever designing, building, reviewing, or discussing any UI for one of these platforms, colors, typography, spacing, layout, components, logos, or brand rules included. Trigger this for any request to build a screen, page, component, or UI pattern for KSL or its sibling platforms, even if the person does not say "design system" explicitly, for example "build a deviation list", "add a filter row", "what color should this button be", "make a settings page for KSL".
 ---
 
@@ -26,6 +26,7 @@ One source of truth across Stiftelsen Norsk Mat's platforms, KSL, Nyt Norge, Spe
 
 ## References
 
+* `platforms/`, reserved for anything specific to one platform that outgrows the shared reference files, currently just an outline, see `platforms/README.md`.
 * `references/brand-context.md`, who each platform serves, tone, and what still needs your input.
 * `references/colors.md`, shared severity and error colors, per platform brand colors, per platform surfaces, and known gaps in the live app.
 * `references/typography.md`, font families per platform, type scale and named styles ranked by real usage.
@@ -34,16 +35,18 @@ One source of truth across Stiftelsen Norsk Mat's platforms, KSL, Nyt Norge, Spe
 
 ## Assets
 
-* `assets/components/`, real, working `.tsx` component code, copy these directly into a project rather than rebuilding from the docs. `connected-button-group.tsx` and `list-item.tsx` are new, built for this system, not upstream Material 3.
+* `assets/tokens.css`, the canonical, corrected CSS custom properties for every platform, one `.theme-<platform>` class each, plus the complete Tailwind `@theme` mapping. Drop this in directly rather than trusting the live app's `globals.css`, which is missing several of these variables entirely, see colors.md's known gaps.
+* `assets/components/`, real, working `.tsx` component code, copy these directly into a project rather than rebuilding from the docs. `connected-button-group.tsx` and `list-item.tsx` are new, built for this system, not upstream Material 3. `switch.tsx` and the text input family are corrected copies, hardcoded colors replaced with the variables from `tokens.css`.
 * `assets/<platform>/`, logo files and a README per platform covering what exists, what's missing, and usage rules where confirmed.
 
 ## Non-negotiable rules
 
+* Use `assets/tokens.css` as the actual CSS, not the live app's `globals.css`, it is missing `--outline` entirely and `--outline-variant` for three platforms, and its Tailwind mapping omits the whole surface family.
 * No raw hex, pixel, or radius values in new code, everything must reference a token from colors.md or spacing.md.
-* Kritisk, Vesentlig, Mindre alvorlig are the only three deviation tiers, and they are identical across every platform. No other orange, ever, Vesentlig is the only orange.
+* Kritisk, Vesentlig, Mindre alvorlig are the only three deviation tiers, and they are identical across every platform. No other orange, ever, Vesentlig is the only orange. Use `var(--vesentlig)` and `var(--mindre-alvorlig)`, never fall back to `var(--error)` for either.
 * IconButton is `button.tsx`'s `size="icon"` variant, don't hand roll a new one.
 * ConnectedButtonGroup and ListItem live in `assets/components/`, use them instead of copying markup from an existing page.
-* Manrope is the only font for KSL, Nyt Norge, Spesialitet. LokalMat uses Messina Serif and Sands once that platform is built. Never reintroduce Quatro.
+* Manrope is the only font for KSL, Nyt Norge, Spesialitet. LokalMat uses Messina Serif and Sands once those files are actually licensed, `tokens.css` falls back to Georgia until then, don't let it silently become a generic system sans. Never reintroduce Quatro.
 
 ## Keeping this current
 

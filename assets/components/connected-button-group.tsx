@@ -62,7 +62,7 @@ export function ConnectedButtonGroup(props: Props) {
     <div
       role={props.multiSelect ? "group" : "radiogroup"}
       className={cn(
-        "inline-flex items-stretch gap-[2px] rounded-full border border-outline-variant p-[2px]",
+        "inline-flex items-stretch gap-[2px] rounded-full border border-[var(--outline-variant)] p-[2px]",
         className
       )}
     >

@@ -10,14 +10,14 @@ accordion, alert, alert-dialog, aspect-ratio, avatar, badge, bottom-sheet, bread
 
 `new-file.tsx` looks like a stray leftover file, empty or placeholder, worth deleting rather than carrying forward.
 
-## Tier 2, needs a token fix, real platform bleed risk
+## Tier 2, fixed
 
-These hardcode literal hex values instead of reading the CSS variables, meaning they will render KSL's colors even inside Nyt Norge, Spesialitet, or LokalMat, silently wrong the moment they are reused outside KSL.
+These hardcoded literal hex values instead of reading CSS variables, meaning they would have rendered KSL's colors even inside Nyt Norge, Spesialitet, or LokalMat. Corrected copies now live in `assets/components/`, using `assets/tokens.css`'s variables directly.
 
-* `switch.tsx`, the worst case, hardcodes three separate KSL specific colors directly, `#74796A` KSL outline, `#E3E3D9` KSL input border, `#4A671E` KSL primary green. A Nyt Norge switch would still render KSL green today.
-* `editable-text-field.tsx`, `number-input-with-icon.tsx`, `text-input-field.tsx`, `text-input-with-icon.tsx`, `time-picker-with-icon.tsx`, `radio-button.tsx`, all hardcode `#44483B`, which is specifically KSL's on surface variant color, every other platform has a different value for this, so error text or helper text in these fields will look off brand outside KSL. Same files also hardcode `#BA1A1A` for error text, which is harmless since error is shared across every platform, but should still reference `var(--error)` rather than a literal value, for consistency.
+* `switch.tsx`, the worst case, hardcoded three separate KSL specific colors directly. Now uses `var(--input)`, `var(--outline)`, and the existing `var(--primary)` it already had for the checked state.
+* `editable-text-field.tsx`, `number-input-with-icon.tsx`, `text-input-field.tsx`, `text-input-with-icon.tsx`, `time-picker-with-icon.tsx`, `radio-button.tsx`, all hardcoded `#44483B`, KSL's on surface variant, and `#BA1A1A`, error, directly in inline SVG icons. Now reference `var(--on-surface-variant)` and `var(--error)`.
 
-Fix, in every case, swap the literal hex for the matching CSS variable, `var(--on-surface-variant)`, `var(--error)`, `var(--primary)`, `var(--outline)`, `var(--input)`.
+One underlying cause worth knowing, `--outline` did not exist as a variable anywhere in the app, for any platform, that is why these files reached for a literal hex instead, there was nothing to reach for. `assets/tokens.css` adds it. See colors.md's known gaps for the full explanation, including a second, bigger issue found the same way, the app's Tailwind theme mapping was missing outline, outline variant, and the entire surface family entirely.
 
 ## Tier 3, resolved
 

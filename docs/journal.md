@@ -45,11 +45,22 @@ Files produced,
 - references/spacing.md, spacing scale, component height scale, grid approach, breakpoints, page width rule, panel layout structure, structural separation rule, radius tokens, and a summary of decisions
 
 ## Phase 6, components
-Status, in progress. Audited all 67 files in the shared UI library file by file against colors.md. Confirmed real platform bleed bugs, switch.tsx hardcodes three literal KSL colors instead of variables, six form field files hardcode KSL's on surface variant color directly, both still need the token fix, not yet applied to the app. Found one undocumented color, inline-editable-list-item.tsx, confirmed by you as a mistake, resolved as Vesentlig, no new tier. Built the two confirmed missing components, ConnectedButtonGroup and ListItem with density and trailing content variants, based on your own repeated Figma patterns rather than the open source Material 3 library, since Google's own segmented button implementation is unmaintained upstream. IconButton kept as is per your call, the primitive already exists, it is simply under used. Note for later, KSL app bar logo sizing does not follow the 250px brand minimum, real component rules will need their own smaller minimum, see assets/ksl/README.md.
+Status, done. Audited all 67 files in the shared UI library file by file against colors.md. Confirmed real platform bleed bugs, switch.tsx hardcodes three literal KSL colors instead of variables, six form field files hardcode KSL's on surface variant color directly. Found one undocumented color, inline-editable-list-item.tsx, confirmed by you as a mistake, resolved as Vesentlig, no new tier. Built the two confirmed missing components, ConnectedButtonGroup and ListItem with density and trailing content variants, based on your own repeated Figma patterns rather than the open source Material 3 library, since Google's own segmented button implementation is unmaintained upstream. IconButton kept as is per your call, the primitive already exists, it is simply under used. Note for later, KSL app bar logo sizing does not follow the 250px brand minimum, real component rules will need their own smaller minimum, see assets/ksl/README.md.
 Files produced,
 - references/components.md, full tiered audit, keep as is, needs token fix, resolved decision, and what got built
 - assets/components/connected-button-group.tsx
 - assets/components/list-item.tsx
+
+## Phase 6, update, real fix shipped
+Status, done. Claude Design surfaced exactly these known gaps while handing off a real LokalMat design, switch.tsx's hardcoded KSL colors, the text field family's hardcoded on surface variant color, and missing outline-variant for LokalMat. Fixed all three, plus two deeper causes found while fixing them, `--outline` did not exist as a variable anywhere in the app for any platform, and the app's Tailwind theme mapping never exposed outline, outline-variant, or the surface family as usable classes at all, so components reaching for them, including this skill's own ConnectedButtonGroup, silently failed. Built assets/tokens.css as the canonical, corrected CSS for every platform, complete variables, complete mapping, meant to be used directly instead of the app's globals.css. Font issue, Messina Serif and Sands, cannot be fixed from here, no licensed files exist yet, tokens.css falls back to Georgia in the meantime rather than a silent generic sans.
+Files produced,
+- assets/tokens.css, new, canonical CSS variables and Tailwind mapping for every platform
+- assets/components/switch.tsx, fixed, hardcoded colors replaced
+- assets/components/editable-text-field.tsx, number-input-with-icon.tsx, text-input-field.tsx, text-input-with-icon.tsx, time-picker-with-icon.tsx, radio-button.tsx, fixed, hardcoded colors replaced
+- assets/components/connected-button-group.tsx, fixed, was using an unmapped Tailwind class
+- references/colors.md, known gaps section updated, several items now marked resolved with what fixed them
+- references/components.md, Tier 2 updated from "needs a token fix" to "fixed"
+- SKILL.md, points to tokens.css as the real CSS to use, added the fallback rule for Vesentlig and Mindre alvorlig
 
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
@@ -84,6 +95,12 @@ Files produced,
 - SKILL.md, rewritten with frontmatter, confidence levels per platform, how to use this, reference index, asset index, non negotiable rules, and how to keep it current
 
 Also removed, the empty platforms/ folder from phase 0, everything platform specific ended up living inside colors.md and typography.md as tables instead, an empty, unreferenced folder would only confuse the next person.
+
+## Phase 8, update
+Status, done. Restored platforms/ per your request, empty folders should still carry a short written outline of intended future scope rather than disappear entirely. Added platforms/README.md explaining what belongs there, why it is still empty, and current status per platform. Renamed the project itself, norskmat-design-system to norsk-mat-design-system, for a cleaner, more recognizable name, updated everywhere including the SKILL.md frontmatter.
+Files produced,
+- platforms/README.md, new
+- SKILL.md, updated name and reference index
 
 ## Phase 9, testing
 Status, first pass done. Ran one realistic smoke test, build a KSL avvik filter row using ConnectedButtonGroup, plus one ListItem row for a Vesentlig deviation, using only the skill files, no outside knowledge. Caught a real gap, colors.md gave correct hex values for Vesentlig and Mindre alvorlig but never defined what to actually type in code, the test defaulted to `var(--error)` for a Vesentlig row since that was the only deviation color with an established variable, which mislabels severity. Fixed by adding named CSS variables for Vesentlig and Mindre alvorlig to colors.md, and a rule against falling back to `--error` for the other two tiers.
