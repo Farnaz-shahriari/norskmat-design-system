@@ -62,6 +62,13 @@ Files produced,
 - references/components.md, Tier 2 updated from "needs a token fix" to "fixed"
 - SKILL.md, points to tokens.css as the real CSS to use, added the fallback rule for Vesentlig and Mindre alvorlig
 
+## Phase 6, update, the actual component library was never shipped
+Status, done. You caught this using Claude Code, components.md tiered all 67 files and marked most "ready to use as is," but only the newly built and the already fixed files ever actually made it into assets/components/, the other roughly 60 were described, never copied. Copied the full library now, 69 files total including the two new builds. Also found and fixed a second, previously undocumented instance of the exact same orphan orange bug from earlier, inline-editable-list-item.tsx had a "warning" chip variant hardcoding the same three colors, sitting right next to a correctly built "error" variant in the same file, now uses the real Vesentlig variables. new-file.tsx confirmed genuinely empty, left out.
+Files produced,
+- assets/components/, 60 previously undelivered files added, plus inline-editable-list-item.tsx fixed and added
+- references/components.md, Tier 1 lists all 60 by name, Tier 3 updated with the second orphan orange instance and its fix
+- SKILL.md, component count corrected to reflect the complete library
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

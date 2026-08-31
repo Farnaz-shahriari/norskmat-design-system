@@ -4,11 +4,13 @@ Source, the 67 component files in the shared UI library (`ui.zip`), audited file
 
 ## Tier 1, atomic, ready to use
 
-No color issues found, either fully token based or purely structural with no color of its own.
+No color issues found, either fully token based or purely structural with no color of its own. All 60 of these are copied into `assets/components/` as is.
 
-accordion, alert, alert-dialog, aspect-ratio, avatar, badge, bottom-sheet, breadcrumb, button, calendar, card, carousel, chart, checkbox, chip, collapsible, command, context-menu, dialog, divider-with-subtitle, drawer, dropdown-menu, fab, form, hover-card, input, input-otp, label, list-item, material-checkbox, menubar, navigation-menu, pagination, popover, progress, radio-group, resizable, scroll-area, scrolling-fab, select, separator, sheet, sidebar, skeleton, slider, sonner, table, tabs, textarea, time-picker-dropdown, time-picker, toggle, toggle-group, tooltip
+accordion, alert, alert-dialog, aspect-ratio, avatar, badge, bottom-sheet, breadcrumb, button, calendar, card, carousel, chart, checkbox, chip, collapsible, command, context-menu, dialog, divider-with-subtitle, drawer, dropdown-menu, fab, form, hover-card, input, input-otp, label, material-checkbox, menubar, navigation-menu, pagination, popover, progress, radio-group, resizable, scroll-area, scrolling-fab, select, separator, sheet, sidebar, skeleton, slider, sonner, table, tabs, textarea, time-picker-dropdown, time-picker, toggle, toggle-group, tooltip
 
-`new-file.tsx` looks like a stray leftover file, empty or placeholder, worth deleting rather than carrying forward.
+Also copied, not part of the color audit but required by the rest, `click-to-edit-textarea.tsx`, `date-picker.tsx`, `date-time-picker.tsx`, `outlined-text-field.tsx`, `use-mobile.ts`, and `utils.ts`, the `cn()` helper every other file in this folder depends on.
+
+`new-file.tsx` was a genuinely empty stray file, left out entirely, not copied.
 
 ## Tier 2, fixed
 
@@ -21,7 +23,7 @@ One underlying cause worth knowing, `--outline` did not exist as a variable anyw
 
 ## Tier 3, resolved
 
-`inline-editable-list-item.tsx` hardcoded three colors that matched nothing in colors.md, `#663C00`, `#FF9800`, `#FFF4E5`. Confirmed, this was a mistake, not a real fourth tier. Replace with Vesentlig, `#A84300` main, `#FDD19F` / `#3D2100` container. No other orange belongs anywhere in the system.
+`inline-editable-list-item.tsx` hardcoded three colors that matched nothing in colors.md, `#663C00`, `#FF9800`, `#FFF4E5`, used together as its "warning" chip variant, background, text, and border, sitting right next to a correctly built "error" variant in the same file. Confirmed, this was a mistake, not a real fourth tier. Fixed, now uses `var(--vesentlig-container)`, `var(--vesentlig-container-foreground)`, and `var(--vesentlig)`, the copy in `assets/components/` reflects this.
 
 ## Tier 4, built
 
