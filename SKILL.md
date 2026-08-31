@@ -35,7 +35,7 @@ One source of truth across Stiftelsen Norsk Mat's platforms, KSL, Nyt Norge, Spe
 
 ## Assets
 
-* `assets/tokens.css`, the canonical, corrected CSS custom properties for every platform, one `.theme-<platform>` class each, plus the complete Tailwind `@theme` mapping. Drop this in directly rather than trusting the live app's `globals.css`, which is missing several of these variables entirely, see colors.md's known gaps.
+* `assets/tokens.css`, the canonical, corrected CSS for every platform, colors, typography, spacing, and radius, one `.theme-<platform>` class each for the parts that vary, shared variables and named type classes for the parts that don't. Drop this in directly rather than trusting the live app's `globals.css`, which is missing several of these entirely, see the known gaps in colors.md, typography.md, and spacing.md.
 * `assets/components/`, the complete, working component library, 69 files, real `.tsx` code, copy these directly into a project rather than rebuilding from the docs. `connected-button-group.tsx` and `list-item.tsx` are new, built for this system, not upstream Material 3. `switch.tsx`, the text input family, and `inline-editable-list-item.tsx` are corrected copies, hardcoded colors replaced with the variables from `tokens.css`. Every other file is the original, audited and confirmed clean.
 * `assets/<platform>/`, logo files and a README per platform covering what exists, what's missing, and usage rules where confirmed.
 

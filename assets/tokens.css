@@ -1,15 +1,24 @@
 /*
  * Norsk Mat design system, canonical tokens.
- * Source of truth for every value here is references/colors.md, which is
- * itself derived from the real Figma variable exports, not the live app.
+ * Covers colors, typography, spacing, and radius, source of truth for every
+ * value here is references/colors.md, references/typography.md, and
+ * references/spacing.md, all derived from the real Figma variable exports
+ * and the KSL Foretak app codebase, not the live app's own CSS.
  *
- * This file exists because the live app's globals.css has real, confirmed
- * gaps, see "Known gaps" in colors.md, missing --outline entirely, missing
- * --outline-variant for three of four platforms, and an incomplete
- * @theme mapping that leaves outline, surface, and severity tokens
- * unusable as Tailwind classes even though the raw CSS variables exist.
- * This file fixes all three, apply one .theme-<platform> class to the
- * root element to switch platforms.
+ * This file exists because the live app has real, confirmed gaps.
+ * Colors, missing --outline entirely, missing --outline-variant for three
+ * of four platforms, and an incomplete @theme mapping that leaves outline,
+ * surface, and severity tokens unusable as Tailwind classes even though
+ * the raw CSS variables existed.
+ * Typography and spacing, the named type classes, the spacing scale, the
+ * height scale, and the radius tokens existed only as markdown tables,
+ * nothing implemented them anywhere, button.tsx and the input family
+ * already reference var(--radius-button) directly, it was simply never
+ * defined until now.
+ *
+ * Apply one .theme-<platform> class to the root element to switch
+ * platforms, the shared type, spacing, and severity tokens below apply
+ * to all of them automatically.
  */
 
 :root,
@@ -175,6 +184,42 @@
   --mindre-alvorlig-container: #FFEDD0;
   --mindre-alvorlig-container-foreground: #3D2E00;
 
+  /* Type scale, references/typography.md, shared across every platform,
+     only the font family itself changes per .theme-* block above. */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --text-4xl: 57px;
+  --text-2xl: 32px;
+  --text-xl: 24px;
+  --text-lg: 22px;
+  --text-md: 18px;
+  --text-base: 16px;
+  --text-sm: 14px;
+
+  /* Spacing scale, references/spacing.md, base unit 4px */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 48px;
+
+  /* Component height scale, references/spacing.md */
+  --height-sm: 32px;
+  --height-md: 40px;
+  --height-lg: 56px;
+
+  /* Radius tokens, references/spacing.md. --radius-button is already
+     referenced directly by the component library, button.tsx and every
+     input variant use rounded-[var(--radius-button)], it was simply
+     never defined anywhere until now. */
+  --radius-sm: 4px;
+  --radius-button: 100px;
+  --radius-card: 12px;
+  --radius-dialog: 28px;
+
   /* Common aliases used across the shared component library */
   --card: var(--surface);
   --card-foreground: var(--on-surface);
@@ -189,6 +234,67 @@
   --border: var(--outline-variant);
   --input: var(--surface-container-highest);
   --ring: var(--primary);
+}
+
+/* Named type styles, references/typography.md, ranked by real usage in
+   the app, body and label sizes dominate, headline barely appears.
+   font-family is intentionally var(--font-family), not hardcoded to
+   Manrope, so these classes automatically pick up LokalMat's Messina
+   Serif and Sands once those files actually exist, no separate rule
+   needed per platform. */
+.headline-medium {
+  font-family: var(--font-family);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+}
+.title-large {
+  font-family: var(--font-family);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+.title-medium {
+  font-family: var(--font-family);
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+}
+.body-large {
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+}
+.body-medium {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+}
+.label-large {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+.label-medium {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+.label-small {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  line-height: 16px;
+}
+.label-xsmall {
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  line-height: 14px;
 }
 
 /* Tailwind v4 @theme mapping, this is the piece that was missing in the

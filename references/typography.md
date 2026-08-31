@@ -48,3 +48,7 @@ Body and label text carry almost all real usage, headline-medium barely appears,
 ## Known gap, resolved
 
 The design system guideline once called for a second heading font, Quatro. It was never actually loaded anywhere, no import, no font file, and about 130 places in the codebase hardcoded a reference to it directly, meaning those headings silently fell back to a generic system sans-serif in the browser, not Quatro, not Manrope. You confirmed Quatro caused visible font inconsistency and removed it. Manrope is now the only heading and body font for KSL, Nyt Norge, Spesialitet. Do not reintroduce Quatro, and if you revisit those ~130 hardcoded instances later, replace them with the named classes above rather than another literal font string.
+
+## Implementation
+
+Everything above was, until now, a table in this file only, nothing implemented it. `assets/tokens.css` now defines every named class, `.headline-medium`, `.title-large`, and so on, plus the underlying `--text-*` and `--font-weight-*` variables, using `var(--font-family)`, not a hardcoded font, so LokalMat automatically picks up Messina Serif and Sands the moment those files are real, no separate rule needed per platform.

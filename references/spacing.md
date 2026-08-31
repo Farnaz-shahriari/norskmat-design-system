@@ -99,3 +99,7 @@ Rule, every rounded corner in the app must use one of these four tokens, no raw 
 - Panels, formalized using Material 3's supporting pane logic, fixed width side panes, flexible main pane, relocate instead of hide
 - Borders vs elevation, kept borders as the separator, documented as an intentional choice, not an oversight
 - Radius, kept existing tokens, removed raw duplicate values
+
+## Implementation
+
+Everything above was, until now, a table in this file only, nothing implemented it. `assets/tokens.css` now defines the real `--space-*`, `--height-*`, and `--radius-*` variables. `--radius-button` in particular was already being referenced directly by the component library, `button.tsx` and every input variant use `rounded-[var(--radius-button)]`, it simply resolved to nothing until now.

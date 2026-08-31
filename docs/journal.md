@@ -69,6 +69,12 @@ Files produced,
 - references/components.md, Tier 1 lists all 60 by name, Tier 3 updated with the second orphan orange instance and its fix
 - SKILL.md, component count corrected to reflect the complete library
 
+## Phase 4 and 5, update, typography and spacing were never implemented either
+Status, done. You caught this using Claude Cowork, same root cause as the component library gap, phase 4 and phase 5 defined the type scale, named styles, spacing scale, height scale, and radius tokens as markdown tables, but nothing ever turned them into real CSS. button.tsx and the input family were already referencing var(--radius-button) directly, undefined until now. Added everything to assets/tokens.css, named type classes use var(--font-family) rather than a hardcoded font, so LokalMat inherits Messina Serif and Sands automatically once those files exist, no separate rule needed.
+Files produced,
+- assets/tokens.css, updated, added font weight variables, text size variables, all nine named type classes, spacing scale, height scale, and radius tokens
+- references/typography.md, references/spacing.md, each now points to the implementation instead of only describing it
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,
