@@ -1,0 +1,70 @@
+name: Reference site
+
+# Every push to main rebuilds the reference from the design system and deploys
+# it. That is the point, the site is generated, so it should never be a thing
+# someone has to remember to regenerate. docs/index.html is not committed.
+#
+# The linter runs first and can fail the whole thing. A push that leaves a
+# component pointing at a token that does not exist should not get a green
+# deploy, because a green deploy is what makes people trust the page.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# A newer push supersedes an in flight one, but never cancel a running deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Check components against the tokens
+        run: npm run lint:tokens
+
+      - name: Build the reference site
+        run: npm run docs
+
+      - name: Confirm the build produced what it should
+        run: |
+          test -s docs/index.html || { echo "docs/index.html missing or empty"; exit 1; }
+          test -s docs/tokens.json || { echo "docs/tokens.json missing or empty"; exit 1; }
+          test -s docs/audit.js    || { echo "docs/audit.js missing or empty"; exit 1; }
+          grep -q '<div id="root">' docs/index.html || { echo "index.html has no mount point"; exit 1; }
+          echo "index.html $(wc -c < docs/index.html) bytes"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    # Pull requests get the build and the linter, but only main deploys.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

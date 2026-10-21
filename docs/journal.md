@@ -75,6 +75,119 @@ Files produced,
 - assets/tokens.css, updated, added font weight variables, text size variables, all nine named type classes, spacing scale, height scale, and radius tokens
 - references/typography.md, references/spacing.md, each now points to the implementation instead of only describing it
 
+## Phase 10, made it consumable, one source instead of copies
+Status, done. A real LokalMat app was built against this system in Claude Code and the handoff exposed the actual structural problem, there was no way to consume this repo except copying files by hand, so every app becomes a snapshot that silently stops receiving changes. Turned the repo into an installable package instead. Also fixed the two defects that forced the hand editing in the first place, every component import carried a Figma Make `@version` suffix, 37 packages, so no app could install them without stripping the suffixes and separately pinning versions, and several variables the components reference were never defined anywhere.
+Files produced,
+- package.json, new, name `@norskmat/design-system`, all 37 versions moved from import suffixes into real dependencies, react and tailwind as peers, exports map for tokens, components, utils, and logos
+- assets/components/, 40 files edited, every `@version` import suffix stripped
+- assets/tokens.css, added `--radius` and `--radius-xl` as aliases to the existing four radius tokens, `--elevation-sm: none` so the name resolves without breaking spacing.md's no shadows rule, `--input-background`, and the `.headline-small` class, 24px was the seventh most used size in the app with no named class
+- docs/consuming.md, new, install, use, update, and the one bundler setting each app needs since the package ships raw tsx
+- references/typography.md, headline-small added to the named styles table
+- references/spacing.md, radius aliases and the elevation decision documented
+- references/colors.md, three new known gaps, two resolved, one left open on purpose
+- SKILL.md, install section, and a new non-negotiable rule against copying files into an app
+
+Left open on purpose, the sidebar color family. `sidebar.tsx` needs six tokens that exist nowhere, and it wraps one in `hsl()` while this system is hex throughout. Whether a sidebar is its own surface or just `--surface-container` is a design decision, not a bug fix, so it is documented as gap 11 rather than guessed.
+
+## Phase 11, made it installable by other people
+Status, done. Found the real reason this skill has been unreliable, the copy on your Claude account is a single orphaned SKILL.md, no references, no assets, and it predates every change in this repo. So the skill has been firing with the rules but none of the data, every path in it a dead end, and it still carried the old norskmat name. Fixed the distribution properly rather than re-uploading a zip that would drift again.
+Restructured the repo so it is a Claude Code plugin marketplace as well as an npm package, one copy of every file serving both. SKILL.md, references/, assets/ and platforms/ moved into skills/norsk-mat-design-system/, package.json exports repointed there so npm consumers see no change in their import paths.
+Files produced,
+- .claude-plugin/marketplace.json, new, marketplace named norskmat, one plugin, source is the repo root
+- .claude-plugin/plugin.json, new, plugin metadata
+- skills/norsk-mat-design-system/, the whole skill moved here from the repo root
+- package.json, exports and files repointed, import paths for consuming apps unchanged
+- docs/consuming.md, the Tailwind @source path updated for the new layout
+Verified, packed the package and installed it clean with all 37 dependencies, bundled Button, ListItem, Switch and cn plus the tokens.css import, both clean, and confirmed the references files now actually ship inside the package.
+
+How a colleague installs it, /plugin marketplace add Farnaz-shahriari/norskmat-design-system then /plugin install norsk-mat-design-system@norskmat, and /plugin marketplace update norskmat to pull later commits. Third party marketplaces do not auto update by default, that is a per marketplace setting.
+
+## Phase 12, the reference site
+Status, done. Built an interactive reference for the whole system at docs/index.html, generated rather than written, because a hand written docs page is just another copy that drifts. scripts/extract-tokens.mjs parses tokens.css into a model, scripts/build-docs.mjs compiles Tailwind over the real component sources so their classes actually exist on the page, bundles the real .tsx components in, and inlines everything into one self contained file. Change a colour, run npm run docs, the site is correct.
+Sections, get started with the npm and plugin install, platforms, colour, deviation tiers, typography, spacing and radius, live components, rules, known gaps. A platform switcher in the header retints every specimen and every live component at once, which is the one thing a static page cannot show, that a platform swap is a class name.
+Design decision worth keeping, the site chrome is deliberately not built from the design system's own tokens, deep teal and olive biased neutrals, a colour that appears in none of the four platform palettes. A specimen sheet printed in the ink it documents tells you nothing, you cannot see where the site stops and the system starts. Everything inside a stage is the real system, everything outside it is chrome.
+The stages also stay light in a dark page on purpose. None of the four platform themes defines a dark palette, so inventing one for the docs would be documenting something that does not exist.
+Files produced,
+- docs/index.html, generated, self contained, 347 kB
+- docs/site/main.tsx, docs/site/site.css, docs/site/tailwind.css, the site source
+- scripts/extract-tokens.mjs, scripts/build-docs.mjs
+- package.json, npm run docs plus seven devDependencies
+- docs/.nojekyll, so GitHub Pages serves it untouched
+- SKILL.md and docs/consuming.md point at it
+Verified in a real browser, all nine sections screenshotted, live components confirmed rendering the real thing, KSL olive at 56px with the 100px pill radius, and confirmed retinting to Nyt Norge blue and LokalMat red on switch. Two real bugs found and fixed in that pass, a class name collision that drew a card border around every type specimen, and a flex column that stretched the button group full width.
+Then ran the build on your own machine from your own copy and it reproduced the file byte for byte, same md5, so npm run docs is genuinely portable and not something that only worked in a sandbox.
+
+## Phase 13, one screen, four brands
+Status, done. Added the section that actually shows the system working, a full example screen rendered in each platform's tokens, placed second in the nav right after get started because it is the payoff and people should find it before the token tables.
+Three views, a desktop browser frame, a phone frame, and compare all four, which puts the same screen in all four brands side by side at once. That last one is the whole argument for a multi brand design system in a single glance. Platform is chosen from cards showing the real logo, the audience, a six swatch palette strip and the font, or with keys 1 to 4, and the choice is remembered per viewer in localStorage.
+Also added a label the tokens toggle, which outlines every themed region in the screen and names the token behind it, --surface-container on the app bar, --surface-container-high on the lead stat tile, --vesentlig-container on a Vesentlig badge. That ties the screen back to the token lists further down the page without duplicating them.
+The real platform logos are now inlined as base64 data URIs at build time, base64 rather than inline svg because four logos in one document would collide on their internal ids and gradient names.
+Design constraint kept on purpose, the example screen contains no hex, no pixel value and no font name, only tokens. That is what makes it a test rather than a picture, if it looks wrong on a platform, a token is wrong.
+Files produced,
+- docs/site/preview.tsx, new, the picker, the screen, and the three views
+- docs/site/site.css, frames, picker, screen and inspect mode styles
+- docs/site/main.tsx, nav entry, keyboard shortcuts, remembered platform
+- scripts/build-docs.mjs, inlines the four logos
+Two real bugs found and fixed during verification. First, the platform class was being applied by querying .themed elements in an effect, so a stage that mounted later, the phone frame, never got themed at all, it silently rendered KSL colours while the header said Nyt Norge. Replaced with one class on one wrapper and CSS variable inheritance, which is also exactly how an app does it, one class on html. Second, three stat tiles side by side stop being readable well below 390px, so compact is now a real breakpoint with the tiles as rows and the filter group scrolling instead of clipping.
+Verified in a real browser across all three views and all four platforms, no console errors, and the build reproduced byte for byte on your machine, same md5.
+
+## Phase 14, audited the known gaps and closed the ones that were closable
+Status, done. Audited every open item against the actual files rather than trusting the list, which was the right instinct, two entries turned out to understate the problem badly and one real bug was hiding that nobody had written down.
+
+Fixed, eight items.
+- The sidebar colour family, six token names sidebar.tsx needs that were defined nowhere, so a sidebar rendered untinted on every platform. Defined as aliases onto the surface family, surface-container-low for the ground plus the standard secondary container treatment for the selected item, and mapped into @theme so bg-sidebar actually generates. Aliases, not new colours, so it is one edit to change if a sidebar should be its own surface. This had been left open as needing a design decision, but the conservative reading needed no decision at all.
+- A shadow wrapping a hex value in hsl(), which is invalid CSS, so the sidebar rail handle had no outline at all.
+- --radius-xl collided with Tailwind's own radius scale. This one I caused in phase 10, adding --radius-xl as an alias for the bottom sheet. Declaring it in :root silently changed every rounded-xl in the library, and card.tsx went from its correct 12px to 28px with nobody editing card.tsx. Removed the alias, bottom-sheet.tsx now names --radius-dialog directly, and card.tsx and list-item.tsx name --radius-card. --radius-sm shares a name with Tailwind's too but holds the same 4px, so it is harmless, and it is now documented as a trap.
+- Two exact value matches renamed to their tokens, rounded-[4px] to --radius-sm in checkbox.tsx and rounded-[28px] to --radius-dialog in time-picker-dropdown.tsx.
+- Nothing enforced any of the rules. npm run lint:tokens now does. It checks all 69 components for variables tokens.css does not define, raw hex, radius name collisions with Tailwind, radius outside the four tokens, spacing off the scale, and text sized outside the named type classes. Errors fail the build, warnings do not, so it can go into CI as is. The undefined variable check is the important one, it would have caught --outline, --radius, --input-background and the sidebar family the day each broke.
+- Also extended @theme with the spacing and height scales, so p-md and gap-lg are real classes now. Radius is deliberately not mapped, the design tokens are already called --radius-card and friends and a @theme entry of the same name resolves to itself.
+
+Corrected rather than fixed.
+- The list claimed six components size text with Tailwind's text-* scale. It is 25. They are almost all Radix primitives so leaving them may be right, but it should be a decision.
+- A new gap nobody had written down, around 40 radius usages are not on the four tokens, rounded-md in 18 files, rounded-lg in 10. spacing.md says four values only, so these are real violations, but which of the four each becomes is a per component call.
+- Four spacing values off the scale, three are picker maximums and arguably fine, py-[14px] in tabs.tsx is not.
+
+Left open honestly, LokalMat's unlicensed fonts, the live app's severity colours, the radius and type scale migrations, and the two platforms with logos but no palette.
+
+Files produced,
+- scripts/lint-tokens.mjs, new, plus the lint:tokens script
+- skills/norsk-mat-design-system/assets/tokens.css, --radius-xl removed, sidebar family added, spacing and height mapped, traps documented in comments
+- assets/components/, six files fixed, bottom-sheet, card, list-item, sidebar, checkbox, time-picker-dropdown
+- references/colors.md, known gaps rewritten as fixed and still open, with real counts
+- SKILL.md, two new non-negotiable rules, run the linter, and never use Tailwind's radius names
+- docs/site/main.tsx and docs/index.html, the gaps section rebuilt as two lists
+
+Verified, the linter reports zero errors, card radius resolves to 12px again, --radius-xl is back to Tailwind's 0.75rem, bg-sidebar and p-md both generate with the right values, and the site renders with no console errors.
+Two bugs in my own linter found and fixed while running it, a regex tested against a value with the -- already stripped so every Radix runtime variable came out as an error, and a side matcher that ate the first letter of a size so rounded-lg was reported as rounded-l.
+
+## Phase 15, made the reference live rather than a committed file
+Status, done. The reference site was build output committed into the repo, which meant it went stale the moment someone changed a token and forgot npm run docs. That is the same drift this repo exists to stop, just moved into the documentation.
+
+Two things now.
+
+First, it deploys itself. .github/workflows/docs.yml runs the linter, builds the site, checks the output actually contains what it should, and deploys to GitHub Pages on every push to main. Pull requests get the lint and the build but do not deploy. docs/index.html, docs/tokens.json and docs/audit.js are gitignored, they are output, not source. The linter running first is deliberate, a push that leaves a component pointing at a token that does not exist should not get a green deploy, because a green deploy is what makes people trust the page. One manual step remains, set Pages source to GitHub Actions in the repo settings, once.
+
+Second, and this is the part that answers in place, a live drift check. Paste one line into the console of any app that uses this system,
+  import("https://farnaz-shahriari.github.io/norskmat-design-system/audit.js")
+and it reports every token that app defines differently and every token it does not define at all, in a panel plus a full console table. It carries no expected values of its own, it fetches them from tokens.json beside it on the deployment, so it is always comparing against the system as it stands rather than a snapshot. GitHub Pages sends a permissive CORS header, so the fetch works from any origin.
+Design decisions in it worth keeping. Colours are compared as colours via the browser's own parser, so #FFFFFF, #ffffff and rgb(255 255 255) are one value, and lengths are compared in px, so 1rem matches 16px, it reports real differences rather than formatting. The panel renders in a shadow root, so the host app's CSS cannot reach in and it cannot leak out, and only values the browser parses as colours are ever put into a style attribute. It reads and never writes, safe on production. Platform detection prefers the theme class and falls back to matching the app's computed --primary, which catches an app that set the variables directly.
+Also emitted docs/tokens.json as the machine readable model, so an app can assert against it in a test rather than a console.
+
+Verified against a deliberately broken app. Built a fake KSL app carrying three real bugs, --outline deleted entirely, Vesentlig's container left at the old wrong #ffddcc, and the large spacing step off by 4px. The checker reported 52 of 55 tokens correct and named exactly those three, one missing and two drifted, with no false positives. Screenshotted the panel and the new section, no console errors.
+
+Files produced,
+- .github/workflows/docs.yml, new
+- docs/site/audit.js, new, dependency free on purpose so it pastes anywhere
+- scripts/build-docs.mjs, also emits tokens.json and audit.js
+- docs/site/main.tsx, new Check a live app section with the copyable one liner
+- .gitignore, the three build outputs
+- docs/consuming.md and SKILL.md, point at the live URL and the check
+
+## Phase 16, opened it inside Claude too
+Status, done. Published the reference as a Claude artifact so it is openable right now, before the GitHub Pages deploy exists, and added claude/reference-site.md to the project as the one place that holds every link, the artifact, the Pages URL, the paste in checker, the install lines and the plugin commands.
+Rather than hand maintaining a second copy of the page, npm run docs now also writes docs/artifact.html, the same build in the shape the artifact runtime expects, no doctype, html, head or body tags of its own since those are added at publish time. Same styles, same bundle, same content, so republishing that file is republishing the current build. Gitignored like the other three outputs.
+Verified by wrapping docs/artifact.html in the same skeleton the runtime adds and loading it in a browser, mounted, all 11 sections present, the four platform cards render, and the live Button still renders KSL olive. The publish warning about an external script is a false positive, the only https reference in the page body is the checker one liner shown as copyable text, there is no script tag with a src.
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

@@ -1,0 +1,20 @@
+{
+  "name": "norskmat",
+  "owner": {
+    "name": "Stiftelsen Norsk Mat",
+    "url": "https://github.com/Farnaz-shahriari/norskmat-design-system"
+  },
+  "plugins": [
+    {
+      "name": "norsk-mat-design-system",
+      "displayName": "Norsk Mat design system",
+      "source": ".",
+      "description": "Colors, typography, spacing, components and brand rules for KSL, Nyt Norge, Spesialitet, LokalMat, Beskyttede Betegnelser and Stiftelsen Norsk Mat. Install this before building or reviewing any UI for those platforms.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Farnaz Shahriari"
+      },
+      "license": "UNLICENSED"
+    }
+  ]
+}

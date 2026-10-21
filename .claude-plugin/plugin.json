@@ -1,0 +1,10 @@
+{
+  "name": "norsk-mat-design-system",
+  "description": "Colors, typography, spacing, components and brand rules for KSL, Nyt Norge, Spesialitet, LokalMat, Beskyttede Betegnelser and Stiftelsen Norsk Mat.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Farnaz Shahriari"
+  },
+  "homepage": "https://github.com/Farnaz-shahriari/norskmat-design-system",
+  "license": "UNLICENSED"
+}

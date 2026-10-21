@@ -1,0 +1,12 @@
+/* Tailwind entry for the reference site.
+   Compiled by scripts/build-docs.mjs, output is inlined into docs/index.html.
+
+   Two things matter here. tokens.css brings its own @theme inline mapping, so
+   importing it is what makes classes like bg-primary and border-outline-variant
+   exist at all. The @source line points Tailwind at the real component sources,
+   so only classes those components genuinely use get generated. */
+@import "tailwindcss";
+@import "../../skills/norsk-mat-design-system/assets/tokens.css";
+
+@source "../../skills/norsk-mat-design-system/assets/components";
+@source "./main.tsx";
