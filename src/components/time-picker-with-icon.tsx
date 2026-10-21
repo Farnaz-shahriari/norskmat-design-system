@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 
 interface TimePickerWithIconProps {
   label: string;
@@ -20,6 +20,7 @@ export function TimePickerWithIcon({
   required = false,
   helpText
 }: TimePickerWithIconProps) {
+  const fieldId = useId();
   const hasValue = hours > 0 || minutes > 0;
   const [mode, setMode] = useState<'empty' | 'edit' | 'view'>(hasValue ? 'view' : 'empty');
   const [isOpen, setIsOpen] = useState(false);
@@ -132,7 +133,7 @@ export function TimePickerWithIcon({
           <div className="box-border content-stretch flex gap-4 items-center p-2 relative w-full">
             {/* Leading Icon Button - Plus */}
             <div className="content-stretch flex items-center justify-center relative shrink-0 size-12">
-              <div 
+              <div aria-hidden="true"
                 onClick={handleAdd}
                 className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
               >
@@ -207,10 +208,11 @@ export function TimePickerWithIcon({
               <div className="flex gap-4 mb-6">
                 {/* Hours */}
                 <div className="flex-1">
-                  <label className="block mb-2">
+                  <label htmlFor={`${fieldId}-hours-1`} className="block mb-2">
                     <span className="label-medium text-foreground">Timer</span>
                   </label>
                   <input
+                    id={`${fieldId}-hours-1`}
                     type="number"
                     min="0"
                     max="23"
@@ -225,10 +227,11 @@ export function TimePickerWithIcon({
 
                 {/* Minutes */}
                 <div className="flex-1">
-                  <label className="block mb-2">
+                  <label htmlFor={`${fieldId}-minutes-1`} className="block mb-2">
                     <span className="label-medium text-foreground">Minutter</span>
                   </label>
                   <input
+                    id={`${fieldId}-minutes-1`}
                     type="number"
                     min="0"
                     max="59"
@@ -364,10 +367,11 @@ export function TimePickerWithIcon({
               <div className="flex gap-4 mb-6">
                 {/* Hours */}
                 <div className="flex-1">
-                  <label className="block mb-2">
+                  <label htmlFor={`${fieldId}-hours-2`} className="block mb-2">
                     <span className="label-medium text-foreground">Timer</span>
                   </label>
                   <input
+                    id={`${fieldId}-hours-2`}
                     type="number"
                     min="0"
                     max="23"
@@ -382,10 +386,11 @@ export function TimePickerWithIcon({
 
                 {/* Minutes */}
                 <div className="flex-1">
-                  <label className="block mb-2">
+                  <label htmlFor={`${fieldId}-minutes-2`} className="block mb-2">
                     <span className="label-medium text-foreground">Minutter</span>
                   </label>
                   <input
+                    id={`${fieldId}-minutes-2`}
                     type="number"
                     min="0"
                     max="59"
@@ -500,7 +505,7 @@ export function TimePickerWithIcon({
           </button>
           {/* Edit icon button */}
           <div className="content-stretch flex items-center justify-center relative shrink-0 size-12">
-            <div
+            <div aria-hidden="true"
               onClick={handleEdit}
               className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
             >
@@ -538,10 +543,11 @@ export function TimePickerWithIcon({
             <div className="flex gap-4 mb-6">
               {/* Hours */}
               <div className="flex-1">
-                <label className="block mb-2">
+                <label htmlFor={`${fieldId}-hours-3`} className="block mb-2">
                   <span className="label-medium text-foreground">Timer</span>
                 </label>
                 <input
+                  id={`${fieldId}-hours-3`}
                   type="number"
                   min="0"
                   max="23"
@@ -556,10 +562,11 @@ export function TimePickerWithIcon({
 
               {/* Minutes */}
               <div className="flex-1">
-                <label className="block mb-2">
+                <label htmlFor={`${fieldId}-minutes-3`} className="block mb-2">
                   <span className="label-medium text-foreground">Minutter</span>
                 </label>
                 <input
+                  id={`${fieldId}-minutes-3`}
                   type="number"
                   min="0"
                   max="59"

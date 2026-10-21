@@ -133,7 +133,7 @@ export function TextInputWithIcon({
                   {icon}
                 </div>
               ) : (
-                <div 
+                <div aria-hidden="true"
                   onClick={handleAdd}
                   className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
                 >
@@ -203,7 +203,7 @@ export function TextInputWithIcon({
                   {icon}
                 </div>
               ) : (
-                <div
+                <div aria-hidden="true"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -274,7 +274,7 @@ export function TextInputWithIcon({
                 {icon}
               </div>
             ) : (
-              <div
+              <div aria-hidden="true"
                 onClick={handleEdit}
                 className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
               >

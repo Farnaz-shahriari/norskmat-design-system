@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import { Button } from './button';
 
 interface TimePickerDropdownProps {
@@ -9,6 +9,7 @@ interface TimePickerDropdownProps {
 }
 
 export function TimePickerDropdown({ hours, minutes, onConfirm, onCancel }: TimePickerDropdownProps) {
+  const fieldId = useId();
   const [selectedHours, setSelectedHours] = useState(hours);
   const [selectedMinutes, setSelectedMinutes] = useState(minutes);
 
@@ -24,8 +25,9 @@ export function TimePickerDropdown({ hours, minutes, onConfirm, onCancel }: Time
       {/* Timer and Minutter inputs */}
       <div className="flex gap-3 items-center">
         <div className="flex-1 flex flex-col gap-2">
-          <label className="label-small text-muted-foreground">Timer</label>
+          <label htmlFor={`${fieldId}-hours-1`} className="label-small text-muted-foreground">Timer</label>
           <input
+            id={`${fieldId}-hours-1`}
             type="number"
             min="0"
             max="23"
@@ -36,8 +38,9 @@ export function TimePickerDropdown({ hours, minutes, onConfirm, onCancel }: Time
         </div>
 
         <div className="flex-1 flex flex-col gap-2">
-          <label className="label-small text-muted-foreground">Minutter</label>
+          <label htmlFor={`${fieldId}-minutes-1`} className="label-small text-muted-foreground">Minutter</label>
           <input
+            id={`${fieldId}-minutes-1`}
             type="number"
             min="0"
             max="59"

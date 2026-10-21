@@ -74,7 +74,7 @@ export function BottomSheet({
   return (
     <>
       {/* Backdrop - Only visible on mobile/tablet */}
-      <div
+      <div aria-hidden="true"
         className={`fixed inset-0 bg-black/40 z-40 min-[1400px]:hidden transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}

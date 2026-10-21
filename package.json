@@ -40,7 +40,9 @@
     "build:css": "node scripts/build-css.mjs",
     "build:types": "tsc -p tsconfig.build.json",
     "docs": "node scripts/build-docs.mjs",
-    "lint:tokens": "node scripts/lint-tokens.mjs"
+    "lint:tokens": "node scripts/lint-tokens.mjs",
+    "lint:a11y": "eslint src/components",
+    "lint:contrast": "node scripts/check-contrast.mjs"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -91,7 +93,10 @@
     "@tailwindcss/cli": "4.1.11",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
+    "@typescript-eslint/parser": "8.71.1",
     "esbuild": "0.24.0",
+    "eslint": "9.39.5",
+    "eslint-plugin-jsx-a11y": "6.10.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "tailwindcss": "4.1.11",

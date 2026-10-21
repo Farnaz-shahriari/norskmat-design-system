@@ -88,7 +88,7 @@ export function TextInputField({
           <div className="box-border content-stretch flex gap-4 items-start p-2 relative w-full">
             {/* Leading Icon Button - Check/Save */}
             <div className="content-stretch flex items-center justify-center relative shrink-0 size-12">
-              <div
+              <div aria-hidden="true"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -99,7 +99,7 @@ export function TextInputField({
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                   <div className="relative shrink-0 size-6">
                     <div className="absolute inset-[16.667%]">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
+                      <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
                         <path d="M16.667 5L7.5 14.167L3.333 10" stroke="var(--on-surface-variant)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                       </svg>
                     </div>
@@ -154,7 +154,7 @@ export function TextInputField({
               <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                 <div className="relative shrink-0 w-[18px] h-[18px]">
                   <div className="absolute inset-[8.333%]">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
+                    <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
                       <path d="M7.5 0C3.36 0 0 3.36 0 7.5S3.36 15 7.5 15 15 11.64 15 7.5 11.64 0 7.5 0Zm.75 11.25h-1.5v-1.5h1.5v1.5Zm0-3h-1.5v-4.5h1.5v4.5Z" fill="var(--error)" />
                     </svg>
                   </div>
@@ -171,7 +171,7 @@ export function TextInputField({
         <div className="box-border content-stretch flex gap-4 items-center p-2 relative w-full">
           {/* Leading Icon Button - Plus (empty) or Edit (has value) */}
           <div className="content-stretch flex items-center justify-center relative shrink-0 size-12">
-            <div 
+            <div aria-hidden="true"
               onClick={handleIconClick}
               className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
             >
@@ -183,7 +183,7 @@ export function TextInputField({
                   ) : (
                     // Plus icon when empty
                     <div className="absolute inset-[20.833%]">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
+                      <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
                         <path d="M8 2V14M2 8H14" stroke="var(--on-surface-variant)" strokeWidth="2" fill="none" />
                       </svg>
                     </div>
@@ -196,7 +196,7 @@ export function TextInputField({
           {/* Content - clickable to activate edit mode */}
           <button
             onClick={handleIconClick}
-            className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
+            className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer rounded-[var(--radius)] outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
           >
             {value ? (
               // Show label + value when there's content
@@ -223,7 +223,7 @@ export function TextInputField({
                 <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                   <div className="relative shrink-0 w-[18px] h-[18px]">
                     <div className="absolute inset-[8.333%]">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
+                      <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
                         <path d="M7.5 0C3.36 0 0 3.36 0 7.5S3.36 15 7.5 15 15 11.64 15 7.5 11.64 0 7.5 0Zm.75 11.25h-1.5v-1.5h1.5v1.5Zm0-3h-1.5v-4.5h1.5v4.5Z" fill="var(--error)" />
                       </svg>
                     </div>

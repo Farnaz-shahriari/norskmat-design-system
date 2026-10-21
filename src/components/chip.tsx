@@ -9,16 +9,16 @@ const chipVariants = cva(
     variants: {
       variant: {
         assist:
-          "bg-surface text-foreground border border-border hover:bg-muted",
+          "bg-surface text-foreground border border-outline hover:bg-muted",
 
         filter:
-          "bg-surface text-muted-foreground border border-border hover:bg-muted",
+          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
 
         suggestion:
-          "bg-surface text-muted-foreground border border-border hover:bg-muted",
+          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
 
         input:
-          "bg-surface text-muted-foreground border border-border hover:bg-muted",
+          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
       },
 
       selected: {

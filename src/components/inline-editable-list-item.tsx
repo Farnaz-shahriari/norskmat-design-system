@@ -148,6 +148,7 @@ export function InlineEditableListItem({
   if (value) {
     return (
       <div
+        role="presentation"
         className={`flex items-start gap-3 cursor-pointer group ${className}`}
         onClick={handleEdit}
       >
@@ -169,6 +170,7 @@ export function InlineEditableListItem({
   // Empty mode (no value)
   return (
     <div
+      role="presentation"
       className={`flex items-center gap-3 cursor-pointer group ${className}`}
       onClick={handleEdit}
     >

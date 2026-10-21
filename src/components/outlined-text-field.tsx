@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 
 interface OutlinedTextFieldProps {
   label: string;
@@ -29,16 +29,21 @@ export function OutlinedTextField({
 }: OutlinedTextFieldProps) {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
 
   const isFloating = isFocused || value.length > 0;
 
   return (
+    // Clicking the padding focuses the input, a mouse convenience only,
+    // keyboard users tab straight to the input, hence presentation.
     <div
+      role="presentation"
       className={`relative ${className}`}
       onClick={() => inputRef.current?.focus()}
     >
       {/* Floating label — sits on the border when floating */}
       <label
+        htmlFor={inputId}
         className={`absolute left-3 pointer-events-none bg-background px-1 transition-all duration-150 leading-none
           ${isFloating
             ? 'top-0 -translate-y-1/2 label-small'
@@ -56,7 +61,7 @@ export function OutlinedTextField({
         className={`flex items-center h-14 rounded-[var(--radius)] border px-3 gap-2 transition-colors cursor-text
           ${isFocused
             ? 'border-primary ring-[1.5px] ring-primary'
-            : 'border-border'
+            : 'border-outline'
           }
           ${disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'bg-background'}
         `}
@@ -67,6 +72,7 @@ export function OutlinedTextField({
           </span>
         )}
         <input
+          id={inputId}
           ref={inputRef}
           type={type}
           value={value}
@@ -74,6 +80,9 @@ export function OutlinedTextField({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onKeyDown={onKeyDown}
+          // Opt in and off by default. Meant for the first field of a dialog,
+          // where moving focus into the dialog is the expected pattern.
+          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autoFocus}
           disabled={disabled}
           placeholder={isFloating ? (placeholder ?? '') : ''}

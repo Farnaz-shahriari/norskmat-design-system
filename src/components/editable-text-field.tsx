@@ -112,14 +112,14 @@ export function EditableTextField({
           <div className="box-border content-stretch flex gap-4 items-center p-2 relative w-full">
             {/* Leading Icon Button - Plus */}
             <div className="content-stretch flex items-center justify-center relative shrink-0 size-12" data-name="Icon button">
-              <div 
+              <div aria-hidden="true"
                 onClick={handleAdd}
                 className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
                 data-name="Content"
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
                   <div className="relative shrink-0 size-6" data-name="Icon">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
+                    <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
                       <path d="M8 2V14M2 8H14" stroke="var(--on-surface-variant)" strokeWidth="2" fill="none" />
                     </svg>
                   </div>
@@ -163,7 +163,7 @@ export function EditableTextField({
           <div className="box-border content-stretch flex gap-4 items-start p-2 relative w-full">
             {/* Leading Icon Button - Check/Save */}
             <div className="content-stretch flex items-center justify-center relative shrink-0 size-12" data-name="Icon button">
-              <div
+              <div aria-hidden="true"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -219,7 +219,7 @@ export function EditableTextField({
         <div className="box-border content-stretch flex gap-4 items-start p-2 relative w-full">
           {/* Leading Icon Button - Edit */}
           <div className="content-stretch flex items-center justify-center relative shrink-0 size-12" data-name="Icon button">
-            <div
+            <div aria-hidden="true"
               onClick={handleEdit}
               className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
               data-name="Content"

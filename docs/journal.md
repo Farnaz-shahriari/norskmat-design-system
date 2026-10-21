@@ -241,6 +241,43 @@ Files produced,
 - docs/site/tailwind.css and the three scripts, repointed
 - SKILL.md, references/, docs/consuming.md, paths and usage updated
 
+## Phase 19, accessibility, WCAG 2.2 AA
+Status, done locally. On branch a11y/wcag-aa, cut from design-sync-setup, not pushed.
+
+Borders. Input, Select, Textarea and RadioGroup drew their border in --input, which is surface-container-highest, 1.29:1 on white and 1.08:1 on Spesialitet's beige. A field you cannot see the edge of fails 1.4.11, which asks 3:1. OutlinedTextField and Chip used --border, outline-variant, 1.71:1. All six now use --outline, 4.48:1 on KSL white and 3.74:1 on Spesialitet, the lowest. The --input and --border aliases themselves are unchanged, bg-input is still the switch track and --border still the divider, both legitimately low contrast.
+
+Focus. Tabs, ConnectedButtonGroup, ListItem and TextInputField had no focus style of their own. Each now has a 2px solid ring in --ring. Inset on the tabs, the list item and the segments, because those sit inside scroll containers and a tight pill that clip anything drawn outside. outline-hidden rather than outline-none, so Windows high contrast mode, which drops box-shadow rings, still shows an outline.
+
+Screen readers. The inline svgs in text-input-field, editable-text-field and number-input-with-icon are aria-hidden, each one sits beside text or inside a control that already says what it is.
+
+eslint-plugin-jsx-a11y. Added as npm run lint:a11y, recommended rules over src/components only. ESLint is pinned at 9 because the plugin does not support 10 yet. First run, 49 errors, now 0. What they were,
+- 14 clickable icon divs in the inline edit field family. Each one repeats the onClick of the real button beside it, or saves, which Enter and blur already do. They are a bigger mouse target, not a second control, so they are aria-hidden rather than turned into a second tab stop. The bottom sheet backdrop likewise.
+- material-checkbox had no input at all, a div with onClick inside a label, so it could not be reached by keyboard and was never announced as a checkbox. Now a visually hidden native checkbox carries focus, keyboard and role, the drawn box is its visual and shows the focus ring through peer-focus-visible.
+- 10 Timer and Minutter labels in the three time pickers were not tied to their inputs, so the inputs had no accessible name. Linked with useId.
+- OutlinedTextField's floating label was not tied to its input either, same fix. Its click to focus wrapper and the inline editable list item's row are role presentation, the keyboard path is the input or the button inside.
+- CardTitle and PaginationLink spread children through props, so the linter could not see their content. They render children explicitly now, output unchanged.
+- OutlinedTextField's autoFocus prop stays, with the rule disabled on that one line, it is opt in and meant for the first field of a dialog.
+
+Contrast check. scripts/check-contrast.mjs, npm run lint:contrast. Resolves every token per platform, through var() chains, with a new resolvedTokens() in extract-tokens.mjs so there is one parser, then checks 56 pairs per platform, text roles on the four surfaces components use, every foreground on its fill and container, --outline and --ring on those surfaces. Exits 1 on a failure. All 224 pass. --border and --input are printed as decorative, never failing, so the numbers stay visible.
+
+The rule. SKILL.md now says severity is never shown by colour alone, 1.4.1. The one severity chip in the library, inline-editable-list-item, already carries its text.
+
+Found, not fixed, needs a decision,
+- input-otp.tsx and the outline variant of toggle.tsx still border in --input, 1.29:1, same failure as the four fixed above, they were outside this pass.
+- Input itself has no focus-visible style, unlike Select and Textarea.
+- Button's secondary variant borders in --border, 1.71:1. Its text names it, so 1.4.11 is arguably met, but it is the outlined button.
+- The bottom sheet does not close on Escape.
+- Several inline edit inputs, the text input family and the time pickers in edit mode, show their label as a p rather than a label, so the input has no accessible name.
+
+Files produced,
+- input, select, textarea, radio-group, outlined-text-field, chip, borders
+- tabs, connected-button-group, list-item, text-input-field, focus ring
+- editable-text-field, number-input-with-icon, text-input-with-icon, time-picker-with-icon, bottom-sheet, aria-hidden
+- material-checkbox, native input; time-picker, time-picker-dropdown, time-picker-with-icon, labels; card, pagination, children
+- eslint.config.js and scripts/check-contrast.mjs, new; scripts/extract-tokens.mjs, resolvedTokens()
+- package.json, lint:a11y and lint:contrast, eslint, eslint-plugin-jsx-a11y and @typescript-eslint/parser pinned
+- SKILL.md, two rules
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

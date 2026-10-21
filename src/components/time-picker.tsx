@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import { Clock } from 'lucide-react';
 
 interface TimePickerProps {
@@ -18,6 +18,7 @@ export function TimePicker({
   helpText,
   className = ''
 }: TimePickerProps) {
+  const fieldId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [tempHours, setTempHours] = useState(hours);
   const [tempMinutes, setTempMinutes] = useState(minutes);
@@ -103,10 +104,11 @@ export function TimePicker({
             <div className="flex gap-4 mb-6">
               {/* Hours */}
               <div className="flex-1">
-                <label className="block mb-2">
+                <label htmlFor={`${fieldId}-hours-1`} className="block mb-2">
                   <span className="label-medium text-foreground">Timer</span>
                 </label>
                 <input
+                  id={`${fieldId}-hours-1`}
                   type="number"
                   min="0"
                   max="23"
@@ -121,10 +123,11 @@ export function TimePicker({
 
               {/* Minutes */}
               <div className="flex-1">
-                <label className="block mb-2">
+                <label htmlFor={`${fieldId}-minutes-1`} className="block mb-2">
                   <span className="label-medium text-foreground">Minutter</span>
                 </label>
                 <input
+                  id={`${fieldId}-minutes-1`}
                   type="number"
                   min="0"
                   max="59"

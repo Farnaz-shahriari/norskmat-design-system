@@ -49,6 +49,7 @@ export function ListItem({
       disabled={disabled}
       className={cn(
         "flex items-center gap-4 w-full rounded-[var(--radius-card)] text-left transition-colors",
+        "outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
         "disabled:pointer-events-none disabled:opacity-50",
         isCompact ? "px-4 py-1" : "px-6 py-2 min-h-14",
         selected ? "bg-secondary-container" : "hover:bg-muted",

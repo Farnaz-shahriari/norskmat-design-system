@@ -91,7 +91,7 @@ export function NumberInputWithIcon({
                 <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                   <div className="relative shrink-0 w-[18px] h-[18px]">
                     <div className="absolute inset-[8.333%]">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
+                      <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
                         <path d={warningIconPath} fill="var(--error)" />
                       </svg>
                     </div>
@@ -113,14 +113,14 @@ export function NumberInputWithIcon({
                   {icon}
                 </div>
               ) : (
-                <div 
+                <div aria-hidden="true"
                   onClick={handleAdd}
                   className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
                 >
                   <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                     <div className="relative shrink-0 size-6">
                       <div className="absolute inset-[20.833%]">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
+                        <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
                           <path d="M8 2V14M2 8H14" stroke="var(--on-surface-variant)" strokeWidth="2" fill="none" />
                         </svg>
                       </div>
@@ -152,7 +152,7 @@ export function NumberInputWithIcon({
                   <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                     <div className="relative shrink-0 w-[18px] h-[18px]">
                       <div className="absolute inset-[8.333%]">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
+                        <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
                           <path d={warningIconPath} fill="var(--error)" />
                         </svg>
                       </div>
@@ -183,7 +183,7 @@ export function NumberInputWithIcon({
                   {icon}
                 </div>
               ) : (
-                <div
+                <div aria-hidden="true"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -194,7 +194,7 @@ export function NumberInputWithIcon({
                   <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                     <div className="relative shrink-0 size-6">
                       <div className="absolute inset-[16.667%]">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
+                        <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
                           <path d="M16.667 5L7.5 14.167L3.333 10" stroke="var(--on-surface-variant)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                         </svg>
                       </div>
@@ -244,13 +244,13 @@ export function NumberInputWithIcon({
                 {icon}
               </div>
             ) : (
-              <div
+              <div aria-hidden="true"
                 onClick={handleEdit}
                 className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                   <div className="relative shrink-0 size-6">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
+                    <svg aria-hidden="true" className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 18 18">
                       <path d="M10.5441 6.765L11.2341 7.455L4.43906 14.25H3.74906V13.56L10.5441 6.765ZM13.2441 2.25C13.0566 2.25 12.8616 2.325 12.7191 2.4675L11.3466 3.84L14.1591 6.6525L15.5316 5.28C15.8241 4.9875 15.8241 4.515 15.5316 4.2225L13.7766 2.4675C13.6266 2.3175 13.4391 2.25 13.2441 2.25ZM10.5441 4.6425L2.24906 12.9375V15.75H5.06156L13.3566 7.455L10.5441 4.6425Z" fill="var(--on-surface-variant)" />
                     </svg>
                   </div>

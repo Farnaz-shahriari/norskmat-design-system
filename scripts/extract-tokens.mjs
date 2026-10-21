@@ -39,6 +39,19 @@ function sharedRoot() {
   return varsIn(blocks[blocks.length - 1] || "");
 }
 
+// Every token one platform ends up with, the shared :root values overlaid
+// with the platform's own block, var() chains followed to the final value.
+// --border is var(--outline-variant) in :root but outline-variant itself
+// differs per platform, so this has to resolve per platform, not once.
+export function resolvedTokens(cls) {
+  const vars = { ...sharedRoot(), ...varsIn(blockFor("." + cls)) };
+  const resolve = (v, depth = 0) => {
+    const m = v?.match(/^var\(--([a-z0-9-]+)\)$/);
+    return m && depth < 10 ? resolve(vars[m[1]], depth + 1) : v;
+  };
+  return Object.fromEntries(Object.entries(vars).map(([k, v]) => [k, resolve(v)]));
+}
+
 export const PLATFORMS = [
   { id: "ksl", cls: "theme-ksl", name: "KSL", audience: "Farmer facing, a work tool" },
   { id: "nyt-norge", cls: "theme-nyt-norge", name: "Nyt Norge", audience: "Consumer facing, origin label" },

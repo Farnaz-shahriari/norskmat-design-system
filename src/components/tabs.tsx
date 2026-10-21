@@ -71,6 +71,8 @@ export function Tab({
         transition-colors
         cursor-pointer
         hover:bg-muted
+        outline-hidden
+        focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring
         ${active ? 'text-foreground' : 'text-muted-foreground'}
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
@@ -143,6 +145,8 @@ export function TabCompact({
         transition-colors
         cursor-pointer
         hover:bg-muted
+        outline-hidden
+        focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring
         ${active ? 'text-foreground' : 'text-muted-foreground'}
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
@@ -180,6 +184,8 @@ export function TabLarge({
         transition-colors
         cursor-pointer
         hover:bg-muted
+        outline-hidden
+        focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring
         ${active ? 'text-primary' : 'text-foreground'}
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
