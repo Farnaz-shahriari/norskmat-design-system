@@ -279,7 +279,7 @@ Files produced,
 - SKILL.md, two rules
 
 ## Phase 19, follow up, the gaps it found
-Status, done locally, same branch. Four of the five closed, one waiting on a design call.
+Status, done locally, same branch. Four of the five closed, the fifth decided, left as it is.
 
 A correction first. "Input itself has no focus-visible style" above was wrong. input.tsx splits its classes over three strings inside cn(), and the focus-visible ring is on the second one, identical to Textarea's. The check that produced the claim only read the first string. Nothing to fix.
 
@@ -293,8 +293,9 @@ Unnamed inputs. Ten text inputs and textareas had no accessible name, a screen r
 - no visible label in edit mode at all, aria-label from the label prop, editable-text-field
 Input and Textarea spread their props, so the app using them supplies the name.
 
+Decided, Button's secondary, outlined, variant keeps its --border outline, 1.71:1, 1.42:1 on Spesialitet. Your call. The button's text is what identifies it as a button, so 1.4.11 does not ask the border to reach 3:1, and the outlined button stays quieter than the fields around it. It is the one deliberate exception to "a control's border is --outline", and SKILL.md now says so, so nobody fixes it back. Fields, chips, toggles and the OTP slots are different, an empty field has no text to identify it, its border is the only edge it has.
+
 Still open,
-- Button's secondary, outlined, variant borders in --border, 1.71:1, 1.42:1 on Spesialitet. Its text names it, so 1.4.11 is arguably met, but every other control border is now --outline. Which it should be is a design call, asked, not changed.
 - The bottom sheet is not announced as a dialog, no role="dialog" or aria-modal, and focus does not move into it on open or return on close.
 
 Files produced,
