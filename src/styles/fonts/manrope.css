@@ -1,0 +1,34 @@
+/* ---------------------------------------------------------------------------
+   Manrope, self hosted.
+
+   The design system's only font for KSL, Nyt Norge and Spesialitet. Hosted
+   here rather than loaded from Google Fonts so a page renders correctly
+   offline, on a locked down network, or anywhere an external font request is
+   blocked. Before this, a blocked request meant every heading silently fell
+   back to a system sans, which is exactly the failure that got Quatro removed.
+
+   One variable file per subset, weight axis 200 to 800, which covers the 400,
+   500 and 600 the type scale uses with two requests instead of six.
+
+   Manrope is licensed under the SIL Open Font License 1.1, see OFL.txt beside
+   this file. Copyright 2019 The Manrope Project Authors.
+   Files taken unmodified from @fontsource-variable/manrope.
+   --------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./manrope-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: ;
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./manrope-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: ;
+}

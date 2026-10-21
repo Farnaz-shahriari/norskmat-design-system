@@ -8,29 +8,43 @@
     "type": "git",
     "url": "git+https://github.com/Farnaz-shahriari/norskmat-design-system.git"
   },
-  "scripts": {
-    "docs": "node scripts/build-docs.mjs",
-    "lint:tokens": "node scripts/lint-tokens.mjs"
-  },
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "sideEffects": [
     "**/*.css"
   ],
   "exports": {
-    "./tokens.css": "./skills/norsk-mat-design-system/assets/tokens.css",
-    "./components/*": "./skills/norsk-mat-design-system/assets/components/*.tsx",
-    "./utils": "./skills/norsk-mat-design-system/assets/components/utils.ts",
-    "./use-mobile": "./skills/norsk-mat-design-system/assets/components/use-mobile.ts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./styles.css": "./dist/norskmat.css",
+    "./tokens.css": "./src/styles/tokens.css",
+    "./source.css": "./src/styles/index.css",
+    "./components/*": "./src/components/*.tsx",
+    "./utils": "./src/components/utils.ts",
     "./logos/*": "./skills/norsk-mat-design-system/assets/*"
   },
   "files": [
+    "src",
+    "dist",
     "skills",
     "docs",
     ".claude-plugin"
   ],
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "npm run build:barrel && npm run build:css && npm run build:types",
+    "build:barrel": "node scripts/build-barrel.mjs",
+    "build:css": "node scripts/build-css.mjs",
+    "build:types": "tsc -p tsconfig.build.json",
+    "docs": "node scripts/build-docs.mjs",
+    "lint:tokens": "node scripts/lint-tokens.mjs"
+  },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18",
-    "tailwindcss": ">=4"
+    "react-dom": ">=18"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.3",

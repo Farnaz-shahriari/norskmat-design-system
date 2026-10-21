@@ -10,3 +10,6 @@ docs/index.html
 docs/tokens.json
 docs/audit.js
 docs/artifact.html
+
+# Package build output, produced by npm run build.
+dist/

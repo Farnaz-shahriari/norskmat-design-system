@@ -1,0 +1,29 @@
+/* ---------------------------------------------------------------------------
+   The Norsk Mat design system stylesheet.
+
+   This is the source Tailwind entry. Building it produces dist/norskmat.css,
+   which is what apps import, so a consuming app does not have to configure
+   Tailwind to scan this package at all.
+
+       @import "@norskmat/design-system/styles.css";
+
+   Then one theme class on the root element:
+
+       <html class="theme-ksl">
+
+   Build it yourself instead only if you need to extend the Tailwind theme.
+   --------------------------------------------------------------------------- */
+
+@import "tailwindcss";
+
+/* Self hosted Manrope, so headings do not silently fall back to a system sans
+   when a page loads offline or Google Fonts is blocked. See fonts/OFL.txt. */
+@import "./fonts/manrope.css";
+
+/* Colour, typography, spacing and radius for every platform, plus the
+   @theme mapping that turns them into Tailwind classes. */
+@import "./tokens.css";
+
+/* Scan the real component sources, so every class the library uses is
+   generated. Relative to this file. */
+@source "../components";

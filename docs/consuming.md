@@ -20,10 +20,10 @@ npm install github:Farnaz-shahriari/norskmat-design-system#v1.0.0
 
 ## Use
 
-Tokens, once, at the app's CSS entry point.
+Tokens, once, at the app's CSS entry point. This is the built stylesheet, so there is nothing to configure.
 
 ```css
-@import "@norskmat/design-system/tokens.css";
+@import "@norskmat/design-system/styles.css";
 ```
 
 Then one theme class on the root element, and every color, type class, spacing and radius token resolves to that platform's values.
@@ -32,12 +32,16 @@ Then one theme class on the root element, and every color, type class, spacing a
 <html class="theme-lokalmat">
 ```
 
-Components, by name.
+Components, by name from the package root.
+
+```ts
+import { Button, Chip, ListItem, cn } from "@norskmat/design-system";
+```
+
+Or one at a time, if you would rather not rely on tree shaking.
 
 ```ts
 import { Button } from "@norskmat/design-system/components/button";
-import { Chip } from "@norskmat/design-system/components/chip";
-import { cn } from "@norskmat/design-system/utils";
 ```
 
 Logos, by path.
@@ -46,62 +50,38 @@ Logos, by path.
 import lokalmatLogo from "@norskmat/design-system/logos/lokalmat/lokalmat_logo.svg";
 ```
 
-## One required build setting
+## Compiling the CSS yourself
 
-The package ships raw `.tsx`, not compiled JavaScript. That is deliberate, it keeps the files here identical to what a designer reads and what Figma produces, and it means Tailwind can see the class names. But most bundlers skip `node_modules` when transpiling, so each app has to opt this package in.
+Only needed if you want to extend the Tailwind theme. Import the source entry instead of the built file, and let your bundler see the package.
+
+```css
+@import "@norskmat/design-system/source.css";
+```
 
 Vite,
 
 ```ts
-// vite.config.ts
-export default {
-  optimizeDeps: { exclude: ["@norskmat/design-system"] },
-};
+export default { optimizeDeps: { exclude: ["@norskmat/design-system"] } };
 ```
 
 Next.js,
 
 ```js
-// next.config.js
 module.exports = { transpilePackages: ["@norskmat/design-system"] };
 ```
 
-Tailwind v4 also needs to scan the package for class names, otherwise components render unstyled,
+The package ships real `.tsx` beside the generated `.d.ts`, so types work either way.
 
-```css
-@source "../node_modules/@norskmat/design-system/skills/norsk-mat-design-system/assets/components";
-```
-
-## The reference site
-
-Live at **https://farnaz-shahriari.github.io/norskmat-design-system**, rebuilt and redeployed by `.github/workflows/docs.yml` on every push to `main`. The linter runs first, so a push that leaves a component pointing at a token that does not exist never gets a green deploy.
-
-`docs/index.html` is **not** committed. It is build output, and a committed copy is a copy that can lag behind the design system, which is the failure this whole repo exists to stop. To see it locally,
+## Building the package
 
 ```bash
-npm install     # first time only, pulls the build tools
-npm run docs    # writes docs/index.html, docs/tokens.json, docs/audit.js
+npm install
+npm run build     # barrel, then CSS into dist/, then declarations
 ```
 
-Edit `docs/site/main.tsx`, `docs/site/preview.tsx` and `docs/site/site.css` to change the site. Never edit `docs/index.html`.
+`npm run build` regenerates `src/index.ts`, compiles `src/styles/index.css` to `dist/norskmat.css` with the font files beside it, and emits declarations to `dist/`. It fails if two components export the same name, if a font url would not resolve from `dist/`, or on any type error.
 
-To enable the deployment once, in the repo settings under Pages, set the source to **GitHub Actions**. Nothing else.
-
-## Checking a live app against the system
-
-Open any app that uses the design system, and paste this into the browser console.
-
-```js
-import("https://farnaz-shahriari.github.io/norskmat-design-system/audit.js")
-```
-
-It reports every token that app defines differently from the design system, and every token it does not define at all. It carries no values of its own, it fetches the current ones from the deployment, so it is always checking against the system as it stands rather than a snapshot.
-
-It reads and never writes. The panel renders in a shadow root, so the app's CSS cannot restyle it and it cannot restyle the app. Safe on production.
-
-For a test rather than a console, `docs/tokens.json` on the same host is the machine readable model, so an app can assert against it in CI.
-
-## Updating## Updating
+## Updating## Updating## Updating
 
 ```bash
 npm update @norskmat/design-system

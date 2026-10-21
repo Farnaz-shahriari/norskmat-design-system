@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const SKILL_DIR = join(here, "..", "skills", "norsk-mat-design-system");
-const cssPath = join(SKILL_DIR, "assets", "tokens.css");
+export const SRC_DIR = join(here, "..", "src");
+const cssPath = join(SRC_DIR, "styles", "tokens.css");
 
 const css = readFileSync(cssPath, "utf8");
 

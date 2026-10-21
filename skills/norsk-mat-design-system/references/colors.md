@@ -74,11 +74,11 @@ Run `npm run lint:tokens` from the repo root for the live version of this list. 
 
 ### Fixed
 
-1. `--outline` did not exist as a variable anywhere, for any platform. That is why `switch.tsx` and the text input family hardcoded raw hex, there was nothing to reach for. **Fixed in `assets/tokens.css`** and in the components.
-2. `--outline-variant` was missing for Nyt Norge, Spesialitet and LokalMat, KSL was the only platform that had it. **Fixed in `assets/tokens.css`.**
+1. `--outline` did not exist as a variable anywhere, for any platform. That is why `switch.tsx` and the text input family hardcoded raw hex, there was nothing to reach for. **Fixed in `src/styles/tokens.css`** and in the components.
+2. `--outline-variant` was missing for Nyt Norge, Spesialitet and LokalMat, KSL was the only platform that had it. **Fixed in `src/styles/tokens.css`.**
 3. The `@theme inline` mapping was incomplete, `outline`, `outline-variant` and the entire surface family were never exposed as Tailwind classes even though the raw variables existed, so `bg-surface-variant` silently did nothing. **Fixed**, mapping is complete.
 4. `src/app/utils/severityColors.ts` in the app has Vesentlig's container as `#ffddcc` / `#4a2800`, should be `#FDD19F` / `#3D2100`. Correct here, still wrong in the app.
-5. `globals.css` brand and surface tokens had drifted from this file, most for LokalMat. **Resolved**, `assets/tokens.css` ships the correct value for every platform, use it rather than the app's copy.
+5. `globals.css` brand and surface tokens had drifted from this file, most for LokalMat. **Resolved**, `src/styles/tokens.css` ships the correct value for every platform, use it rather than the app's copy.
 6. `inline-editable-list-item.tsx` used an orphan orange, `#663C00` / `#FF9800` / `#FFF4E5`, as its warning chip. Confirmed a mistake, **fixed**, now uses the Vesentlig variables. No other orange belongs anywhere.
 7. `--input-background` was referenced by a consuming app and defined nowhere. **Fixed**, aliased to `var(--background)`.
 8. **The sidebar colour family did not exist.** `sidebar.tsx` needs `--sidebar`, `--sidebar-foreground`, `--sidebar-accent`, `--sidebar-accent-foreground`, `--sidebar-border` and `--sidebar-ring`, none of which were defined, so a sidebar rendered untinted on every platform. **Fixed**, defined as aliases onto the surface family, `--surface-container-low` for the ground and the standard secondary container treatment for the selected item, and mapped into `@theme` so `bg-sidebar` generates. These are aliases, not new colours. If a sidebar should be its own distinct surface, change those six lines and nothing else.
@@ -88,7 +88,7 @@ Run `npm run lint:tokens` from the repo root for the live version of this list. 
 
 ### Still open
 
-12. Messina Serif and Sands, LokalMat's fonts, are not licensed or loaded anywhere. `assets/tokens.css` falls back to Georgia so headings do not silently drop to a generic system sans. Cannot be fixed from here, it needs the real font files.
+12. Messina Serif and Sands, LokalMat's fonts, are not licensed or loaded anywhere. `src/styles/tokens.css` falls back to Georgia so headings do not silently drop to a generic system sans. Cannot be fixed from here, it needs the real font files.
 13. **Around 40 radius usages are not on the four tokens**, `rounded-md` in 18 files, `rounded-lg` in 10, plus `rounded-2xl`, `rounded-xs`, `rounded-[2px]`, `rounded-[8px]` and `rounded-[16px]`. spacing.md's rule says four values only, so these are real violations, but which of the four each becomes is a per component design decision. The linter lists them.
 14. **25 components size text with Tailwind's `text-*` scale** instead of the named type classes, not six as this list previously claimed. They are almost all Radix primitives, so leaving them may be right, but it should be a decision rather than an accident.
 15. **Four spacing values sit off the scale**, `max-h-[300px]` in command.tsx, `max-w-[400px]` and `max-h-[320px]` in date-picker.tsx, and `py-[14px]` in tabs.tsx. The picker maximums are arguably fine, the tab padding is not.

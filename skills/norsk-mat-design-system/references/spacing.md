@@ -105,4 +105,4 @@ Rule, every rounded corner in the app must use one of these four tokens, no raw 
 
 ## Implementation
 
-Everything above was, until now, a table in this file only, nothing implemented it. `assets/tokens.css` now defines the real `--space-*`, `--height-*`, and `--radius-*` variables, plus the `--radius`, `--radius-xl` and `--elevation-sm` aliases the component library was already reaching for. `--radius-button` in particular was already being referenced directly by the component library, `button.tsx` and every input variant use `rounded-[var(--radius-button)]`, it simply resolved to nothing until now.
+Everything above was, until now, a table in this file only, nothing implemented it. `src/styles/tokens.css` now defines the real `--space-*`, `--height-*`, and `--radius-*` variables, plus the `--radius`, `--radius-xl` and `--elevation-sm` aliases the component library was already reaching for. `--radius-button` in particular was already being referenced directly by the component library, `button.tsx` and every input variant use `rounded-[var(--radius-button)]`, it simply resolved to nothing until now.

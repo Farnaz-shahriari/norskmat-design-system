@@ -6,7 +6,7 @@
    exist at all. The @source line points Tailwind at the real component sources,
    so only classes those components genuinely use get generated. */
 @import "tailwindcss";
-@import "../../skills/norsk-mat-design-system/assets/tokens.css";
+@import "../../src/styles/tokens.css";
 
-@source "../../skills/norsk-mat-design-system/assets/components";
+@source "../../src/components";
 @source "./main.tsx";

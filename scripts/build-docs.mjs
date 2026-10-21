@@ -20,14 +20,14 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import * as esbuild from "esbuild";
-import { buildModel, SKILL_DIR } from "./extract-tokens.mjs";
+import { buildModel, SKILL_DIR, SRC_DIR } from "./extract-tokens.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(here, "..");
 const SITE = join(ROOT, "docs", "site");
 const OUT = join(ROOT, "docs");
-const COMPONENTS = join(SKILL_DIR, "assets", "components");
-const TOKENS = join(SKILL_DIR, "assets", "tokens.css");
+const COMPONENTS = join(SRC_DIR, "components");
+const TOKENS = join(SRC_DIR, "styles", "tokens.css");
 // Intermediates live outside the repo, so a build leaves nothing behind.
 const TMP = mkdtempSync(join(tmpdir(), "norskmat-docs-"));
 

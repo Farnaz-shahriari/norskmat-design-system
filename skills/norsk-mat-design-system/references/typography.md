@@ -52,6 +52,6 @@ The design system guideline once called for a second heading font, Quatro. It wa
 
 ## Implementation
 
-Everything above was, until now, a table in this file only, nothing implemented it. `assets/tokens.css` now defines every named class, `.headline-medium`, `.title-large`, and so on, plus the underlying `--text-*` and `--font-weight-*` variables, using `var(--font-family)`, not a hardcoded font, so LokalMat automatically picks up Messina Serif and Sands the moment those files are real, no separate rule needed per platform.
+Everything above was, until now, a table in this file only, nothing implemented it. `src/styles/tokens.css` now defines every named class, `.headline-medium`, `.title-large`, and so on, plus the underlying `--text-*` and `--font-weight-*` variables, using `var(--font-family)`, not a hardcoded font, so LokalMat automatically picks up Messina Serif and Sands the moment those files are real, no separate rule needed per platform.
 
 `.headline-small` was added later, 24px was already the seventh most used size in the app with no named class to reach for, so it was being written as a raw `text-[24px]` instead. It uses `--text-xl`.

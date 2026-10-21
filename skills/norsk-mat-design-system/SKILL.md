@@ -21,7 +21,7 @@ One source of truth across Stiftelsen Norsk Mat's platforms, KSL, Nyt Norge, Spe
 2. Check `references/brand-context.md` for who the platform is for and its tone.
 3. Pull colors from `references/colors.md`, shared severity and error colors first, then that platform's brand and surface colors.
 4. Pull type and spacing from `references/typography.md` and `references/spacing.md`, same values for every platform except LokalMat's font family.
-5. Build UI from `references/components.md` and the real component code in `assets/components/`, don't hand roll something that already exists as a component.
+5. Build UI from `references/components.md` and the real component code in `src/components/`, don't hand roll something that already exists as a component.
 6. Use logos from `assets/<platform>/`, check that platform's README for usage rules before placing one.
 
 ## References
@@ -45,20 +45,22 @@ This repo is an installable package, `@norskmat/design-system`. Apps must refere
 
 ## Assets
 
-* `assets/tokens.css`, the canonical, corrected CSS for every platform, colors, typography, spacing, and radius, one `.theme-<platform>` class each for the parts that vary, shared variables and named type classes for the parts that don't. Drop this in directly rather than trusting the live app's `globals.css`, which is missing several of these entirely, see the known gaps in colors.md, typography.md, and spacing.md.
-* `assets/components/`, the complete, working component library, 69 files, real `.tsx` code, consumed through the package, not copied. `connected-button-group.tsx` and `list-item.tsx` are new, built for this system, not upstream Material 3. `switch.tsx`, the text input family, and `inline-editable-list-item.tsx` are corrected copies, hardcoded colors replaced with the variables from `tokens.css`. Every other file is the original, audited and confirmed clean.
-* `assets/<platform>/`, logo files and a README per platform covering what exists, what's missing, and usage rules where confirmed.
+* `src/styles/tokens.css`, the canonical, corrected CSS for every platform, colors, typography, spacing, and radius, one `.theme-<platform>` class each for the parts that vary, shared variables and named type classes for the parts that don't. Drop this in directly rather than trusting the live app's `globals.css`, which is missing several of these entirely, see the known gaps in colors.md, typography.md, and spacing.md.
+* `src/styles/index.css`, the Tailwind entry that compiles to `dist/norskmat.css`. An app importing the built file needs no Tailwind configuration of its own.
+* `src/styles/fonts/`, Manrope self hosted under the SIL Open Font License, so headings never fall back to a system sans when an external font request is blocked.
+* `src/components/`, the complete, working component library, 71 files, real `.tsx` code, consumed through the package, not copied. `connected-button-group.tsx` and `list-item.tsx` are new, built for this system, not upstream Material 3. `switch.tsx`, the text input family, and `inline-editable-list-item.tsx` are corrected copies, hardcoded colors replaced with the variables from `tokens.css`. `status-chip.tsx` and `date-format.ts` were recreated after the originals were found missing. Every other file is the original, audited and confirmed clean.
+* `skills/norsk-mat-design-system/assets/<platform>/`, logo files and a README per platform covering what exists, what's missing, and usage rules where confirmed. Brand assets stay with the skill, code lives in `src/`.
 
 ## Non-negotiable rules
 
-* Use `assets/tokens.css` as the actual CSS, not the live app's `globals.css`, it is missing `--outline` entirely and `--outline-variant` for three platforms, and its Tailwind mapping omits the whole surface family.
+* Use `src/styles/tokens.css` as the actual CSS, not the live app's `globals.css`, it is missing `--outline` entirely and `--outline-variant` for three platforms, and its Tailwind mapping omits the whole surface family.
 * No raw hex, pixel, or radius values in new code, everything must reference a token from colors.md or spacing.md.
 * Run `npm run lint:tokens` before committing a component change. It checks every component for undefined variables, raw hex, radius name collisions, off scale radius and spacing, and text sized outside the named scale, and fails on the first three. It exists because these rules were documentation only for months while real components rendered wrong.
 * Never define `--radius-md`, `--radius-lg`, `--radius-xl` or `--radius-2xl` in tokens.css. Those are Tailwind's own radius names, and redefining one silently rewrites every `rounded-<name>` in the library. Point a component at the token it means instead.
 * Never copy `tokens.css` or a component file into an app's own `src/`. Install the package and import it, a copy silently stops receiving changes and nothing warns anyone.
 * Kritisk, Vesentlig, Mindre alvorlig are the only three deviation tiers, and they are identical across every platform. No other orange, ever, Vesentlig is the only orange. Use `var(--vesentlig)` and `var(--mindre-alvorlig)`, never fall back to `var(--error)` for either.
 * IconButton is `button.tsx`'s `size="icon"` variant, don't hand roll a new one.
-* ConnectedButtonGroup and ListItem live in `assets/components/`, use them instead of copying markup from an existing page.
+* ConnectedButtonGroup and ListItem live in `src/components/`, use them instead of copying markup from an existing page.
 * Manrope is the only font for KSL, Nyt Norge, Spesialitet. LokalMat uses Messina Serif and Sands once those files are actually licensed, `tokens.css` falls back to Georgia until then, don't let it silently become a generic system sans. Never reintroduce Quatro.
 
 ## Keeping this current

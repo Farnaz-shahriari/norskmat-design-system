@@ -21,8 +21,9 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SKILL = join(here, "..", "skills", "norsk-mat-design-system");
-const COMPONENTS = join(SKILL, "assets", "components");
-const TOKENS_PATH = join(SKILL, "assets", "tokens.css");
+const ROOT_SRC = join(here, "..", "src");
+const COMPONENTS = join(ROOT_SRC, "components");
+const TOKENS_PATH = join(ROOT_SRC, "styles", "tokens.css");
 
 const tokensCss = readFileSync(TOKENS_PATH, "utf8");
 const files = readdirSync(COMPONENTS)
@@ -65,7 +66,7 @@ for (const { name, src } of files) {
 // formatter. They had been broken since the library was first copied in, and
 // nothing noticed, because the docs site only imports about fifteen of the
 // sixty nine components and the token checks above never look at imports.
-const pkg = JSON.parse(readFileSync(join(SKILL, "..", "..", "package.json"), "utf8"));
+const pkg = JSON.parse(readFileSync(join(here, "..", "package.json"), "utf8"));
 const declared = new Set([
   ...Object.keys(pkg.dependencies ?? {}),
   ...Object.keys(pkg.peerDependencies ?? {}),
@@ -79,12 +80,12 @@ for (const { name, src } of files) {
       // Relative, so it must be a sibling file. Nothing in this folder should
       // ever reach outside it, the folder is what the package ships.
       if (spec.startsWith("../")) {
-        err(name, `imports ${spec}, which reaches outside assets/components`);
+        err(name, `imports ${spec}, which reaches outside src/components`);
         continue;
       }
       const base = spec.replace(/^\.\//, "");
       const hit = [base, base + ".tsx", base + ".ts"].some((c) => fileNames.has(c));
-      if (!hit) err(name, `imports ${spec}, and no such file is in assets/components`);
+      if (!hit) err(name, `imports ${spec}, and no such file is in src/components`);
       continue;
     }
     // Bare specifier, so package.json has to declare it or an install will
