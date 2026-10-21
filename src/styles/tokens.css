@@ -418,7 +418,14 @@
      rounded-[var(--radius-card)], which is explicit and already what the
      component library does. */
 
-  /* The spacing and height scales as utility classes, p-md, gap-lg, h-lg. */
+  /* The spacing scale as utility classes, p-md, gap-lg, mt-sm. The height
+     scale is not mapped, use h-[var(--height-lg)].
+
+     These names shadow Tailwind's own size names on w, h, max-w, min-w and
+     the rest. max-w-lg resolves to --spacing-lg, 24px, not --container-lg,
+     32rem, which is how Dialog, AlertDialog, Sheet, Drawer and
+     TimePickerDropdown shipped as slivers. Write max-w-(--container-lg) for
+     a container width. lint:tokens fails on a named size, xs to 2xl. */
   --spacing-xs: var(--space-xs);
   --spacing-sm: var(--space-sm);
   --spacing-md: var(--space-md);

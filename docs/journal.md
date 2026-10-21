@@ -318,11 +318,13 @@ Checked with axe 4.14 over all 35 stories, WCAG 2.0 to 2.2 A and AA. 31 clean, c
 
 .design-sync/conventions.md, the non negotiable rules from SKILL.md plus how theming works, the html class, portals, what is shared and what changes per platform, the two brands without a theme. Also the three component API traps from the handoff, no outline variant on Button, borders not shadows, nothing in src/components imports outside it. SKILL.md stays the source, the file says so.
 
-A real bug Storybook found, not fixed, needs a decision. tokens.css maps the spacing scale into Tailwind as --spacing-xs through --spacing-2xl, and Tailwind v4 resolves a named size like max-w-lg from --spacing-lg before its own --container-lg. The same class of collision as --radius-md. So in the shipped CSS,
+A real bug Storybook found. tokens.css maps the spacing scale into Tailwind as --spacing-xs through --spacing-2xl, and Tailwind v4 resolves a named size like max-w-lg from --spacing-lg before its own --container-lg. The same class of collision as --radius-md. So in the shipped CSS,
 - dialog.tsx and alert-dialog.tsx, sm:max-w-lg is 24px, meant 32rem, the dialog renders as a 50px strip
 - sheet.tsx and drawer.tsx, sm:max-w-sm is 8px, meant 24rem
 - time-picker-dropdown.tsx, max-w-md is 16px, meant 28rem
 Nothing reported it because the reference site never renders an open dialog.
+
+Fixed, same phase, your call on the approach. The seven uses now name Tailwind's container size outright, max-w-(--container-lg), -sm and -md, which Tailwind keeps in the output as 32rem, 24rem and 28rem because something uses them. No token changed, p-md and gap-lg still mean what they meant. Measured in Storybook, the open dialog is 512px in all four themes. lint:tokens has a new error, 3b, for a named size, the names read from the --spacing-* keys tokens.css defines, on w, h, max-w, min-w, max-h, min-h, size or basis. Run against the unfixed components it reports exactly the five files. The tokens.css comment above that mapping claimed h-lg gave the height scale, it gave 24px, it now says what the names collide with. SKILL.md and conventions.md carry the rule.
 
 Not done, /design-sync itself. Its skill files are not on this machine, so whether it reads Storybook, the stories or .design-sync/conventions.md is still unconfirmed.
 
@@ -332,6 +334,9 @@ Files produced,
 - .design-sync/conventions.md, new
 - package.json, storybook, @storybook/react-vite, @storybook/addon-a11y, vite, @tailwindcss/vite, and the two scripts
 - .gitignore, storybook-static/ and storybook logs
+- dialog, alert-dialog, sheet, drawer, time-picker-dropdown, container widths
+- scripts/lint-tokens.mjs, rule 3b; src/styles/tokens.css, the spacing comment
+- SKILL.md and .design-sync/conventions.md, the size name rule
 
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.

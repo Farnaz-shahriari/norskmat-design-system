@@ -127,6 +127,32 @@ for (const n of TW_RADIUS) {
   }
 }
 
+/* -------------------------------- 3b. size names shadowed by the spacing scale */
+
+// tokens.css maps the spacing scale into @theme as --spacing-xs to
+// --spacing-2xl, so p-md and gap-lg work. Tailwind v4 resolves a named size on
+// w, h, max-w and the rest from --spacing-<name> before its own
+// --container-<name>, so max-w-lg came out 24px, not 32rem, and Dialog,
+// AlertDialog, Sheet, Drawer and TimePickerDropdown shipped as slivers. Write
+// the size meant, max-w-(--container-lg), or the spacing token, w-(--space-lg).
+const spacingNames = [...defined].filter((v) => v.startsWith("--spacing-")).map((v) => v.slice("--spacing-".length));
+if (spacingNames.length) {
+  const SHADOWED = new RegExp(
+    `(?<![\\w-])((?:max-w|min-w|max-h|min-h|w|h|size|basis)-(?:${spacingNames.join("|")}))(?![\\w-])`,
+    "g",
+  );
+  for (const { name, src } of files) {
+    for (const cls of new Set([...src.matchAll(SHADOWED)].map((m) => m[1]))) {
+      const at = cls.lastIndexOf("-");
+      const [util, size] = [cls.slice(0, at), cls.slice(at + 1)];
+      err(
+        name,
+        `${cls} resolves to --spacing-${size}, not Tailwind's ${size} size, write ${util}-(--container-${size}) or ${util}-(--space-${size}), whichever is meant`,
+      );
+    }
+  }
+}
+
 /* ------------------------------------------------- 4. radius not on a token (warn) */
 
 // Anything the four documented tokens can legitimately produce, plus the two

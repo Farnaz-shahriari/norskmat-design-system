@@ -48,12 +48,17 @@ the root element, nothing else changes.
 * No raw hex, pixel, or radius values in new code, everything must reference
   a token from `colors.md` or `spacing.md`.
 * Run `npm run lint:tokens` before committing a component change. It fails on
-  undefined variables, raw hex, and radius name collisions.
+  undefined variables, raw hex, radius name collisions, and size names
+  shadowed by the spacing scale.
 * Never define `--radius-md`, `--radius-lg`, `--radius-xl` or `--radius-2xl`
   in tokens.css. Those are Tailwind's own radius names, and redefining one
   silently rewrites every `rounded-<name>` in the library. Point a component
   at the token it means instead, `--radius-sm`, `--radius-button`,
   `--radius-card` or `--radius-dialog`.
+* Never use a named size, `xs` to `2xl`, on `w`, `h`, `max-w`, `min-w`,
+  `max-h`, `min-h`, `size` or `basis`. The spacing scale owns those names, so
+  `max-w-lg` is 24px, not Tailwind's 32rem. Write `max-w-(--container-lg)`
+  for a container width, `h-[var(--height-lg)]` for a component height.
 * Never copy `tokens.css` or a component file into an app's own `src/`.
   Install the package and import it, a copy silently stops receiving changes.
 * Kritisk, Vesentlig, Mindre alvorlig are the only three deviation tiers,

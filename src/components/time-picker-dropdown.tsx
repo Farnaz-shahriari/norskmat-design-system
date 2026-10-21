@@ -18,7 +18,7 @@ export function TimePickerDropdown({ hours, minutes, onConfirm, onCancel }: Time
   };
 
   return (
-    <div className="bg-background rounded-[var(--radius-dialog)] p-6 flex flex-col gap-5 w-full max-w-md shadow-2xl border-2 border-border">
+    <div className="bg-background rounded-[var(--radius-dialog)] p-6 flex flex-col gap-5 w-full max-w-(--container-md) shadow-2xl border-2 border-border">
       {/* Header */}
       <h3 className="label-small text-muted-foreground">Velg tid</h3>
 
