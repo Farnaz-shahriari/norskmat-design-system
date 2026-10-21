@@ -13,3 +13,7 @@ docs/artifact.html
 
 # Package build output, produced by npm run build.
 dist/
+
+# Storybook build output and logs, produced by npm run build-storybook.
+storybook-static/
+*storybook.log

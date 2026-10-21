@@ -1,0 +1,12 @@
+/* The library's own stylesheet, the same entry that builds dist/norskmat.css,
+   plus the stories and the preview decorator as extra Tailwind sources, so
+   the layout classes they use are generated too. */
+@import "../src/styles/index.css";
+@source "../stories";
+@source "./";
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family);
+}

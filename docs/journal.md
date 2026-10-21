@@ -303,6 +303,36 @@ Files produced,
 - bottom-sheet.tsx, Escape
 - date-picker, inline-editable-list-item, text-input-field, text-input-with-icon, number-input-with-icon, click-to-edit-textarea, editable-text-field, accessible names
 
+## Phase 20, Storybook, preparing for /design-sync
+Status, done. On branch storybook-design-sync, cut from a11y/wcag-aa.
+
+Storybook 10.6.1 with the a11y addon, on Vite 7, pinned like everything else. Vite 7 rather than 8 because @tailwindcss/vite has to match the repo's Tailwind 4.1.11, and that version only goes to Vite 7. npm run storybook, npm run build-storybook.
+
+The CSS. .storybook/preview.css imports src/styles/index.css, the same entry that builds dist/norskmat.css, compiled by @tailwindcss/vite on the fly, so a story always shows the current tokens rather than whatever dist/ was last built from. The stories and the decorator are added as Tailwind sources so their layout classes are generated.
+
+Stories live in stories/, not src/components, because that folder is what the package ships and what build-barrel.mjs exports. 35 stories across Button, ConnectedButtonGroup, ListItem, Chip, Input, Select, Checkbox, Switch, Dialog and Tabs.
+
+Themes. A Platform toolbar, defaulting to all four side by side, each column carrying its own theme class. A single platform puts the class on html, the way an app does it, because Dialog and Select render into a portal on body, outside any column, and would always come out KSL. So their open states are one story per platform rather than side by side. Checked in a browser, every column resolves its own --outline, Spesialitet its beige, LokalMat its Georgia stand in, and the open Nyt Norge dialog its own primary.
+
+Checked with axe 4.14 over all 35 stories, WCAG 2.0 to 2.2 A and AA. 31 clean, colour contrast included in all four themes. The four open Select stories report aria-hidden-focus, Radix hides the rest of the page while the list is open and the trigger stays focusable behind it, focus is held in the list so it cannot be reached. An artefact of capturing the open state, not a component defect.
+
+.design-sync/conventions.md, the non negotiable rules from SKILL.md plus how theming works, the html class, portals, what is shared and what changes per platform, the two brands without a theme. Also the three component API traps from the handoff, no outline variant on Button, borders not shadows, nothing in src/components imports outside it. SKILL.md stays the source, the file says so.
+
+A real bug Storybook found, not fixed, needs a decision. tokens.css maps the spacing scale into Tailwind as --spacing-xs through --spacing-2xl, and Tailwind v4 resolves a named size like max-w-lg from --spacing-lg before its own --container-lg. The same class of collision as --radius-md. So in the shipped CSS,
+- dialog.tsx and alert-dialog.tsx, sm:max-w-lg is 24px, meant 32rem, the dialog renders as a 50px strip
+- sheet.tsx and drawer.tsx, sm:max-w-sm is 8px, meant 24rem
+- time-picker-dropdown.tsx, max-w-md is 16px, meant 28rem
+Nothing reported it because the reference site never renders an open dialog.
+
+Not done, /design-sync itself. Its skill files are not on this machine, so whether it reads Storybook, the stories or .design-sync/conventions.md is still unconfirmed.
+
+Files produced,
+- .storybook/main.ts, preview.tsx, preview.css, platforms.ts, new
+- stories/, ten story files, new
+- .design-sync/conventions.md, new
+- package.json, storybook, @storybook/react-vite, @storybook/addon-a11y, vite, @tailwindcss/vite, and the two scripts
+- .gitignore, storybook-static/ and storybook logs
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,
