@@ -58,6 +58,45 @@ for (const { name, src } of files) {
   }
 }
 
+/* ------------------------------------------------- 1b. imports that resolve */
+
+// Added after four components were found importing files that do not exist in
+// this repo, two Figma Make svg path modules, a StatusChip and a date
+// formatter. They had been broken since the library was first copied in, and
+// nothing noticed, because the docs site only imports about fifteen of the
+// sixty nine components and the token checks above never look at imports.
+const pkg = JSON.parse(readFileSync(join(SKILL, "..", "..", "package.json"), "utf8"));
+const declared = new Set([
+  ...Object.keys(pkg.dependencies ?? {}),
+  ...Object.keys(pkg.peerDependencies ?? {}),
+]);
+const fileNames = new Set(readdirSync(COMPONENTS));
+
+for (const { name, src } of files) {
+  const specs = [...src.matchAll(/\bfrom\s+["']([^"']+)["']/g)].map((m) => m[1]);
+  for (const spec of specs) {
+    if (spec.startsWith(".")) {
+      // Relative, so it must be a sibling file. Nothing in this folder should
+      // ever reach outside it, the folder is what the package ships.
+      if (spec.startsWith("../")) {
+        err(name, `imports ${spec}, which reaches outside assets/components`);
+        continue;
+      }
+      const base = spec.replace(/^\.\//, "");
+      const hit = [base, base + ".tsx", base + ".ts"].some((c) => fileNames.has(c));
+      if (!hit) err(name, `imports ${spec}, and no such file is in assets/components`);
+      continue;
+    }
+    // Bare specifier, so package.json has to declare it or an install will
+    // not bring it in.
+    const root = spec.startsWith("@") ? spec.split("/").slice(0, 2).join("/") : spec.split("/")[0];
+    if (root === "react" || root === "react-dom") continue; // peer, always present
+    if (!declared.has(root)) {
+      err(name, `imports ${root}, which package.json does not declare`);
+    }
+  }
+}
+
 /* ------------------------------------------------------------ 2. raw hex values */
 
 for (const { name, src } of files) {

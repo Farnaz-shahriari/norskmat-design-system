@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import svgPaths from '../../imports/svg-8axi0x1eud';
+import { Pencil } from 'lucide-react';
 
 interface TextInputFieldProps {
   label: string;
@@ -179,9 +179,7 @@ export function TextInputField({
                 <div className="relative shrink-0 size-6" data-name="Icon">
                   {value ? (
                     // Edit icon when there's a value
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                      <path d={svgPaths.p25003780} fill="var(--on-surface-variant)" />
-                    </svg>
+                    <Pencil className="block size-full" style={{ color: "var(--on-surface-variant)" }} aria-hidden="true" />
                   ) : (
                     // Plus icon when empty
                     <div className="absolute inset-[20.833%]">

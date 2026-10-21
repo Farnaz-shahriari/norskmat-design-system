@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Calendar, Clock } from 'lucide-react';
-import { formatNorwegianDate } from '../../utils/dateFormat';
+import { formatNorwegianDate } from './date-format';
 import { TimePickerDropdown } from './time-picker-dropdown';
 
 interface DateTimePickerProps {

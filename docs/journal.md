@@ -188,6 +188,30 @@ Status, done. Published the reference as a Claude artifact so it is openable rig
 Rather than hand maintaining a second copy of the page, npm run docs now also writes docs/artifact.html, the same build in the shape the artifact runtime expects, no doctype, html, head or body tags of its own since those are added at publish time. Same styles, same bundle, same content, so republishing that file is republishing the current build. Gitignored like the other three outputs.
 Verified by wrapping docs/artifact.html in the same skeleton the runtime adds and loading it in a browser, mounted, all 11 sections present, the four platform cards render, and the live Button still renders KSL olive. The publish warning about an external script is a false positive, the only https reference in the page body is the checker one liner shown as copyable text, there is no script tag with a src.
 
+## Phase 17, cleanup before design sync
+Status, done. On branch design-sync-setup. Four cleanup items were asked for, two were real, one was already done, and one turned out not to be a problem. Worth recording which was which.
+
+Already done. Version numbers in import paths, the lucide-react@0.487.0 shape. Phase 10 stripped all 37 of them into package.json dependencies, so zero files needed it.
+
+Not actually broken. sonner.tsx imports next-themes, which was on the list as missing. It is declared in package.json at 0.4.6 and resolves from node_modules, so it builds fine and was left alone. Changing working code under a cleanup heading is how cleanups cause regressions. Separate observation for later, this design system has no dark palette on any of the four platforms, so a theme provider dependency may not earn its place, but that is a design decision, not cleanup.
+
+Really broken, five imports across three files, every one pointing outside this repo.
+- editable-text-field.tsx, two Figma Make svg path modules and a StatusChip
+- text-input-field.tsx, one of the same svg modules
+- date-time-picker.tsx, formatNorwegianDate from a utils folder that does not exist here
+Fixed by recreating rather than by stubbing. The three svg paths were an alert icon in a Trenger utfylling chip, a check on the save button and a pencil on the edit button, all three now lucide-react icons, which the library already depends on and date-time-picker already uses. No fabricated path data. New assets/components/status-chip.tsx reproduces the incomplete state exactly from the two inline copies that were already sitting in editable-text-field.tsx, and those two copies now use the component, so the markup exists once instead of three times. New assets/components/date-format.ts uses Intl with nb-NO rather than a month name table, so it stays correct without maintenance.
+One thing invented, StatusChip's isComplete true state. Nothing in the repo specified it, nothing uses it. It mirrors the incomplete state with a check in --primary. Flagged in the file so whoever owns the design can correct it.
+
+Root cause, and the actual fix. These had been broken since the library was first copied in and nothing noticed, because the docs site only imports about fifteen of the sixty nine components, and the token linter never looked at imports at all. Added an import check to scripts/lint-tokens.mjs, every relative import must resolve to a sibling file, nothing may reach outside assets/components, and every bare import must be declared in package.json. Errors, so it fails CI.
+Verified the check rather than trusting a clean run, planted all three original break shapes back into a file and confirmed it reported exactly three errors and exited 1, then reverted. Then bundled all 71 components through esbuild in one entry point, so every import in the library had to resolve, not only the ones the docs site uses. Clean.
+Also deleted the _to_delete folder, 16 transfer archives and two probe files left over from earlier sessions.
+
+Files produced,
+- assets/components/status-chip.tsx and date-format.ts, new
+- assets/components/editable-text-field.tsx, text-input-field.tsx, date-time-picker.tsx, imports fixed
+- scripts/lint-tokens.mjs, import resolution check
+- _to_delete/, gone
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

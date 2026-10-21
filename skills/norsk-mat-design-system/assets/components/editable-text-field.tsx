@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import svgPaths from '../../imports/svg-8axi0x1eud';
-import svgPathsChip from '../../imports/svg-0mgb3e9dd3';
-import { StatusChip } from '../StatusChip';
+import { Check, Pencil } from 'lucide-react';
+
+import { StatusChip } from './status-chip';
 
 interface EditableTextFieldProps {
   label: string;
@@ -104,20 +104,7 @@ export function EditableTextField({
           {/* Trenger utfylling chip - Show above on small screens */}
           {showTrengerUtfylling && (
             <div className="max-[400px]:flex max-[400px]:justify-start max-[400px]:mb-2 hidden">
-              <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
-                <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
-                  <div className="relative shrink-0 w-[18px] h-[18px]">
-                    <div className="absolute inset-[8.333%]">
-                      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
-                        <path d={svgPathsChip.p1c3b4f80} fill="var(--error)" />
-                      </svg>
-                    </div>
-                  </div>
-                  <span className="label-medium text-foreground whitespace-nowrap">
-                    Trenger utfylling
-                  </span>
-                </div>
-              </div>
+              <StatusChip isComplete={false} />
             </div>
           )}
 
@@ -154,20 +141,7 @@ export function EditableTextField({
             {/* Trenger utfylling chip - Show inline on larger screens */}
             {showTrengerUtfylling && (
               <div className="max-[400px]:hidden">
-                <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
-                  <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
-                    <div className="relative shrink-0 w-[18px] h-[18px]">
-                      <div className="absolute inset-[8.333%]">
-                        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 15 15">
-                          <path d={svgPathsChip.p1c3b4f80} fill="var(--error)" />
-                        </svg>
-                      </div>
-                    </div>
-                    <span className="label-medium text-foreground whitespace-nowrap">
-                      Trenger utfylling
-                    </span>
-                  </div>
-                </div>
+                <StatusChip isComplete={false} />
               </div>
             )}
             
@@ -200,9 +174,7 @@ export function EditableTextField({
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
                   <div className="relative shrink-0 size-6" data-name="Icon">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-                      <path d={svgPaths.p63ecae80} fill="var(--on-surface-variant)" />
-                    </svg>
+                    <Check className="block size-full" style={{ color: "var(--on-surface-variant)" }} aria-hidden="true" />
                   </div>
                 </div>
               </div>
@@ -254,9 +226,7 @@ export function EditableTextField({
             >
               <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
                 <div className="relative shrink-0 size-6" data-name="Icon">
-                  <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                    <path d={svgPaths.p25003780} fill="var(--on-surface-variant)" />
-                  </svg>
+                  <Pencil className="block size-full" style={{ color: "var(--on-surface-variant)" }} aria-hidden="true" />
                 </div>
               </div>
             </div>
