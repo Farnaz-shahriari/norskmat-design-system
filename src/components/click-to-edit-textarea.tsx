@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { Button } from "./button";
 import { cn } from "./utils";
 
@@ -27,6 +27,7 @@ export function ClickToEditTextarea({
   rows = 3,
   className,
 }: ClickToEditTextareaProps) {
+  const labelId = useId();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -71,7 +72,7 @@ export function ClickToEditTextarea({
     <div ref={containerRef} className={cn("flex flex-col gap-2 w-full", className)}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-col">
-          <span className="label-small text-muted-foreground">{label}</span>
+          <span id={labelId} className="label-small text-muted-foreground">{label}</span>
           {subtitle && (
             <span className="label-small text-muted-foreground mt-0.5">{subtitle}</span>
           )}
@@ -103,6 +104,7 @@ export function ClickToEditTextarea({
         <div onBlur={handleBlur} className="space-y-2">
           <textarea
             ref={textareaRef}
+            aria-labelledby={labelId}
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
             onKeyDown={handleKeyDown}

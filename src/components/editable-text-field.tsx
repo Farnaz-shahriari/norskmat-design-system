@@ -185,6 +185,7 @@ export function EditableTextField({
               {multiline ? (
                 <textarea
                   ref={textareaRef}
+                  aria-label={label}
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -196,6 +197,7 @@ export function EditableTextField({
               ) : (
                 <input
                   ref={inputRef}
+                  aria-label={label}
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}

@@ -67,6 +67,20 @@ export function BottomSheet({
     };
   }, [isOpen]);
 
+  // Escape closes the sheet, the keyboard equivalent of tapping the backdrop.
+  // Only below 1400px, where the sheet is actually on screen. Above that the
+  // content lives in a side panel and isOpen may still be true.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (window.matchMedia('(min-width: 1400px)').matches) return;
+      onClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen && !isAnimating) {
     return null;
   }

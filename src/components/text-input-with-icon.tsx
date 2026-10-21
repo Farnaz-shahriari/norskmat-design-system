@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 
 interface TextInputWithIconProps {
   label: string;
@@ -24,6 +24,7 @@ export function TextInputWithIcon({
   multiline = true,
   helpText
 }: TextInputWithIconProps) {
+  const labelId = useId();
   const [mode, setMode] = useState<'empty' | 'edit' | 'view'>(value ? 'view' : 'empty');
   const [editValue, setEditValue] = useState(value);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -226,11 +227,12 @@ export function TextInputWithIcon({
             {/* Content */}
             <div className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0">
               <div className="label-small text-muted-foreground w-full mb-1">
-                <p className="m-0">{label}</p>
+                <p id={labelId} className="m-0">{label}</p>
               </div>
               {multiline ? (
                 <textarea
                   ref={textareaRef}
+                  aria-labelledby={labelId}
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -243,6 +245,7 @@ export function TextInputWithIcon({
               ) : (
                 <input
                   ref={inputRef}
+                  aria-labelledby={labelId}
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}

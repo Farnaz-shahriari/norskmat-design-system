@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 
 interface NumberInputWithIconProps {
   label: string;
@@ -24,6 +24,7 @@ export function NumberInputWithIcon({
   suffix = '',
   helpText
 }: NumberInputWithIconProps) {
+  const labelId = useId();
   const [mode, setMode] = useState<'empty' | 'edit' | 'view'>(value ? 'view' : 'empty');
   const [editValue, setEditValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -206,11 +207,12 @@ export function NumberInputWithIcon({
             {/* Content */}
             <div className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0">
               <div className="label-small text-muted-foreground w-full mb-1">
-                <p className="m-0">{label}</p>
+                <p id={labelId} className="m-0">{label}</p>
               </div>
               <div className="relative w-full">
                 <input
                   ref={inputRef}
+                  aria-labelledby={labelId}
                   type="number"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}

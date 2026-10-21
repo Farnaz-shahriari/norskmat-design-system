@@ -278,6 +278,30 @@ Files produced,
 - package.json, lint:a11y and lint:contrast, eslint, eslint-plugin-jsx-a11y and @typescript-eslint/parser pinned
 - SKILL.md, two rules
 
+## Phase 19, follow up, the gaps it found
+Status, done locally, same branch. Four of the five closed, one waiting on a design call.
+
+A correction first. "Input itself has no focus-visible style" above was wrong. input.tsx splits its classes over three strings inside cn(), and the focus-visible ring is on the second one, identical to Textarea's. The check that produced the claim only read the first string. Nothing to fix.
+
+Borders. input-otp's slots and toggle's outline variant now border in --outline, like the six fields before them. No component in the library borders in --input any more.
+
+Bottom sheet. Escape now closes it, the keyboard equivalent of tapping the backdrop, but only below 1400px. Above that the sheet is display none and its content lives in a side panel, and isOpen can still be true, so an unguarded Escape would have closed state the user cannot see. Checked in a browser at 375px, closes, and at 1500px, does not.
+
+Unnamed inputs. Ten text inputs and textareas had no accessible name, a screen reader announced "edit text" and nothing else. Eight were the edit mode fields of the inline edit family, two more turned up when every input in the library was scanned rather than only the ones already suspected, date-picker and click-to-edit-textarea. Each got the strongest name its markup allowed without changing how it looks,
+- a visible label element, tied with htmlFor and useId, date-picker and inline-editable-list-item
+- visible label text in a p or span, the input points at it with aria-labelledby, text-input-field, text-input-with-icon, number-input-with-icon, click-to-edit-textarea
+- no visible label in edit mode at all, aria-label from the label prop, editable-text-field
+Input and Textarea spread their props, so the app using them supplies the name.
+
+Still open,
+- Button's secondary, outlined, variant borders in --border, 1.71:1, 1.42:1 on Spesialitet. Its text names it, so 1.4.11 is arguably met, but every other control border is now --outline. Which it should be is a design call, asked, not changed.
+- The bottom sheet is not announced as a dialog, no role="dialog" or aria-modal, and focus does not move into it on open or return on close.
+
+Files produced,
+- input-otp.tsx and toggle.tsx, borders
+- bottom-sheet.tsx, Escape
+- date-picker, inline-editable-list-item, text-input-field, text-input-with-icon, number-input-with-icon, click-to-edit-textarea, editable-text-field, accessible names
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

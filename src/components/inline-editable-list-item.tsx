@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import { Plus, Edit2, Check, X } from 'lucide-react';
 
 type InlineEditableListItemProps = {
@@ -22,6 +22,7 @@ export function InlineEditableListItem({
   onSave,
   className = '',
 }: InlineEditableListItemProps) {
+  const fieldId = useId();
   const [value, setValue] = useState(initialValue);
   const [isEditing, setIsEditing] = useState(false);
   const [tempValue, setTempValue] = useState('');
@@ -98,13 +99,14 @@ export function InlineEditableListItem({
     return (
       <div className={`flex items-start gap-2 ${className}`}>
         <div className="flex-1 relative">
-          <label className="label-small text-muted-foreground block mb-1">
+          <label htmlFor={fieldId} className="label-small text-muted-foreground block mb-1">
             {label}
             {required && <span className="text-[var(--error)] ml-1">*</span>}
           </label>
           <div className="relative">
             <textarea
               ref={textareaRef}
+              id={fieldId}
               value={tempValue}
               onChange={(e) => setTempValue(e.target.value)}
               onKeyDown={handleKeyDown}

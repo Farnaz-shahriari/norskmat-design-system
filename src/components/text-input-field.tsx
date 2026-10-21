@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 import { Pencil } from 'lucide-react';
 
 interface TextInputFieldProps {
@@ -18,6 +18,7 @@ export function TextInputField({
   multiline = false,
   showTrengerUtfylling = false
 }: TextInputFieldProps) {
+  const labelId = useId();
   const [mode, setMode] = useState<'edit'>(value ? 'edit' : 'edit'); // Always start in edit mode for simplicity
   const [editValue, setEditValue] = useState(value);
   const [isEditing, setIsEditing] = useState(false); // Track if user is actively editing
@@ -110,11 +111,12 @@ export function TextInputField({
             {/* Content */}
             <div className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0">
               <div className="label-small text-muted-foreground w-full mb-1">
-                <p className="m-0">{label}</p>
+                <p id={labelId} className="m-0">{label}</p>
               </div>
               {multiline ? (
                 <textarea
                   ref={textareaRef}
+                  aria-labelledby={labelId}
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -127,6 +129,7 @@ export function TextInputField({
               ) : (
                 <input
                   ref={inputRef}
+                  aria-labelledby={labelId}
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}

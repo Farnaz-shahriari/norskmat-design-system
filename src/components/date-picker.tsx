@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 
 interface DatePickerProps {
@@ -31,6 +31,7 @@ export function DatePicker({
   maxDate = null,
   highlightedDates = []
 }: DatePickerProps) {
+  const fieldId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [viewDate, setViewDate] = useState(value || new Date());
@@ -212,7 +213,7 @@ export function DatePicker({
     <div ref={containerRef} className={`relative max-w-[400px] ${className}`}>
       {/* Input field */}
       <div className="relative">
-        <label className="block mb-1.5">
+        <label htmlFor={fieldId} className="block mb-1.5">
           <span className="label-medium text-foreground">
             {label}{required && ' *'}
           </span>
@@ -231,6 +232,7 @@ export function DatePicker({
               value={inputValue}
               onChange={handleInputChange}
               onFocus={() => setIsOpen(true)}
+              id={fieldId}
               placeholder={placeholder}
               className="flex-1 body-large text-foreground bg-transparent border-none outline-none placeholder:text-muted-foreground"
             />
