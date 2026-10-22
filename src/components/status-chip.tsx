@@ -26,7 +26,7 @@ export function StatusChip({ isComplete, label, className }: StatusChipProps) {
   return (
     <div
       className={cn(
-        "bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0",
+        "bg-primary-container box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius-chip)] shrink-0",
         className,
       )}
     >
@@ -36,7 +36,7 @@ export function StatusChip({ isComplete, label, className }: StatusChipProps) {
           style={{ color: isComplete ? "var(--primary)" : "var(--error)" }}
           aria-hidden="true"
         />
-        <span className="label-medium text-foreground whitespace-nowrap">
+        <span className="label-medium text-primary-container-foreground whitespace-nowrap">
           {label ?? (isComplete ? "Utfylt" : "Trenger utfylling")}
         </span>
       </div>

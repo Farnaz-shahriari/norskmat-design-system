@@ -48,11 +48,11 @@ export function ListItem({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex items-center gap-4 w-full rounded-[var(--radius-card)] text-left transition-colors",
+        "state-layer flex items-center gap-md w-full rounded-[var(--radius-card)] text-left transition-colors",
         "outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
-        "disabled:pointer-events-none disabled:opacity-50",
-        isCompact ? "px-4 py-1" : "px-6 py-2 min-h-14",
-        selected ? "bg-secondary-container" : "hover:bg-muted",
+        "disabled:pointer-events-none disabled:opacity-(--disabled-content)",
+        isCompact ? "px-md py-1" : "pl-md pr-lg py-sm min-h-14",
+        selected ? "bg-secondary-container text-secondary-container-foreground" : "text-on-surface",
         className
       )}
     >
@@ -67,7 +67,7 @@ export function ListItem({
           <p
             className={cn(
               "label-small",
-              selected ? "text-secondary-container-foreground" : "text-muted-foreground"
+              selected ? "text-secondary-container-foreground" : "text-on-surface-variant"
             )}
           >
             {overline}
@@ -77,7 +77,7 @@ export function ListItem({
         <p
           className={cn(
             isCompact ? "label-large" : "body-large",
-            selected ? "text-secondary-container-foreground" : "text-foreground",
+            selected ? "text-secondary-container-foreground" : "text-on-surface",
             !isCompact && "line-clamp-2 w-full"
           )}
         >
@@ -87,8 +87,8 @@ export function ListItem({
         {supportingText && (
           <p
             className={cn(
-              "label-medium mt-0.5",
-              selected ? "text-secondary-container-foreground" : "text-muted-foreground"
+              "body-medium mt-0.5",
+              selected ? "text-secondary-container-foreground" : "text-on-surface-variant"
             )}
           >
             {supportingText}
@@ -97,9 +97,9 @@ export function ListItem({
       </div>
 
       {(trailingText || trailingIcon) && (
-        <div className="shrink-0 flex items-center gap-2.5">
+        <div className="shrink-0 flex items-center gap-sm">
           {trailingText && (
-            <span className="label-medium text-muted-foreground whitespace-nowrap">
+            <span className="label-small text-on-surface-variant whitespace-nowrap">
               {trailingText}
             </span>
           )}
