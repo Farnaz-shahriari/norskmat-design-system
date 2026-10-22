@@ -4,7 +4,7 @@ import { ConnectedButtonGroup } from "../src/components/connected-button-group";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/ConnectedButtonGroup",
+  title: "Components/Actions/ConnectedButtonGroup",
   decorators: [withPlatform],
   component: ConnectedButtonGroup,
 } satisfies Meta<typeof ConnectedButtonGroup>;

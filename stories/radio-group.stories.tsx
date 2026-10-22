@@ -64,7 +64,7 @@ function LabelledRadioGroup({
 }
 
 const meta = {
-  title: "Components/RadioGroup",
+  title: "Components/Forms/RadioGroup",
   decorators: [withPlatform],
   component: LabelledRadioGroup,
   args: { label: "Alvorlighetsgrad", options: SEVERITY, defaultValue: "vesentlig" },

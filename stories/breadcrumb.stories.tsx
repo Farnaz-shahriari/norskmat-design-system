@@ -12,7 +12,7 @@ import {
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Breadcrumb",
+  title: "Components/Navigation/Breadcrumb",
   decorators: [withPlatform],
   component: Breadcrumb,
   // The component's own default name is the English "breadcrumb".

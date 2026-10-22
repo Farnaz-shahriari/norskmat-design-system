@@ -82,7 +82,7 @@ function FilterDeviationsSheet({ open, side = "right" }: { open?: boolean; side?
 }
 
 const meta = {
-  title: "Components/Sheet",
+  title: "Components/Overlays/Sheet",
   decorators: [withPlatform],
   component: FilterDeviationsSheet,
   argTypes: {

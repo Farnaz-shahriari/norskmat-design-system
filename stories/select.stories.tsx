@@ -34,7 +34,7 @@ function DeadlineSelect({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/Select",
+  title: "Components/Forms/Select",
   decorators: [withPlatform],
   component: DeadlineSelect,
 } satisfies Meta<typeof DeadlineSelect>;

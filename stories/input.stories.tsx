@@ -15,7 +15,7 @@ function Field({ label, ...props }: { label: string } & ComponentProps<typeof In
 }
 
 const meta = {
-  title: "Components/Input",
+  title: "Components/Forms/Input",
   decorators: [withPlatform],
   component: Field,
   args: { label: "Gårdsnummer", placeholder: "For eksempel 12/3" },

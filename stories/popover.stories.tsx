@@ -43,7 +43,7 @@ function AddCommentPopover({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/Popover",
+  title: "Components/Overlays/Popover",
   decorators: [withPlatform],
   component: AddCommentPopover,
 } satisfies Meta<typeof AddCommentPopover>;

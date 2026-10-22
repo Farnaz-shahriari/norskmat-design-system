@@ -24,7 +24,7 @@ function StatefulTextInputField({
 }
 
 const meta = {
-  title: "Components/TextInputField",
+  title: "Components/Forms/TextInputField",
   decorators: [withPlatform],
   component: TextInputField,
   args: {

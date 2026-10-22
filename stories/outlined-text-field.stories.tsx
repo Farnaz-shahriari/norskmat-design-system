@@ -22,7 +22,7 @@ function StatefulOutlinedTextField({
 }
 
 const meta = {
-  title: "Components/OutlinedTextField",
+  title: "Components/Forms/OutlinedTextField",
   decorators: [withPlatform],
   component: OutlinedTextField,
   args: {

@@ -11,7 +11,7 @@ import {
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Pagination",
+  title: "Components/Navigation/Pagination",
   decorators: [withPlatform],
   component: Pagination,
   // The component's own default name is the English "pagination". Name the

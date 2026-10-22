@@ -365,6 +365,28 @@ Files produced,
 - .storybook/with-platform.tsx, preview-styles.ts, new; main.ts, platforms.ts, preview.tsx, preview.css
 - .gitignore, the sync's working folders
 
+## Phase 22, structure in Claude Design
+Status, done. Same branch, same project. The project listed a README and thirty components in one flat group; it now has foundations, functional groups, and a theme explorer.
+
+Groups. The Claude Design pane groups a component by the story title segment before its name, so every story is now Components/<Group>/<Name>, six groups, Actions (Button, Fab, ConnectedButtonGroup, Chip), Forms (Input, Textarea, Select, Checkbox, RadioGroup, Switch, DatePicker, OutlinedTextField, TextInputField), Info (Alert, Badge, StatusChip, Progress, Tooltip), Layout (Card, ListItem, Table, Accordion), Navigation (TabGroup, Breadcrumb, Pagination), Overlays (Dialog, AlertDialog, Sheet, Popover, DropdownMenu). Storybook's sidebar got the same structure. A retitle edits the story file, so all thirty were re-captured and re-graded from images, every story match again.
+
+Foundations and the theme explorer. scripts/build-design-cards.mjs, npm run build:cards, writes four cards into design-cards/, gitignored. Colours, Typography, and Spacing and shape come from tokens.css through extract-tokens.mjs, every swatch and specimen is the live token, the severity tiers carry their contrast. The Theme explorer is stories/examples/theme-explorer.tsx, an Egenkontroll dashboard on desktop and a deviation detail on mobile, built only from library components, with a brand switcher and an all-four comparison; it is also the Examples/ThemeExplorer story. The card compiles it against the synced bundle on window.NorskmatDesignSystem, so it runs the same code the project ships.
+
+How they reach the project. First attempt, the sync's guidelines step only takes .md, so .design-sync/overrides/docs.mjs forks it to also take .html and .js, and the cards went to guidelines/design-cards/. That broke Claude Design: with HTML and JS in guidelines/ its rebuild never ran, the old flat index stayed, and none of the new groups showed. Removing those five files let it rebuild. The cards now sit at foundations/ in the project, with the explorer's script at _preview/ThemeExplorer.js beside the component preview scripts, uploaded on their own after the sync. The compare harness does not cover them; each was render-checked in a browser against a copy of the real bundle, in every brand.
+
+Order. Claude Design sorts groups alphabetically, so the two card groups are named 1. Foundations (Colours, Typography, Spacing and shape) and 2. Theme explorer, which puts them above the six component groups, as asked. Confirmed in the project's index.
+
+Found while checking, library, not fixed,
+- Bare border classes are dark: no base border colour is set, so Tailwind's default, currentColor, applies. Cards, Alert and Table show it in the explorer.
+- Overlay content sets no text colour and inherits the app's body colour; a text-foreground on the app's root div does not reach Radix portals. Fix together with the page font in tokens.css.
+- ConnectedButtonGroup does not shrink: below about 300px a long label wraps out of its pill.
+
+Files produced,
+- stories/, every title regrouped; stories/examples/theme-explorer.tsx and stories/theme-explorer.stories.tsx, new
+- scripts/build-design-cards.mjs, new, writes foundations/ and _preview/ThemeExplorer.js; package.json, build:cards
+- .design-sync/config.json, buildCmd, titleMap ThemeExplorer null, guidelinesGlob, libOverrides; .design-sync/overrides/docs.mjs, new; NOTES.md
+- .gitignore, design-cards/
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

@@ -26,3 +26,8 @@ storybook-static/
 .design-sync/node_modules
 .ds-sync/
 ds-bundle/
+
+# Claude Design cards, produced by npm run build:cards from tokens.css and the
+# theme explorer story; uploaded to the project's foundations/ and _preview/
+# after a sync (.design-sync/NOTES.md).
+design-cards/

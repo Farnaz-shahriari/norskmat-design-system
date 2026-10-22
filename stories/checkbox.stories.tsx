@@ -15,7 +15,7 @@ function LabelledCheckbox({ label, ...props }: { label: string } & ComponentProp
 }
 
 const meta = {
-  title: "Components/Checkbox",
+  title: "Components/Forms/Checkbox",
   decorators: [withPlatform],
   component: LabelledCheckbox,
   args: { label: "Jeg bekrefter at sjekklisten er fullført" },

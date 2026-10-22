@@ -38,7 +38,7 @@ function CloseDeviationDialog({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/Dialog",
+  title: "Components/Overlays/Dialog",
   decorators: [withPlatform],
   component: CloseDeviationDialog,
 } satisfies Meta<typeof CloseDeviationDialog>;

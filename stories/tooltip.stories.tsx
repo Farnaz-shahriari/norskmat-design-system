@@ -33,7 +33,7 @@ function PrintChecklistTooltip({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/Tooltip",
+  title: "Components/Info/Tooltip",
   decorators: [withPlatform],
   component: PrintChecklistTooltip,
 } satisfies Meta<typeof PrintChecklistTooltip>;

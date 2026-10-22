@@ -8,7 +8,7 @@ import {
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Accordion",
+  title: "Components/Layout/Accordion",
   decorators: [withPlatform],
   component: Accordion,
   // Story args are bypassed, each render spells out its own Accordion. The

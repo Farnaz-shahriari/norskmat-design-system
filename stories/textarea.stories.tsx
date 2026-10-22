@@ -40,7 +40,7 @@ function Field({
 }
 
 const meta = {
-  title: "Components/Textarea",
+  title: "Components/Forms/Textarea",
   decorators: [withPlatform],
   component: Field,
   args: {

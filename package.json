@@ -44,7 +44,8 @@
     "lint:a11y": "eslint src/components",
     "lint:contrast": "node scripts/check-contrast.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static"
+    "build-storybook": "storybook build -o storybook-static",
+    "build:cards": "node scripts/build-design-cards.mjs"
   },
   "peerDependencies": {
     "react": ">=18",

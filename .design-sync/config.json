@@ -4,11 +4,12 @@
   "shape": "storybook",
   "storybookConfigDir": ".storybook",
   "storybookStatic": ".design-sync/sb-reference",
-  "buildCmd": "npm run build",
+  "buildCmd": "npm run build && npm run build:cards",
   "entry": "src/index.ts",
   "cssEntry": "dist/norskmat.css",
   "titleMap": {
-    "Tabs": "TabGroup"
+    "Tabs": "TabGroup",
+    "ThemeExplorer": null
   },
   "overrides": {
     "AlertDialog": {
@@ -45,6 +46,10 @@
   },
   "readmeHeader": ".design-sync/conventions.md",
   "guidelinesGlob": [
-    "skills/norsk-mat-design-system/references/*.md"
-  ]
+    "skills/norsk-mat-design-system/references/*.md",
+    "design-cards/*"
+  ],
+  "libOverrides": {
+    "docs.mjs": "guidelinesGlob also ships the .html/.js design cards (foundations, theme explorer) from design-cards/"
+  }
 }

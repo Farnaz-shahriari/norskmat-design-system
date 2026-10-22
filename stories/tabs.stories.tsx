@@ -29,7 +29,7 @@ function TabsExample({ as: T = Tab, withDisabled = false }: { as?: TabLike; with
 }
 
 const meta = {
-  title: "Components/Tabs",
+  title: "Components/Navigation/Tabs",
   decorators: [withPlatform],
   component: TabsExample,
 } satisfies Meta<typeof TabsExample>;

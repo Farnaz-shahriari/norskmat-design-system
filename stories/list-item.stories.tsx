@@ -4,7 +4,7 @@ import { ListItem } from "../src/components/list-item";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/ListItem",
+  title: "Components/Layout/ListItem",
   decorators: [withPlatform],
   component: ListItem,
   args: { title: "Journal for plantevernmidler", density: "default" },

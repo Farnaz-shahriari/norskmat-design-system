@@ -48,7 +48,7 @@ function DeleteDeviationDialog({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/AlertDialog",
+  title: "Components/Overlays/AlertDialog",
   decorators: [withPlatform],
   component: DeleteDeviationDialog,
 } satisfies Meta<typeof DeleteDeviationDialog>;

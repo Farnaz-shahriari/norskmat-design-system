@@ -26,7 +26,7 @@ function LabelledProgress({ label, value, valueText }: { label: string; value: n
 }
 
 const meta = {
-  title: "Components/Progress",
+  title: "Components/Info/Progress",
   decorators: [withPlatform],
   component: LabelledProgress,
   args: { label: "Sjekklister fullført", value: 58, valueText: "7 av 12" },

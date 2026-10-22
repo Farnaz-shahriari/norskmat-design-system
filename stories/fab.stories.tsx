@@ -4,7 +4,7 @@ import { Fab } from "../src/components/fab";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Fab",
+  title: "Components/Actions/Fab",
   decorators: [withPlatform],
   component: Fab,
   args: {

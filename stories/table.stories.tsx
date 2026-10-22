@@ -64,7 +64,7 @@ function AvvikHeader() {
 }
 
 const meta = {
-  title: "Components/Table",
+  title: "Components/Layout/Table",
   decorators: [withPlatform],
   component: Table,
 } satisfies Meta<typeof Table>;

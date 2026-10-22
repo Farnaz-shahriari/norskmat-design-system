@@ -3,7 +3,7 @@ import { StatusChip } from "../src/components/status-chip";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/StatusChip",
+  title: "Components/Info/StatusChip",
   decorators: [withPlatform],
   component: StatusChip,
   args: { isComplete: false },

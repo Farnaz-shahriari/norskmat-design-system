@@ -38,7 +38,7 @@ function DeviationActionsMenu({ open }: { open?: boolean }) {
 }
 
 const meta = {
-  title: "Components/DropdownMenu",
+  title: "Components/Overlays/DropdownMenu",
   decorators: [withPlatform],
   component: DeviationActionsMenu,
 } satisfies Meta<typeof DeviationActionsMenu>;

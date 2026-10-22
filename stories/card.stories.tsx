@@ -14,7 +14,7 @@ import {
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Card",
+  title: "Components/Layout/Card",
   decorators: [withPlatform],
   component: Card,
 } satisfies Meta<typeof Card>;

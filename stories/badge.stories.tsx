@@ -4,7 +4,7 @@ import { Badge } from "../src/components/badge";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Badge",
+  title: "Components/Info/Badge",
   decorators: [withPlatform],
   component: Badge,
   args: { children: "Levert", variant: "default" },

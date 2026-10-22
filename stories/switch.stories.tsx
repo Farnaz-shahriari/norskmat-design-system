@@ -15,7 +15,7 @@ function LabelledSwitch({ label, ...props }: { label: string } & ComponentProps<
 }
 
 const meta = {
-  title: "Components/Switch",
+  title: "Components/Forms/Switch",
   decorators: [withPlatform],
   component: LabelledSwitch,
   args: { label: "Varsle meg om nye avvik" },

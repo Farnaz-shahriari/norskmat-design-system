@@ -4,7 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "../src/components/alert";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Alert",
+  title: "Components/Info/Alert",
   decorators: [withPlatform],
   component: Alert,
   args: { variant: "default" },

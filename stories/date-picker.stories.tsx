@@ -41,7 +41,7 @@ const RECOMMENDED = new Date(2026, 10, 20);
 const LATEST = new Date(2027, 0, 19);
 
 const meta = {
-  title: "Components/DatePicker",
+  title: "Components/Forms/DatePicker",
   decorators: [withPlatform],
   component: DatePicker,
   args: {

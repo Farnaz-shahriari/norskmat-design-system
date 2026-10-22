@@ -5,7 +5,7 @@ import { Chip } from "../src/components/chip";
 import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
-  title: "Components/Chip",
+  title: "Components/Actions/Chip",
   decorators: [withPlatform],
   component: Chip,
   args: { children: "Plantevern", variant: "assist", size: "default", selected: false },
