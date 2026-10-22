@@ -62,7 +62,7 @@ export function ConnectedButtonGroup(props: Props) {
     <div
       role={props.multiSelect ? "group" : "radiogroup"}
       className={cn(
-        "inline-flex items-stretch gap-[2px] rounded-full border border-[var(--outline-variant)] p-[2px]",
+        "inline-flex items-stretch gap-[2px] rounded-full border border-outline p-[2px]",
         className
       )}
     >
@@ -77,13 +77,13 @@ export function ConnectedButtonGroup(props: Props) {
             disabled={item.disabled}
             onClick={() => handleClick(item.value)}
             className={cn(
-              "inline-flex items-center justify-center gap-2 rounded-full transition-colors label-large",
+              "state-layer inline-flex items-center justify-center gap-sm rounded-full transition-colors label-large",
               "outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
-              "disabled:pointer-events-none disabled:opacity-50",
+              "disabled:pointer-events-none disabled:text-on-surface/38",
               size === "sm" ? "h-9 px-3" : "h-10 px-4",
               selected
                 ? "bg-secondary-container text-secondary-container-foreground"
-                : "bg-transparent text-foreground hover:bg-muted"
+                : "bg-transparent text-on-surface"
             )}
           >
             {selected && !item.icon && <Check className="w-[18px] h-[18px] shrink-0" />}

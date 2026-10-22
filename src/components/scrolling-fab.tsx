@@ -72,14 +72,14 @@ export function ScrollingFAB({
   return (
     <button
       onClick={onClick}
-      className={`min-[1400px]:hidden fixed bottom-6 right-6 flex items-center justify-center gap-2 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all rounded-full z-[60] ${
+      className={`state-layer min-[1400px]:hidden fixed bottom-6 right-6 flex items-center justify-center gap-2 bg-primary text-primary-foreground transition-all rounded-[var(--radius-fab)] z-[60] ${
         isCollapsed ? 'w-14 h-14' : 'h-14 px-6'
       }`}
       aria-label={label}
     >
       <Icon className="w-6 h-6 flex-shrink-0" />
       <span 
-        className={`label-medium whitespace-nowrap transition-all overflow-hidden ${
+        className={`label-large whitespace-nowrap transition-all overflow-hidden ${
           isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
         }`}
       >

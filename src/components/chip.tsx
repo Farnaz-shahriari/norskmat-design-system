@@ -4,21 +4,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const chipVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 label-large",
+  "state-layer inline-flex items-center justify-center gap-sm whitespace-nowrap transition-all outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:border-on-surface/12 disabled:text-on-surface/38 label-large",
   {
     variants: {
       variant: {
-        assist:
-          "bg-surface text-foreground border border-outline hover:bg-muted",
+        assist: "bg-surface text-on-surface border border-outline",
 
-        filter:
-          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
+        filter: "bg-surface text-on-surface-variant border border-outline",
 
-        suggestion:
-          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
+        suggestion: "bg-surface text-on-surface-variant border border-outline",
 
-        input:
-          "bg-surface text-muted-foreground border border-outline hover:bg-muted",
+        input: "bg-surface text-on-surface-variant border border-outline",
       },
 
       selected: {
