@@ -387,6 +387,17 @@ Files produced,
 - .design-sync/config.json, buildCmd, titleMap ThemeExplorer null, guidelinesGlob, libOverrides; .design-sync/overrides/docs.mjs, new; NOTES.md
 - .gitignore, design-cards/
 
+## Phase 23, Material 3 audit
+Status, done, audit only, no code changed. Every file in src/components/ checked against Material 3, the full table is docs/m3-audit.md. 10 components are M3 already, 19 partly, 39 still shadcn/ui, 17 of those used in stories and 22 extras nothing uses.
+
+What blocks M3 everywhere, no state layers or disabled opacities exist, the shape scale lacks 8 and 16dp, the colour roles lack the inverse set and scrim, the type classes lack body-small and title-small. 24 components still use real shadows against the borders rule. The custom components carry the a11y risk, Tabs has no tab roles or arrow keys, BottomSheet no dialog role or focus trap, the date and time pickers no grid semantics, lint:a11y catches none of it.
+
+Corrections to what we assumed, Tabs is a custom M3 build, not shadcn. Sonner, Carousel, Sidebar, Drawer, ContextMenu, Calendar, Slider, Toggle and ToggleGroup all have M3 counterparts, restyle rather than drop. Fab, MaterialCheckbox and RadioButton are only partly M3.
+
+Suggested order, foundations in tokens.css first, then Card, Table, Button and Pagination, Breadcrumb, Alert, Badge, Accordion, Tabs onto Radix, state layers on the M3 ones in the Theme explorer, forms, overlays, pickers, extras.
+Files produced,
+- docs/m3-audit.md, new
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,
