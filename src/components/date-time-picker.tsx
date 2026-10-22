@@ -117,7 +117,7 @@ export function DateTimePicker({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="label-medium text-foreground">
+      <label className="label-medium text-on-surface">
         {label}
         {required && <span className="text-error ml-1">*</span>}
       </label>
@@ -129,17 +129,17 @@ export function DateTimePicker({
           <div className="flex-1 relative" ref={datePickerRef}>
             <button
               onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-              className="w-full h-14 px-4 pr-12 rounded-lg border-2 border-border hover:border-foreground bg-background text-foreground body-large text-left focus:outline-none focus:border-primary transition-colors"
+              className="w-full h-14 px-4 pr-12 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary bg-transparent text-on-surface body-large text-left focus:outline-none focus:border-primary transition-colors"
             >
               {dateValue ? formatNorwegianDate(dateValue) : placeholder}
             </button>
             <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Calendar className="w-5 h-5 text-muted-foreground" />
+              <Calendar className="w-5 h-5 text-on-surface-variant" />
             </div>
 
             {/* Date picker dropdown */}
             {isDatePickerOpen && (
-              <div className="absolute top-full mt-2 left-0 z-[9999] bg-background rounded-2xl shadow-2xl border-2 border-border p-4 w-80">
+              <div className="absolute top-full mt-2 left-0 z-[9999] bg-surface-container-high text-on-surface rounded-[var(--radius-fab)] border border-outline-variant p-4 w-80">
                 {/* Month/Year header */}
                 <div className="flex items-center justify-between mb-4">
                   <button
@@ -147,11 +147,11 @@ export function DateTimePicker({
                       const newDate = new Date(currentYear, currentMonth - 1, 1);
                       onDateChange(newDate);
                     }}
-                    className="p-2 hover:bg-muted rounded-lg"
+                    className="p-2 state-layer rounded-[var(--radius-chip)]"
                   >
                     ←
                   </button>
-                  <span className="label-large text-foreground">
+                  <span className="label-large text-on-surface">
                     {monthNames[currentMonth]} {currentYear}
                   </span>
                   <button
@@ -159,7 +159,7 @@ export function DateTimePicker({
                       const newDate = new Date(currentYear, currentMonth + 1, 1);
                       onDateChange(newDate);
                     }}
-                    className="p-2 hover:bg-muted rounded-lg"
+                    className="p-2 state-layer rounded-[var(--radius-chip)]"
                   >
                     →
                   </button>
@@ -168,7 +168,7 @@ export function DateTimePicker({
                 {/* Day names */}
                 <div className="grid grid-cols-7 gap-1 mb-2">
                   {dayNames.map((day, i) => (
-                    <div key={i} className="text-center label-small text-muted-foreground h-8 flex items-center justify-center">
+                    <div key={i} className="text-center label-small text-on-surface-variant h-8 flex items-center justify-center">
                       {day}
                     </div>
                   ))}
@@ -192,14 +192,14 @@ export function DateTimePicker({
                       <button
                         key={i}
                         onClick={() => handleDateSelect(day)}
-                        className={`h-8 rounded-lg label-medium transition-colors relative ${
+                        className={`h-8 rounded-[var(--radius-chip)] label-medium transition-colors relative ${
                           !isCurrentMonth
-                            ? 'text-muted-foreground opacity-50'
+                            ? 'text-on-surface-variant opacity-(--disabled-content)'
                             : isSelected
                             ? 'bg-primary text-primary-foreground'
                             : isToday
-                            ? 'border border-primary text-foreground'
-                            : 'text-foreground hover:bg-muted'
+                            ? 'border border-primary text-on-surface'
+                            : 'text-on-surface state-layer'
                         }`}
                       >
                         {day.getDate()}
@@ -227,12 +227,12 @@ export function DateTimePicker({
                 }
                 setIsTimePickerOpen(!isTimePickerOpen);
               }}
-              className="w-full h-14 px-4 pr-12 rounded-lg border-2 border-border hover:border-foreground bg-background text-foreground body-large text-left focus:outline-none focus:border-primary transition-colors"
+              className="w-full h-14 px-4 pr-12 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary bg-transparent text-on-surface body-large text-left focus:outline-none focus:border-primary transition-colors"
             >
               {formatTime(timeHours, timeMinutes)}
             </button>
             <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Clock className="w-5 h-5 text-muted-foreground" />
+              <Clock className="w-5 h-5 text-on-surface-variant" />
             </div>
 
             {/* Time picker dropdown */}

@@ -214,16 +214,16 @@ export function DatePicker({
       {/* Input field */}
       <div className="relative">
         <label htmlFor={fieldId} className="block mb-1.5">
-          <span className="label-medium text-foreground">
+          <span className="label-medium text-on-surface">
             {label}{required && ' *'}
           </span>
         </label>
         
         <div 
-          className={`relative flex items-center h-14 px-4 border-2 rounded-lg bg-background transition-colors ${
+          className={`relative flex items-center h-14 px-4 border rounded-[var(--radius-sm)] bg-transparent transition-colors ${
             isOpen 
-              ? 'border-primary' 
-              : 'border-border hover:border-foreground'
+              ? 'border-primary ring-1 ring-inset ring-primary' 
+              : 'border-outline hover:border-on-surface'
           }`}
         >
           <div className="flex-1 flex items-center gap-2">
@@ -234,10 +234,10 @@ export function DatePicker({
               onFocus={() => setIsOpen(true)}
               id={fieldId}
               placeholder={placeholder}
-              className="flex-1 body-large text-foreground bg-transparent border-none outline-none placeholder:text-muted-foreground"
+              className="flex-1 body-large text-on-surface bg-transparent border-none outline-none placeholder:text-on-surface-variant"
             />
             {isValueRecommended() && (
-              <span className="label-small text-muted-foreground whitespace-nowrap">
+              <span className="label-small text-on-surface-variant whitespace-nowrap">
                 Anbefalt lukke frist
               </span>
             )}
@@ -245,9 +245,11 @@ export function DatePicker({
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-center w-10 h-10 -mr-2 rounded-full hover:bg-muted transition-colors"
+            aria-label={isOpen ? "Lukk kalender" : "Velg dato"}
+            aria-expanded={isOpen}
+            className="flex items-center justify-center w-10 h-10 -mr-2 rounded-full state-layer text-on-surface-variant transition-colors"
           >
-            <Calendar className="w-5 h-5 text-foreground" />
+            <Calendar className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -256,7 +258,7 @@ export function DatePicker({
       {isOpen && (
         <div 
           ref={dropdownRef}
-          className={`fixed z-[9999] bg-surface-container-low rounded-2xl shadow-2xl border border-border w-[360px] ${
+          className={`fixed z-[9999] bg-surface-container-high text-on-surface rounded-[var(--radius-fab)] border border-outline-variant w-[360px] ${
             dropdownPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'
           }`}
           style={{
@@ -273,21 +275,21 @@ export function DatePicker({
             // Month picker view
             <div className="flex flex-col">
               {/* Header with year navigation */}
-              <div className="flex items-center justify-between h-16 px-6 border-b border-border">
+              <div className="flex items-center justify-between h-16 px-6 border-b border-outline-variant">
                 <button
                   onClick={() => handleYearChange(-1)}
-                  className="p-2 hover:bg-muted rounded-full transition-colors"
+                  className="p-2 state-layer rounded-full transition-colors"
                 >
-                  <ChevronLeft className="w-5 h-5 text-foreground" />
+                  <ChevronLeft className="w-5 h-5 text-on-surface" />
                 </button>
-                <span className="title-medium text-foreground">
+                <span className="title-medium text-on-surface">
                   {viewDate.getFullYear()}
                 </span>
                 <button
                   onClick={() => handleYearChange(1)}
-                  className="p-2 hover:bg-muted rounded-full transition-colors"
+                  className="p-2 state-layer rounded-full transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5 text-foreground" />
+                  <ChevronRight className="w-5 h-5 text-on-surface" />
                 </button>
               </div>
 
@@ -297,10 +299,10 @@ export function DatePicker({
                   <button
                     key={month}
                     onClick={() => handleMonthSelect(index)}
-                    className={`flex items-center justify-center h-12 rounded-lg transition-colors ${
+                    className={`flex items-center justify-center h-12 rounded-[var(--radius-chip)] transition-colors ${
                       index === viewDate.getMonth()
                         ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-muted text-foreground'
+                        : 'state-layer text-on-surface'
                     }`}
                   >
                     <span className="body-medium">{month}</span>
@@ -312,33 +314,33 @@ export function DatePicker({
             // Calendar view
             <>
               {/* Month/Year selector */}
-              <div className="flex items-center justify-between h-16 px-4 border-b border-border">
+              <div className="flex items-center justify-between h-16 px-4 border-b border-outline-variant">
                 <button
                   onClick={() => handleMonthChange(-1)}
-                  className="p-2 hover:bg-muted rounded-full transition-colors"
+                  className="p-2 state-layer rounded-full transition-colors"
                 >
-                  <ChevronLeft className="w-5 h-5 text-foreground" />
+                  <ChevronLeft className="w-5 h-5 text-on-surface" />
                 </button>
                 
                 <button
                   onClick={() => setShowMonthPicker(true)}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-muted rounded-lg transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 state-layer rounded-[var(--radius-chip)] transition-colors"
                 >
-                  <span className="body-medium text-foreground">
+                  <span className="body-medium text-on-surface">
                     {NORWEGIAN_MONTHS[viewDate.getMonth()]}
                   </span>
-                  <ChevronDown className="w-4 h-4 text-foreground" />
+                  <ChevronDown className="w-4 h-4 text-on-surface" />
                 </button>
 
-                <span className="body-medium text-muted-foreground">
+                <span className="body-medium text-on-surface-variant">
                   {viewDate.getFullYear()}
                 </span>
 
                 <button
                   onClick={() => handleMonthChange(1)}
-                  className="p-2 hover:bg-muted rounded-full transition-colors"
+                  className="p-2 state-layer rounded-full transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5 text-foreground" />
+                  <ChevronRight className="w-5 h-5 text-on-surface" />
                 </button>
               </div>
 
@@ -348,7 +350,7 @@ export function DatePicker({
                 <div className="grid grid-cols-7 gap-2 mb-4">
                   {NORWEGIAN_DAYS_SHORT.map((day, index) => (
                     <div key={`day-header-${index}`} className="flex items-center justify-center h-10">
-                      <span className="label-medium text-muted-foreground">{day}</span>
+                      <span className="label-medium text-on-surface-variant">{day}</span>
                     </div>
                   ))}
                 </div>
@@ -375,14 +377,14 @@ export function DatePicker({
                           selected
                             ? 'bg-primary text-primary-foreground'
                             : today
-                            ? 'border-2 border-primary text-foreground hover:bg-muted'
+                            ? 'border-2 border-primary text-on-surface state-layer'
                             : recommended
-                            ? 'border-2 border-primary text-foreground hover:bg-muted'
+                            ? 'border-2 border-primary text-on-surface state-layer'
                             : disabled
-                            ? 'text-muted-foreground bg-muted cursor-not-allowed opacity-50'
+                            ? 'text-on-surface/38 cursor-not-allowed'
                             : highlighted
-                            ? 'border-2 border-primary text-foreground hover:bg-muted'
-                            : 'text-foreground hover:bg-muted'
+                            ? 'border-2 border-primary text-on-surface state-layer'
+                            : 'text-on-surface state-layer'
                         }`}
                       >
                         <span className="body-medium">{day}</span>
@@ -393,23 +395,23 @@ export function DatePicker({
               </div>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-between px-6 py-4 border-t border-border">
+              <div className="flex items-center justify-between px-6 py-4 border-t border-outline-variant">
                 <button
                   onClick={handleClear}
-                  className="text-primary hover:bg-muted px-4 py-2 rounded-lg transition-colors label-large"
+                  className="text-primary state-layer px-4 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                 >
                   Tøm
                 </button>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="text-primary hover:bg-muted px-4 py-2 rounded-lg transition-colors label-large"
+                    className="text-primary state-layer px-4 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                   >
                     Avbryt
                   </button>
                   <button
                     onClick={handleOK}
-                    className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-lg transition-colors label-large"
+                    className="state-layer bg-primary text-primary-foreground px-6 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                   >
                     OK
                   </button>

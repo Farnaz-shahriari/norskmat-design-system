@@ -112,7 +112,7 @@ export function TimePickerWithIcon({
           {/* Trenger utfylling chip - Show above on small screens */}
           {required && (
             <div className="max-[400px]:flex max-[400px]:justify-start max-[400px]:mb-2 hidden">
-              <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
+              <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shrink-0">
                 <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                   <div className="relative shrink-0 w-[18px] h-[18px]">
                     <div className="absolute inset-[8.333%]">
@@ -121,7 +121,7 @@ export function TimePickerWithIcon({
                       </svg>
                     </div>
                   </div>
-                  <span className="label-medium text-foreground whitespace-nowrap">
+                  <span className="label-medium text-on-surface whitespace-nowrap">
                     Trenger utfylling
                   </span>
                 </div>
@@ -155,19 +155,19 @@ export function TimePickerWithIcon({
               className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
             >
               <div className="flex flex-col justify-center leading-[0] relative shrink-0 w-full">
-                <p className="body-large text-foreground leading-6 m-0">{label}</p>
+                <p className="body-large text-on-surface leading-6 m-0">{label}</p>
               </div>
               {helpText !== undefined ? (
-                helpText && <p className="body-medium text-muted-foreground leading-5 m-0">{helpText}</p>
+                helpText && <p className="body-medium text-on-surface-variant leading-5 m-0">{helpText}</p>
               ) : (
-                <p className="body-medium text-muted-foreground leading-5 m-0">{required ? 'Påkrevd' : 'Valgfri'}</p>
+                <p className="body-medium text-on-surface-variant leading-5 m-0">{required ? 'Påkrevd' : 'Valgfri'}</p>
               )}
             </button>
             
             {/* Trenger utfylling chip - Show inline on larger screens */}
             {required && (
               <div className="max-[400px]:hidden">
-                <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
+                <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shrink-0">
                   <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                     <div className="relative shrink-0 w-[18px] h-[18px]">
                       <div className="absolute inset-[8.333%]">
@@ -176,7 +176,7 @@ export function TimePickerWithIcon({
                         </svg>
                       </div>
                     </div>
-                    <span className="label-medium text-foreground whitespace-nowrap">
+                    <span className="label-medium text-on-surface whitespace-nowrap">
                       Trenger utfylling
                     </span>
                   </div>
@@ -189,7 +189,7 @@ export function TimePickerWithIcon({
         {/* Time Picker Popover */}
         {isOpen && (
           <div 
-            className="fixed z-[9999] bg-surface-container-low rounded-2xl shadow-2xl border border-border w-[360px]"
+            className="fixed z-[9999] bg-surface-container-high text-on-surface rounded-[var(--radius-fab)] border border-outline-variant w-[360px]"
             style={{
               left: containerRef.current?.getBoundingClientRect().left || 0,
               [pickerPosition === 'below' ? 'top' : 'bottom']: 
@@ -201,7 +201,7 @@ export function TimePickerWithIcon({
             <div className="p-6">
               {/* Header */}
               <div className="mb-6">
-                <h3 className="title-medium text-foreground">Velg tid</h3>
+                <h3 className="title-medium text-on-surface">Velg tid</h3>
               </div>
 
               {/* Time inputs */}
@@ -209,7 +209,7 @@ export function TimePickerWithIcon({
                 {/* Hours */}
                 <div className="flex-1">
                   <label htmlFor={`${fieldId}-hours-1`} className="block mb-2">
-                    <span className="label-medium text-foreground">Timer</span>
+                    <span className="label-medium text-on-surface">Timer</span>
                   </label>
                   <input
                     id={`${fieldId}-hours-1`}
@@ -221,14 +221,14 @@ export function TimePickerWithIcon({
                       const val = parseInt(e.target.value) || 0;
                       setTempHours(Math.max(0, Math.min(23, val)));
                     }}
-                    className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                    className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                   />
                 </div>
 
                 {/* Minutes */}
                 <div className="flex-1">
                   <label htmlFor={`${fieldId}-minutes-1`} className="block mb-2">
-                    <span className="label-medium text-foreground">Minutter</span>
+                    <span className="label-medium text-on-surface">Minutter</span>
                   </label>
                   <input
                     id={`${fieldId}-minutes-1`}
@@ -240,7 +240,7 @@ export function TimePickerWithIcon({
                       const val = parseInt(e.target.value) || 0;
                       setTempMinutes(Math.max(0, Math.min(59, val)));
                     }}
-                    className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                    className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                   />
                 </div>
               </div>
@@ -250,60 +250,60 @@ export function TimePickerWithIcon({
                 <button
                   type="button"
                   onClick={() => { setTempHours(1); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   1t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(2); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   2t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(3); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   3t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(0); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   30m
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(1); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   1t 30m
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(2); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   2t 30m
                 </button>
               </div>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-outline-variant">
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="text-primary hover:bg-muted px-4 py-2 rounded-lg transition-colors label-large"
+                  className="text-primary state-layer px-4 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                 >
                   Avbryt
                 </button>
                 <button
                   type="button"
                   onClick={handleOK}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-lg transition-colors label-large"
+                  className="state-layer bg-primary text-primary-foreground px-6 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                 >
                   OK
                 </button>
@@ -331,13 +331,13 @@ export function TimePickerWithIcon({
             </div>
             {/* Content */}
             <div className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0">
-              <div className="label-small text-muted-foreground w-full mb-1">
+              <div className="label-small text-on-surface-variant w-full mb-1">
                 <p className="m-0">{label}</p>
               </div>
               <button
                 ref={inputRef}
                 onClick={openPicker}
-                className="w-full h-14 px-4 border-2 border-primary rounded-[var(--radius)] body-large text-foreground focus:outline-none focus:border-primary text-left bg-background"
+                className="w-full h-14 px-4 border border-outline rounded-[var(--radius)] body-large text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-inset focus:ring-primary text-left bg-transparent"
               >
                 {formatTime(tempHours, tempMinutes) || 'Velg tid'}
               </button>
@@ -348,7 +348,7 @@ export function TimePickerWithIcon({
         {/* Time Picker Popover */}
         {isOpen && (
           <div 
-            className="fixed z-[9999] bg-surface-container-low rounded-2xl shadow-2xl border border-border w-[360px]"
+            className="fixed z-[9999] bg-surface-container-high text-on-surface rounded-[var(--radius-fab)] border border-outline-variant w-[360px]"
             style={{
               left: containerRef.current?.getBoundingClientRect().left || 0,
               [pickerPosition === 'below' ? 'top' : 'bottom']: 
@@ -360,7 +360,7 @@ export function TimePickerWithIcon({
             <div className="p-6">
               {/* Header */}
               <div className="mb-6">
-                <h3 className="title-medium text-foreground">Velg tid</h3>
+                <h3 className="title-medium text-on-surface">Velg tid</h3>
               </div>
 
               {/* Time inputs */}
@@ -368,7 +368,7 @@ export function TimePickerWithIcon({
                 {/* Hours */}
                 <div className="flex-1">
                   <label htmlFor={`${fieldId}-hours-2`} className="block mb-2">
-                    <span className="label-medium text-foreground">Timer</span>
+                    <span className="label-medium text-on-surface">Timer</span>
                   </label>
                   <input
                     id={`${fieldId}-hours-2`}
@@ -380,14 +380,14 @@ export function TimePickerWithIcon({
                       const val = parseInt(e.target.value) || 0;
                       setTempHours(Math.max(0, Math.min(23, val)));
                     }}
-                    className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                    className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                   />
                 </div>
 
                 {/* Minutes */}
                 <div className="flex-1">
                   <label htmlFor={`${fieldId}-minutes-2`} className="block mb-2">
-                    <span className="label-medium text-foreground">Minutter</span>
+                    <span className="label-medium text-on-surface">Minutter</span>
                   </label>
                   <input
                     id={`${fieldId}-minutes-2`}
@@ -399,7 +399,7 @@ export function TimePickerWithIcon({
                       const val = parseInt(e.target.value) || 0;
                       setTempMinutes(Math.max(0, Math.min(59, val)));
                     }}
-                    className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                    className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                   />
                 </div>
               </div>
@@ -409,60 +409,60 @@ export function TimePickerWithIcon({
                 <button
                   type="button"
                   onClick={() => { setTempHours(1); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   1t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(2); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   2t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(3); setTempMinutes(0); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   3t
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(0); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   30m
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(1); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   1t 30m
                 </button>
                 <button
                   type="button"
                   onClick={() => { setTempHours(2); setTempMinutes(30); }}
-                  className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                  className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
                 >
                   2t 30m
                 </button>
               </div>
 
               {/* Action buttons */}
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-outline-variant">
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="text-primary hover:bg-muted px-4 py-2 rounded-lg transition-colors label-large"
+                  className="text-primary state-layer px-4 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                 >
                   Avbryt
                 </button>
                 <button
                   type="button"
                   onClick={handleOK}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-lg transition-colors label-large"
+                  className="state-layer bg-primary text-primary-foreground px-6 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
                 >
                   OK
                 </button>
@@ -493,13 +493,13 @@ export function TimePickerWithIcon({
             onClick={handleEdit}
             className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
           >
-            <div className="label-small text-muted-foreground w-full">
+            <div className="label-small text-on-surface-variant w-full">
               <p className="m-0">{label}</p>
             </div>
             {helpText && (
-              <p className="body-medium text-muted-foreground mb-1 m-0">{helpText}</p>
+              <p className="body-medium text-on-surface-variant mb-1 m-0">{helpText}</p>
             )}
-            <div className="body-large text-foreground w-full">
+            <div className="body-large text-on-surface w-full">
               <p className="m-0">{formatTime(hours, minutes)}</p>
             </div>
           </button>
@@ -524,7 +524,7 @@ export function TimePickerWithIcon({
       {/* Time Picker Popover */}
       {isOpen && (
         <div 
-          className="fixed z-[9999] bg-surface-container-low rounded-2xl shadow-2xl border border-border w-[360px]"
+          className="fixed z-[9999] bg-surface-container-high text-on-surface rounded-[var(--radius-fab)] border border-outline-variant w-[360px]"
           style={{
             left: containerRef.current?.getBoundingClientRect().left || 0,
             [pickerPosition === 'below' ? 'top' : 'bottom']: 
@@ -536,7 +536,7 @@ export function TimePickerWithIcon({
           <div className="p-6">
             {/* Header */}
             <div className="mb-6">
-              <h3 className="title-medium text-foreground">Velg tid</h3>
+              <h3 className="title-medium text-on-surface">Velg tid</h3>
             </div>
 
             {/* Time inputs */}
@@ -544,7 +544,7 @@ export function TimePickerWithIcon({
               {/* Hours */}
               <div className="flex-1">
                 <label htmlFor={`${fieldId}-hours-3`} className="block mb-2">
-                  <span className="label-medium text-foreground">Timer</span>
+                  <span className="label-medium text-on-surface">Timer</span>
                 </label>
                 <input
                   id={`${fieldId}-hours-3`}
@@ -556,14 +556,14 @@ export function TimePickerWithIcon({
                     const val = parseInt(e.target.value) || 0;
                     setTempHours(Math.max(0, Math.min(23, val)));
                   }}
-                  className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                  className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                 />
               </div>
 
               {/* Minutes */}
               <div className="flex-1">
                 <label htmlFor={`${fieldId}-minutes-3`} className="block mb-2">
-                  <span className="label-medium text-foreground">Minutter</span>
+                  <span className="label-medium text-on-surface">Minutter</span>
                 </label>
                 <input
                   id={`${fieldId}-minutes-3`}
@@ -575,7 +575,7 @@ export function TimePickerWithIcon({
                     const val = parseInt(e.target.value) || 0;
                     setTempMinutes(Math.max(0, Math.min(59, val)));
                   }}
-                  className="w-full h-14 px-4 rounded-lg border-2 border-border hover:border-foreground focus:border-primary bg-background text-foreground body-large focus:outline-none transition-colors text-center"
+                  className="w-full h-14 px-4 rounded-[var(--radius-sm)] border border-outline hover:border-on-surface focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary bg-transparent text-on-surface body-large focus:outline-none transition-colors text-center"
                 />
               </div>
             </div>
@@ -585,60 +585,60 @@ export function TimePickerWithIcon({
               <button
                 type="button"
                 onClick={() => { setTempHours(1); setTempMinutes(0); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 1t
               </button>
               <button
                 type="button"
                 onClick={() => { setTempHours(2); setTempMinutes(0); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 2t
               </button>
               <button
                 type="button"
                 onClick={() => { setTempHours(3); setTempMinutes(0); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 3t
               </button>
               <button
                 type="button"
                 onClick={() => { setTempHours(0); setTempMinutes(30); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 30m
               </button>
               <button
                 type="button"
                 onClick={() => { setTempHours(1); setTempMinutes(30); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 1t 30m
               </button>
               <button
                 type="button"
                 onClick={() => { setTempHours(2); setTempMinutes(30); }}
-                className="h-10 px-3 rounded-lg border border-border hover:bg-muted transition-colors label-medium text-foreground"
+                className="state-layer h-8 px-md rounded-[var(--radius-chip)] border border-outline transition-colors label-large text-on-surface"
               >
                 2t 30m
               </button>
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+            <div className="flex items-center justify-end gap-2 pt-4 border-t border-outline-variant">
               <button
                 type="button"
                 onClick={handleCancel}
-                className="text-primary hover:bg-muted px-4 py-2 rounded-lg transition-colors label-large"
+                className="text-primary state-layer px-4 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
               >
                 Avbryt
               </button>
               <button
                 type="button"
                 onClick={handleOK}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-lg transition-colors label-large"
+                className="state-layer bg-primary text-primary-foreground px-6 py-2 rounded-[var(--radius-chip)] transition-colors label-large"
               >
                 OK
               </button>
