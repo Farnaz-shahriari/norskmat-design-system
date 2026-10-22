@@ -89,7 +89,7 @@ export function BottomSheet({
     <>
       {/* Backdrop - Only visible on mobile/tablet */}
       <div aria-hidden="true"
-        className={`fixed inset-0 bg-black/40 z-40 min-[1400px]:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-scrim/32 z-40 min-[1400px]:hidden transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={onClose}
@@ -97,7 +97,7 @@ export function BottomSheet({
 
       {/* Bottom Sheet - Only visible on mobile/tablet */}
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-background rounded-t-[var(--radius-dialog)] shadow-lg z-50 min-[1400px]:hidden transition-all duration-500 ease-out ${
+        className={`fixed bottom-0 left-0 right-0 bg-surface-container-low text-on-surface rounded-t-[var(--radius-dialog)] z-50 min-[1400px]:hidden transition-all duration-500 ease-out ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
         style={{
@@ -106,19 +106,19 @@ export function BottomSheet({
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-3 pb-2">
-          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+          <div className="w-8 h-1 bg-on-surface-variant/40 rounded-full" />
         </div>
 
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-3 border-b border-[var(--border)]">
-            <h2 className="title-large text-foreground">{title}</h2>
+          <div className="flex items-center justify-between px-lg py-3 border-b border-outline-variant">
+            <h2 className="title-large text-on-surface">{title}</h2>
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors"
+              className="state-layer flex items-center justify-center w-10 h-10 rounded-full text-on-surface-variant transition-colors"
               aria-label="Lukk"
             >
-              <X className="w-6 h-6 text-foreground" />
+              <X className="w-6 h-6" />
             </button>
           </div>
         )}
@@ -139,7 +139,7 @@ export function BottomSheet({
 
         {/* Footer - Fixed at bottom */}
         {footer && (
-          <div className="px-6 py-4 border-t border-[var(--border)] bg-background">
+          <div className="px-lg py-md border-t border-outline-variant bg-surface-container-low">
             {footer}
           </div>
         )}
