@@ -1,0 +1,50 @@
+{
+  "projectId": "e9bb49cd-5381-49fc-bb12-8e1776ffeaa7",
+  "pkg": "@norskmat/design-system",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "buildCmd": "npm run build",
+  "entry": "src/index.ts",
+  "cssEntry": "dist/norskmat.css",
+  "titleMap": {
+    "Tabs": "TabGroup"
+  },
+  "overrides": {
+    "AlertDialog": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "Dialog": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "DropdownMenu": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "Select": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "Sheet": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "Tooltip": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    },
+    "DatePicker": {
+      "cardMode": "column"
+    },
+    "Popover": {
+      "cardMode": "single",
+      "primaryStory": "OpenKSL"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md",
+  "guidelinesGlob": [
+    "skills/norsk-mat-design-system/references/*.md"
+  ]
+}

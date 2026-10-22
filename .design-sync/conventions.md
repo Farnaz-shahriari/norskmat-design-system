@@ -100,3 +100,50 @@ Not style preferences, each of these already shipped a bug.
 `npm run storybook` renders the real components in every theme, with the
 axe accessibility panel. The Platform toolbar switches the root class, "All
 four side by side" is the default.
+
+## Building with it in Claude Design
+
+Components are on `window.NorskmatDesignSystem` and carry their own styling.
+`styles.css` is precompiled: a Tailwind class that isn't listed below or used
+by a component does nothing. Style your own layout with these, and with
+inline `var(--*)` styles for anything else.
+
+* **Root.** `theme-<platform>` on `<html>`, then `bg-background text-foreground`
+  and `style={{ fontFamily: "var(--font-family)" }}` on the app root. The
+  stylesheet sets no page font yet, so without that line any text that has no
+  type class falls back to the system sans.
+* **Type.** `headline-medium headline-small title-large title-medium
+  body-large body-medium label-large label-medium label-small label-xsmall`.
+  Never Tailwind `text-sm`/`text-lg` sizes.
+* **Colour.** `bg-background bg-surface bg-surface-variant
+  bg-surface-container-low bg-muted bg-card bg-primary bg-primary-container
+  bg-secondary-container bg-error bg-error-container`, `text-foreground
+  text-muted-foreground text-primary text-error`, `border-outline
+  border-outline-variant`. Severity: `bg-[var(--error)]`,
+  `bg-[var(--vesentlig)]`, `bg-[var(--mindre-alvorlig)]` with the matching
+  `text-[var(--<tier>-foreground)]`, always with the tier name in text.
+* **Layout.** `flex flex-col flex-row flex-wrap grid items-center items-start
+  justify-between justify-center w-full min-w-0 shrink-0 grow flex-1`,
+  spacing `gap-xs gap-sm gap-md gap-lg p-md p-lg px-md`. Anything else:
+  `style={{ gap: "var(--space-xl)", borderRadius: "var(--radius-card)" }}`.
+* **Where to look.** `styles.css` and `_ds_bundle.css` for every token and
+  class; each component's `<Name>.d.ts` for props and `<Name>.prompt.md` for
+  usage.
+
+```jsx
+const { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, Badge, Button } = window.NorskmatDesignSystem;
+
+<div className="bg-background text-foreground flex flex-col gap-md p-lg" style={{ fontFamily: "var(--font-family)" }}>
+  <Card className="w-full max-w-[360px]">
+    <CardHeader>
+      <CardTitle className="title-medium">Avvik 2026-114</CardTitle>
+      <CardDescription>Journal for plantevernmidler mangler</CardDescription>
+      <CardAction>
+        <Badge className="bg-[var(--error)] text-[var(--error-foreground)]">Kritisk</Badge>
+      </CardAction>
+    </CardHeader>
+    <CardContent className="body-medium">Frist 15. november 2026.</CardContent>
+  </Card>
+  <Button variant="secondary">Lukk avvik</Button>
+</div>
+```

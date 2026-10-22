@@ -338,6 +338,33 @@ Files produced,
 - scripts/lint-tokens.mjs, rule 3b; src/styles/tokens.css, the spacing comment
 - SKILL.md and .design-sync/conventions.md, the size name rule
 
+## Phase 21, the Claude Design sync
+Status, done. On branch storybook-design-sync. 30 components synced to a new design system project, "Norsk Mat DS (from code)", https://claude.ai/design/p/e9bb49cd-5381-49fc-bb12-8e1776ffeaa7. Not published yet, that is your switch. The hand-built "Norsk Mat Design System" project was left untouched.
+
+Coverage. In the storybook shape a component is documented in Claude Design only if it has stories, so the ten from phase 20 would have left the design agent knowing ten components. Wrote stories for twenty more core ones, Card, Badge, Alert, AlertDialog, Textarea, RadioGroup, Tooltip, DropdownMenu, Popover, Table, Sheet, StatusChip, DatePicker, Accordion, Progress, Breadcrumb, Pagination, OutlinedTextField, TextInputField, Fab. The other ~40 are in the bundle but undocumented; writing stories for them and re-syncing adds them.
+
+Verification. Every story's preview, compiled from the story itself against the shipped bundle, was screenshotted next to the real storybook render and graded by eye. 117 stories, all match. The differences found and accepted are framing: the preview page's padding changes how the four platform columns wrap. Render check 30 of 30 clean.
+
+What the sync needed from the repo, each now in NOTES.md,
+- The platform decorator moved from preview.tsx into every story's meta, with-platform.tsx. The sync gives a preview-wide decorator a fixed context, so a story pinned to one platform still rendered four stacked dialogs, all KSL.
+- Overlay stories pin their platform with pinPlatform(), a parameter the previews can read as well as the toolbar global.
+- The stylesheet loads through previewAnnotations, preview-styles.ts, because esbuild could not bundle preview.tsx with the fonts behind its CSS import.
+- preview.css no longer sets the body font. It hid a library bug, below.
+
+Found, not fixed, needs your decision,
+- The shipped CSS never applies the brand font to the page. Tailwind's base puts the system sans on html, and --font-family only reaches text with a named type class. Anything sized with text-* or inheriting, DialogTitle, Select options, Table, Badge, renders in the system font in every app and every Claude Design design. Proposed fix, font-family: var(--font-family) in each theme block of tokens.css. Until then conventions.md tells the design agent to set it on its root.
+- DatePicker's trailing hint and icon overflow a narrow field. TextInputField's label collapses beside the "Trenger utfylling" chip below about 290px, because the stacked fallback uses a viewport media query. The story agents also listed bugs in Progress (drops value, no aria-valuenow), Pagination (hard-coded English, current page marked only by a low-contrast border), Alert (always role="alert"), Fab (no accessible name when not extended), Table (scroll container not keyboard reachable), DatePicker (unnamed calendar buttons, week starts on Sunday), and others; NOTES.md and the session report carry the full list.
+
+Decisions, yours. Fonts, accept substitutes: Manrope ships; LokalMat uses the Georgia stand-in until Messina Serif and Sands are licensed. The Messina files in the hand-built project, some named Trial, were not used.
+
+Conventions. conventions.md kept as written, plus a section for the design agent, the classes that actually exist in the precompiled CSS, the font workaround, where to look, and a Card example taken from a verified preview. It is the head of the README the design agent reads. Guidelines now come from skills/norsk-mat-design-system/references, not docs/.
+
+Files produced,
+- .design-sync/config.json, NOTES.md, new; conventions.md, the agent section
+- stories/, twenty story files, new; every story file, withPlatform in its meta
+- .storybook/with-platform.tsx, preview-styles.ts, new; main.ts, platforms.ts, preview.tsx, preview.css
+- .gitignore, the sync's working folders
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

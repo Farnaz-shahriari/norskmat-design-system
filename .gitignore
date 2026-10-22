@@ -17,3 +17,12 @@ dist/
 # Storybook build output and logs, produced by npm run build-storybook.
 storybook-static/
 *storybook.log
+
+# /design-sync working state. The durable sync inputs, .design-sync/config.json,
+# NOTES.md, conventions.md, previews/ and overrides/, are committed.
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.ds-sync/
+ds-bundle/
