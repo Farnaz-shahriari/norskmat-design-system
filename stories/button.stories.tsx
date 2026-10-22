@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "../src/components/button";
+import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
   title: "Components/Button",
+  decorators: [withPlatform],
   component: Button,
   args: { children: "Lagre", variant: "primary", size: "default" },
   argTypes: {

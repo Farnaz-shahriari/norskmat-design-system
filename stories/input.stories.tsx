@@ -2,6 +2,7 @@ import { useId, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "../src/components/input";
 import { Label } from "../src/components/label";
+import { withPlatform } from "../.storybook/with-platform";
 
 function Field({ label, ...props }: { label: string } & ComponentProps<typeof Input>) {
   const id = useId();
@@ -15,6 +16,7 @@ function Field({ label, ...props }: { label: string } & ComponentProps<typeof In
 
 const meta = {
   title: "Components/Input",
+  decorators: [withPlatform],
   component: Field,
   args: { label: "Gårdsnummer", placeholder: "For eksempel 12/3" },
 } satisfies Meta<typeof Field>;

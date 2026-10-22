@@ -1,9 +1,11 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ConnectedButtonGroup } from "../src/components/connected-button-group";
+import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
   title: "Components/ConnectedButtonGroup",
+  decorators: [withPlatform],
   component: ConnectedButtonGroup,
 } satisfies Meta<typeof ConnectedButtonGroup>;
 

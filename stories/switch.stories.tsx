@@ -2,6 +2,7 @@ import { useId, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Label } from "../src/components/label";
 import { Switch } from "../src/components/switch";
+import { withPlatform } from "../.storybook/with-platform";
 
 function LabelledSwitch({ label, ...props }: { label: string } & ComponentProps<typeof Switch>) {
   const id = useId();
@@ -15,6 +16,7 @@ function LabelledSwitch({ label, ...props }: { label: string } & ComponentProps<
 
 const meta = {
   title: "Components/Switch",
+  decorators: [withPlatform],
   component: LabelledSwitch,
   args: { label: "Varsle meg om nye avvik" },
 } satisfies Meta<typeof LabelledSwitch>;

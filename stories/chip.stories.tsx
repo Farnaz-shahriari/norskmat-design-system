@@ -2,9 +2,11 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Check, Plus, X } from "lucide-react";
 import { Chip } from "../src/components/chip";
+import { withPlatform } from "../.storybook/with-platform";
 
 const meta = {
   title: "Components/Chip",
+  decorators: [withPlatform],
   component: Chip,
   args: { children: "Plantevern", variant: "assist", size: "default", selected: false },
   argTypes: {

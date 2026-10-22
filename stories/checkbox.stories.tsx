@@ -2,6 +2,7 @@ import { useId, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Checkbox } from "../src/components/checkbox";
 import { Label } from "../src/components/label";
+import { withPlatform } from "../.storybook/with-platform";
 
 function LabelledCheckbox({ label, ...props }: { label: string } & ComponentProps<typeof Checkbox>) {
   const id = useId();
@@ -15,6 +16,7 @@ function LabelledCheckbox({ label, ...props }: { label: string } & ComponentProp
 
 const meta = {
   title: "Components/Checkbox",
+  decorators: [withPlatform],
   component: LabelledCheckbox,
   args: { label: "Jeg bekrefter at sjekklisten er fullført" },
 } satisfies Meta<typeof LabelledCheckbox>;

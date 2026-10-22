@@ -10,6 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../src/components/dialog";
+import { withPlatform } from "../.storybook/with-platform";
+import { pinPlatform } from "../.storybook/platforms";
 
 function CloseDeviationDialog({ open }: { open?: boolean }) {
   return (
@@ -37,6 +39,7 @@ function CloseDeviationDialog({ open }: { open?: boolean }) {
 
 const meta = {
   title: "Components/Dialog",
+  decorators: [withPlatform],
   component: CloseDeviationDialog,
 } satisfies Meta<typeof CloseDeviationDialog>;
 
@@ -50,7 +53,7 @@ export const Trigger: Story = {};
 // <html>, not from a side by side column. One story per platform instead.
 const open = { args: { open: true } };
 
-export const OpenKSL: Story = { ...open, name: "Open, KSL", globals: { platform: "ksl" } };
-export const OpenNytNorge: Story = { ...open, name: "Open, Nyt Norge", globals: { platform: "nyt-norge" } };
-export const OpenSpesialitet: Story = { ...open, name: "Open, Spesialitet", globals: { platform: "spesialitet" } };
-export const OpenLokalMat: Story = { ...open, name: "Open, LokalMat", globals: { platform: "lokalmat" } };
+export const OpenKSL: Story = { ...open, name: "Open, KSL", ...pinPlatform("ksl") };
+export const OpenNytNorge: Story = { ...open, name: "Open, Nyt Norge", ...pinPlatform("nyt-norge") };
+export const OpenSpesialitet: Story = { ...open, name: "Open, Spesialitet", ...pinPlatform("spesialitet") };
+export const OpenLokalMat: Story = { ...open, name: "Open, LokalMat", ...pinPlatform("lokalmat") };

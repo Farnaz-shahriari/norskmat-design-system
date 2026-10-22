@@ -1,6 +1,7 @@
 import { useState, type ComponentType, type ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Tab, TabCompact, TabGroup, TabLarge } from "../src/components/tabs";
+import { withPlatform } from "../.storybook/with-platform";
 
 type TabLike = ComponentType<{ active?: boolean; onClick?: () => void; disabled?: boolean; children: ReactNode }>;
 
@@ -29,6 +30,7 @@ function TabsExample({ as: T = Tab, withDisabled = false }: { as?: TabLike; with
 
 const meta = {
   title: "Components/Tabs",
+  decorators: [withPlatform],
   component: TabsExample,
 } satisfies Meta<typeof TabsExample>;
 

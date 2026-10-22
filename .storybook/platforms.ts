@@ -9,3 +9,10 @@ export const PLATFORMS = [
 ] as const;
 
 export type PlatformId = (typeof PLATFORMS)[number]["id"];
+
+// Pins a story to one platform. The global locks Storybook's toolbar, the
+// parameter is what withPlatform reads, and the only one /design-sync's
+// previews can see.
+export function pinPlatform(id: PlatformId) {
+  return { globals: { platform: id }, parameters: { platform: id } };
+}

@@ -8,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../src/components/select";
+import { withPlatform } from "../.storybook/with-platform";
+import { pinPlatform } from "../.storybook/platforms";
 
 function DeadlineSelect({ open }: { open?: boolean }) {
   const id = useId();
@@ -33,6 +35,7 @@ function DeadlineSelect({ open }: { open?: boolean }) {
 
 const meta = {
   title: "Components/Select",
+  decorators: [withPlatform],
   component: DeadlineSelect,
 } satisfies Meta<typeof DeadlineSelect>;
 
@@ -45,7 +48,7 @@ export const Closed: Story = {};
 // <html>, not from a side by side column. One story per platform instead.
 const open = { args: { open: true } };
 
-export const OpenKSL: Story = { ...open, name: "Open, KSL", globals: { platform: "ksl" } };
-export const OpenNytNorge: Story = { ...open, name: "Open, Nyt Norge", globals: { platform: "nyt-norge" } };
-export const OpenSpesialitet: Story = { ...open, name: "Open, Spesialitet", globals: { platform: "spesialitet" } };
-export const OpenLokalMat: Story = { ...open, name: "Open, LokalMat", globals: { platform: "lokalmat" } };
+export const OpenKSL: Story = { ...open, name: "Open, KSL", ...pinPlatform("ksl") };
+export const OpenNytNorge: Story = { ...open, name: "Open, Nyt Norge", ...pinPlatform("nyt-norge") };
+export const OpenSpesialitet: Story = { ...open, name: "Open, Spesialitet", ...pinPlatform("spesialitet") };
+export const OpenLokalMat: Story = { ...open, name: "Open, LokalMat", ...pinPlatform("lokalmat") };
