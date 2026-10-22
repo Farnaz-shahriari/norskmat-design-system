@@ -48,7 +48,7 @@ export function Fab({
   className,
   ...props
 }: FabProps) {
-  const shape = extended ? `${SIZE[size].extended} rounded-[16px]` : `${SIZE[size].circle} rounded-full`;
+  const shape = extended ? `${SIZE[size].extended} rounded-[var(--radius-fab)]` : `${SIZE[size].circle} rounded-full`;
   const classes = cn(fabVariants({ variant }), shape, className);
   const content = (
     <>

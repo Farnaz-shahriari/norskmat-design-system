@@ -398,6 +398,25 @@ Suggested order, foundations in tokens.css first, then Card, Table, Button and P
 Files produced,
 - docs/m3-audit.md, new
 
+## Phase 24, Material 3 foundations
+Status, done, Phase 0 of docs/m3-audit.md. Tokens and base styles only, the components are not restyled yet, nothing visible changes except borders, fonts and one checkbox border.
+
+Added to tokens.css. Inverse surface, inverse on surface and inverse primary in all four theme blocks, taken from each platform's Figma scheme, for the plain tooltip, snackbar and slider label, and the shared scrim, black, used at 32%. State layer and disabled opacities, 8, 10, 10 and 16 percent, 38 and 12. `--radius-chip` 8px and `--radius-fab` 16px, the two Material 3 shape steps with no token, which makes six radius tokens, spacing.md's rule now says six. `.title-small` and `.body-small`. A `state-layer` class in the components layer, so it ships in dist even before a component uses it.
+
+Base layer. Every theme class, and `:root`, now sets the page font and text colour, so untyped text and Radix portals stop falling back to a system sans in black, LokalMat's untyped text is now its Georgia stand in. Borders default to outline variant instead of currentColor, which turns the near black edges of Card, Alert, Table, Accordion and Sheet light. All in the base layer, so a utility class still wins.
+
+Caught by rendering all 122 stories in all four themes, the Radix Checkbox had a bare border, it had been near black by accident and would have dropped to outline variant, too faint for a control. It now names `border-outline`, like Input, Select and RadioGroup. No other control relied on a bare border.
+
+One value to confirm, Spesialitet's inverse surface in Figma is #2E3039, Nyt Norge's exact bluish value, against a warm palette whose own Neutral 20 is #33302C. Kept as Figma has it, logged as open gap 19 in colors.md.
+
+Checked, lint:tokens 0 errors and 41 to 39 warnings, lint:a11y, lint:contrast 58 pairs per theme with the two new inverse pairs at about 11.5 and 7.7 to 1, build, docs and cards. The state layer measured in Storybook, 8% on hover, 10% on keyboard focus, 0 when disabled. Not synced to Claude Design yet.
+Files produced,
+- src/styles/tokens.css, inverse roles, scrim, state and disabled opacities, two radii, two type classes, base layer, state-layer class
+- src/components/checkbox.tsx, border-outline; chip.tsx and fab.tsx, raw radii now the new tokens
+- scripts/check-contrast.mjs, inverse pairs; scripts/extract-tokens.mjs, Inverse colour group for the docs and the Colours card; scripts/lint-tokens.mjs, six radius tokens
+- .storybook/preview.css, page background only
+- references colors.md, typography.md, spacing.md, components.md; .design-sync/conventions.md and NOTES.md
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,

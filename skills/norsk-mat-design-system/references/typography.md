@@ -43,6 +43,8 @@ Real usage confirms the below is the actual scale in use, ranked by how often ea
 | label-xsmall | 11px | 500 | 14px | 21 |
 | headline-medium | 32px | 400 | 1.5 | 4 |
 | headline-small | 24px | 400 | 1.5 | 7 |
+| title-small | 14px | 500 | 20px | new |
+| body-small | 12px | 400 | 16px | new |
 
 Body and label text carry almost all real usage, headline-medium barely appears, most screens are dense, data heavy, not headline driven. Keep this in mind for KSL and its sibling platforms, this is a working tool, not a marketing page.
 
@@ -55,3 +57,7 @@ The design system guideline once called for a second heading font, Quatro. It wa
 Everything above was, until now, a table in this file only, nothing implemented it. `src/styles/tokens.css` now defines every named class, `.headline-medium`, `.title-large`, and so on, plus the underlying `--text-*` and `--font-weight-*` variables, using `var(--font-family)`, not a hardcoded font, so LokalMat automatically picks up Messina Serif and Sands the moment those files are real, no separate rule needed per platform.
 
 `.headline-small` was added later, 24px was already the seventh most used size in the app with no named class to reach for, so it was being written as a raw `text-[24px]` instead. It uses `--text-xl`.
+
+`.title-small` and `.body-small` were added for the Material 3 restyle, docs/m3-audit.md, the two M3 type roles the components need that had no class. title-small for tab labels, list subheaders and the rich tooltip heading, body-small for supporting and helper text under a field, a text field's floating label and the plain tooltip. They follow M3's values, 14/20 medium and 12/16 regular. Two existing classes differ from M3 on purpose, label-medium is 14px here (M3 12px) and title-medium 18px (M3 16px), both come from Figma, keep them and choose a class by its role.
+
+Every theme element also sets the page font, `font-family: var(--font-family)`, in the base layer of `tokens.css`, so text without a named class, and everything in a Radix portal, gets the platform's font instead of a system sans. Put the theme class on `<html>` so portals, which mount on body, inherit it.

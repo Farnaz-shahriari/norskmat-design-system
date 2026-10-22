@@ -108,12 +108,13 @@ Components are on `window.NorskmatDesignSystem` and carry their own styling.
 by a component does nothing. Style your own layout with these, and with
 inline `var(--*)` styles for anything else.
 
-* **Root.** `theme-<platform>` on `<html>`, then `bg-background text-foreground`
-  and `style={{ fontFamily: "var(--font-family)" }}` on the app root. The
-  stylesheet sets no page font yet, so without that line any text that has no
-  type class falls back to the system sans.
+* **Root.** `theme-<platform>` on `<html>`, then `bg-background` on the app
+  root. The theme class sets the page font and text colour, so text without a
+  type class, and dialogs and menus, which render outside the root, follow the
+  brand.
 * **Type.** `headline-medium headline-small title-large title-medium
-  body-large body-medium label-large label-medium label-small label-xsmall`.
+  title-small body-large body-medium body-small label-large label-medium
+  label-small label-xsmall`.
   Never Tailwind `text-sm`/`text-lg` sizes.
 * **Colour.** `bg-background bg-surface bg-surface-variant
   bg-surface-container-low bg-muted bg-card bg-primary bg-primary-container
@@ -133,7 +134,7 @@ inline `var(--*)` styles for anything else.
 ```jsx
 const { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, Badge, Button } = window.NorskmatDesignSystem;
 
-<div className="bg-background text-foreground flex flex-col gap-md p-lg" style={{ fontFamily: "var(--font-family)" }}>
+<div className="bg-background flex flex-col gap-md p-lg">
   <Card className="w-full max-w-[360px]">
     <CardHeader>
       <CardTitle className="title-medium">Avvik 2026-114</CardTitle>

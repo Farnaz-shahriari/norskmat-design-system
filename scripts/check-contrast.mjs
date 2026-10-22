@@ -53,6 +53,10 @@ const PAIRS = [
     { kind: "text", fg: `${r}-foreground`, bg: r },
     { kind: "text", fg: `${r}-container-foreground`, bg: `${r}-container` },
   ]),
+  // Inverse surfaces, the plain tooltip and snackbar: their text, and the
+  // snackbar's action in inverse-primary.
+  { kind: "text", fg: "inverse-on-surface", bg: "inverse-surface" },
+  { kind: "text", fg: "inverse-primary", bg: "inverse-surface" },
   // Control borders and the focus ring.
   ...SURFACES.map((bg) => ({ kind: "ui", fg: "outline", bg })),
   ...SURFACES.map((bg) => ({ kind: "ui", fg: "ring", bg })),

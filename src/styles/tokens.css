@@ -55,6 +55,10 @@
   --surface-container: #EEEEE4;
   --surface-container-high: #E9E9DF;
   --surface-container-highest: #E3E3D9;
+
+  --inverse-surface: #2F312B;
+  --inverse-on-surface: #F1F1E7;
+  --inverse-primary: #AFD27C;
 }
 
 .theme-nyt-norge {
@@ -90,6 +94,10 @@
   --surface-container: #EDEDF8;
   --surface-container-high: #E8E7F3;
   --surface-container-highest: #E2E1ED;
+
+  --inverse-surface: #2E3039;
+  --inverse-on-surface: #F0F0FB;
+  --inverse-primary: #B7C4FF;
 }
 
 .theme-spesialitet {
@@ -125,6 +133,10 @@
   --surface-container: #F4EDE5;
   --surface-container-high: #EEE7E0;
   --surface-container-highest: #E8E1DA;
+
+  --inverse-surface: #2E3039;
+  --inverse-on-surface: #F7EFE8;
+  --inverse-primary: #E2C387;
 }
 
 .theme-lokalmat {
@@ -164,6 +176,10 @@
   --surface-container: #EFEEEB;
   --surface-container-high: #E9E8E5;
   --surface-container-highest: #E4E2DF;
+
+  --inverse-surface: #30312F;
+  --inverse-on-surface: #F2F0ED;
+  --inverse-primary: #FFB4A8;
 }
 
 /* Shared, semantic, identical across every platform, do not vary these
@@ -183,6 +199,23 @@
   --mindre-alvorlig-foreground: #FFFFFF;
   --mindre-alvorlig-container: #FFEDD0;
   --mindre-alvorlig-container-foreground: #3D2E00;
+
+  /* Scrim behind modal surfaces, the Scrim role in every platform's Figma
+     scheme, the same black in all four. Material 3 shows it at 32%, write
+     bg-scrim/32. */
+  --scrim: #000000;
+
+  /* State layers, Material 3. An interactive element shows hover, keyboard
+     focus and press by painting its own content colour over itself at these
+     opacities, instead of swapping its background. Use the state-layer class
+     further down rather than reading these directly. Disabled content shows
+     at 38%, a disabled filled container at 12% of on-surface. */
+  --state-hover: 8%;
+  --state-focus: 10%;
+  --state-pressed: 10%;
+  --state-dragged: 16%;
+  --disabled-content: 38%;
+  --disabled-container: 12%;
 
   /* Type scale, references/typography.md, shared across every platform,
      only the font family itself changes per .theme-* block above. */
@@ -219,6 +252,14 @@
   --radius-button: 100px;
   --radius-card: 12px;
   --radius-dialog: 28px;
+
+  /* The two Material 3 shape steps the four above did not cover, named for
+     the component that first needs them, like the others. The full M3 scale,
+     extra small 4 --radius-sm, small 8 --radius-chip, medium 12
+     --radius-card, large 16 --radius-fab, extra large 28 --radius-dialog,
+     full --radius-button. */
+  --radius-chip: 8px;
+  --radius-fab: 16px;
 
   /* Radius alias. The eight text field and inline edit components reach for
      --radius directly, it is not a fifth value, it resolves to --radius-sm.
@@ -301,6 +342,12 @@
   font-weight: var(--font-weight-medium);
   line-height: 1.2;
 }
+.title-small {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 20px;
+}
 .body-large {
   font-family: var(--font-family);
   font-size: var(--text-base);
@@ -312,6 +359,12 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-normal);
   line-height: 1.5;
+}
+.body-small {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-normal);
+  line-height: 16px;
 }
 .label-large {
   font-family: var(--font-family);
@@ -394,6 +447,10 @@
   --color-surface-container: var(--surface-container);
   --color-surface-container-high: var(--surface-container-high);
   --color-surface-container-highest: var(--surface-container-highest);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-inverse-primary: var(--inverse-primary);
+  --color-scrim: var(--scrim);
 
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -433,4 +490,79 @@
   --spacing-xl: var(--space-xl);
   --spacing-2xl: var(--space-2xl);
   --color-ring: var(--ring);
+}
+
+/* Base styles every component inherits. In the base layer, so any utility
+   on an element still wins over them. */
+@layer base {
+  /* The page font and text colour. Without this, text that has no named type
+     class, and everything in a Radix portal, which mounts on body, rendered
+     in Tailwind's system font and plain black. On the element carrying the
+     theme class, so each platform's own --font-family and --foreground apply,
+     put that class on <html> so portals inherit it too. */
+  :root,
+  .theme-ksl,
+  .theme-nyt-norge,
+  .theme-spesialitet,
+  .theme-lokalmat {
+    font-family: var(--font-family);
+    color: var(--foreground);
+  }
+
+  /* Borders default to --outline-variant, the divider colour. Tailwind's
+     preflight leaves a bare border class in currentColor, which drew Card,
+     Alert, Table, Accordion and Sheet edges near black. A control still names
+     its own border, border-outline, per the contrast rule in SKILL.md. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--outline-variant, currentColor);
+  }
+}
+
+/* Material 3 state layer. Add state-layer to an interactive element and it
+   shows hover, keyboard focus and press by painting its own text colour over
+   itself, 8%, 10% and 10%, and nothing while disabled. The layer sits under
+   the content, so text and icons are not tinted, and follows the corner
+   radius. It uses ::before, so it cannot share an element with a before:
+   utility.
+
+   A plain class in the components layer, not a Tailwind @utility, so it is
+   always in dist/norskmat.css even before a component uses it. position:
+   relative is there so the layer has something to sit on, any position
+   utility, absolute, fixed, sticky, still wins from the utilities layer. */
+@layer components {
+  .state-layer {
+    position: relative;
+    isolation: isolate;
+  }
+  .state-layer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms;
+  }
+  @media (hover: hover) {
+    .state-layer:hover::before {
+      opacity: var(--state-hover);
+    }
+  }
+  .state-layer:focus-visible::before {
+    opacity: var(--state-focus);
+  }
+  .state-layer:active::before {
+    opacity: var(--state-pressed);
+  }
+  .state-layer:disabled::before,
+  .state-layer[aria-disabled="true"]::before,
+  .state-layer[data-disabled]::before {
+    opacity: 0;
+  }
 }

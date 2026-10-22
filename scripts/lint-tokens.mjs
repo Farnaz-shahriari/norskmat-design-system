@@ -155,10 +155,10 @@ if (spacingNames.length) {
 
 /* ------------------------------------------------- 4. radius not on a token (warn) */
 
-// Anything the four documented tokens can legitimately produce, plus the two
+// Anything the radius tokens can legitimately produce, plus the two
 // shape keywords and rounded-[inherit], which name a shape rather than a value.
 const TOKEN_RADIUS =
-  /^rounded(?:-[trbl]{1,2})?-(?:\[var\(--radius(?:-button|-card|-dialog|-sm)?\)\]|button|card|dialog|sm|full|none|\[inherit\])$/;
+  /^rounded(?:-[trbl]{1,2})?-(?:\[var\(--radius(?:-button|-card|-chip|-dialog|-fab|-sm)?\)\]|button|card|chip|dialog|fab|sm|full|none|\[inherit\])$/;
 // Match the whole utility including a bracket group, so var() forms stay intact.
 const ANY_RADIUS = /\brounded(?:-(?:\[[^\]]*\]|[a-z0-9]+))*/g;
 const offenders = new Map();
@@ -174,7 +174,7 @@ for (const { name, src } of files) {
 for (const [cls, inFiles] of [...offenders].sort((a, b) => b[1].size - a[1].size)) {
   warn(
     "components",
-    `${cls} used in ${inFiles.size} file${inFiles.size > 1 ? "s" : ""}, not one of the four radius tokens`,
+    `${cls} used in ${inFiles.size} file${inFiles.size > 1 ? "s" : ""}, not one of the radius tokens`,
   );
 }
 

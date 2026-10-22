@@ -31,6 +31,12 @@ One underlying cause worth knowing, `--outline` did not exist as a variable anyw
 * **ListItem**, `src/components/list-item.tsx`, rebuilt in place of the older single variant version. Adds the `default` and `compact` densities that already existed as one off Figma exports, `0 Density` and `-4 Density`, plus an optional overline label, trailing text, trailing icon, and a selected state using `secondary-container`, matching the pattern used across `ConnectedButtonGroup` and elsewhere in the system.
 * **IconButton**, kept as is, per your call. The variant already exists inside `button.tsx`, `size="icon"`, `size="icon-sm"`, `size="icon-xs"`, it is simply under used today, 16 correct usages against 42 hand rolled copies. No new component needed, the fix going forward is discipline, point new icon buttons at the existing variant rather than hand rolling another one.
 
+## Interaction states, Material 3
+
+Show hover, keyboard focus and press with the `state-layer` class from `tokens.css`, not by swapping the background, `hover:bg-muted`, `hover:bg-primary/90` and `hover:brightness-95` are the old pattern the Material 3 restyle replaces, docs/m3-audit.md. The class paints the element's own text colour over it, 8% on hover, 10% on focus and press, nothing when disabled, under the content and inside the corner radius. It uses `::before`, so the element cannot also use a `before:` utility. Keep the `focus-visible` ring from the WCAG pass alongside it, the layer is not a focus indicator on its own.
+
+Disabled follows M3 too, content at `--disabled-content`, 38%, and a filled container at `--disabled-container`, 12% of on-surface, write `disabled:opacity-(--disabled-content)` rather than `opacity-50`. The tokens are `--state-hover`, `--state-focus`, `--state-pressed`, `--state-dragged`, `--disabled-content` and `--disabled-container`.
+
 ## Approach for anything built from here forward
 
 Use the open source Material 3 spec and reference implementations for anatomy and behavior only, never for color or token values, wire everything to the variables in colors.md, the same rule we used for the color audit. For ConnectedButtonGroup specifically, Google's own open source segmented button implementation is still incomplete and unmaintained upstream, so your own repeated Figma pattern was the better and more current reference, that is what got built above. Keep this pattern to avoid reintroducing the kind of drift we already found twice.

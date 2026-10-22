@@ -29,8 +29,8 @@ const chipVariants = cva(
       },
 
       size: {
-        default: "h-8 px-4 rounded-[8px]",
-        sm: "h-7 px-3 rounded-[8px]",
+        default: "h-8 px-4 rounded-[var(--radius-chip)]",
+        sm: "h-7 px-3 rounded-[var(--radius-chip)]",
       },
     },
 

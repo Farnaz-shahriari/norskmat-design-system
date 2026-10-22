@@ -66,6 +66,7 @@ const COLOR_GROUPS = [
   { label: "Surfaces", keys: ["background", "foreground", "surface", "on-surface", "surface-variant", "on-surface-variant", "surface-bright", "surface-dim"] },
   { label: "Surface containers", keys: ["surface-container-lowest", "surface-container-low", "surface-container", "surface-container-high", "surface-container-highest"] },
   { label: "Outline", keys: ["outline", "outline-variant"] },
+  { label: "Inverse", keys: ["inverse-surface", "inverse-on-surface", "inverse-primary"] },
 ];
 
 const SEVERITY = [

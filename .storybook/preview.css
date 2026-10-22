@@ -5,11 +5,9 @@
 @source "../stories";
 @source "./";
 
-/* Page colour only. No font-family here on purpose: the shipped stylesheet
-   does not set one on the page either, and setting it here made Storybook
-   look right while apps fall back to the system font for any text without a
-   named type class. Storybook shows what an app gets. */
+/* Page background only. The page font and text colour come from the
+   shipped stylesheet's base layer (tokens.css), so Storybook shows what an
+   app gets; setting them here once hid that the library set neither. */
 body {
   background: var(--background);
-  color: var(--foreground);
 }

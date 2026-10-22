@@ -84,14 +84,18 @@ Rules
 
 | Token | Value | Use |
 |---|---|---|
-| radius-sm | 4px | inputs, small surfaces |
-| radius-button | 100px | pill shaped buttons |
-| radius-card | 12px | cards |
-| radius-dialog | 28px | dialogs, modals |
+| radius-sm | 4px | inputs, menus, small surfaces, M3 extra small |
+| radius-chip | 8px | chips, M3 small |
+| radius-card | 12px | cards, small FAB, M3 medium |
+| radius-fab | 16px | FAB, extended FAB, modal side sheet, navigation drawer, M3 large |
+| radius-dialog | 28px | dialogs, modals, bottom sheet top corners, M3 extra large |
+| radius-button | 100px | pill shaped buttons, M3 full |
 
-Rule, every rounded corner in the app must use one of these four tokens, no raw bracket values like rounded eight, rounded sixteen, or rounded one thousand, these should all be replaced with the matching token above
+Rule, every rounded corner in the app must use one of these six tokens, no raw bracket values like rounded eight, rounded sixteen, or rounded one thousand, these should all be replaced with the matching token above.
 
-`tokens.css` also defines two aliases, `--radius` and `--radius-xl`, because the component library reaches for those names directly. They are not a fifth and sixth radius. `--radius` resolves to `--radius-sm`, it is used by the eight text field and inline edit components, all inputs. `--radius-xl` resolves to `--radius-dialog`, it is used only by `bottom-sheet.tsx`'s top corners, and a bottom sheet is a modal surface. The four token rule above still holds, do not add a real fifth value.
+There were four until the Material 3 audit, docs/m3-audit.md. The M3 shape scale has six steps and two had no token, so chips wrote `rounded-[8px]` and the extended FAB `rounded-[16px]`. `--radius-chip` and `--radius-fab` fill those two steps, named for the component that first needed them like the others. That completes the scale, do not add a seventh value.
+
+`tokens.css` also defines one alias, `--radius`, because the component library reaches for that name directly. It is not another radius, it resolves to `--radius-sm` and is used by the eight text field and inline edit components, all inputs. Never define `--radius-md`, `--radius-lg`, `--radius-xl` or `--radius-2xl`, they are Tailwind's own radius names, see SKILL.md.
 
 ## Summary of decisions
 

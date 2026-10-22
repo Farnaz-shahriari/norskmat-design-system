@@ -68,6 +68,19 @@ Vesentlig and Mindre alvorlig do not have real CSS variables in the app yet, onl
 | Surface container high | #E9E9DF | #E8E7F3 | #EEE7E0 | #E9E8E5 |
 | Surface container highest | #E3E3D9 | #E2E1ED | #E8E1DA | #E4E2DF |
 
+## Inverse surfaces and scrim, per platform
+
+For the few surfaces Material 3 draws inverted, the plain tooltip, the snackbar and a slider's value label. Values are the Inverse and Scrim roles of each platform's Figma scheme, `source-tokens/`. Scrim sits behind modal dialogs and sheets at 32%, `bg-scrim/32`, it is the same black everywhere, so it lives in the shared block.
+
+| Token | KSL | Nyt Norge | Spesialitet | LokalMat |
+|---|---|---|---|---|
+| Inverse surface | #2F312B | #2E3039 | #2E3039 | #30312F |
+| Inverse on surface | #F1F1E7 | #F0F0FB | #F7EFE8 | #F2F0ED |
+| Inverse primary | #AFD27C | #B7C4FF | #E2C387 | #FFB4A8 |
+| Scrim | #000000 | #000000 | #000000 | #000000 |
+
+Every inverse pair is checked by `npm run lint:contrast`, inverse on surface is about 11.5:1 on inverse surface, inverse primary about 7.7:1. See open gap 19 about Spesialitet's inverse surface.
+
 ## Known gaps, audited against the component library, not assumed
 
 Run `npm run lint:tokens` from the repo root for the live version of this list. It checks every component for undefined variables, raw hex, radius name collisions, off scale radius and spacing, and text sized outside the named scale.
@@ -86,11 +99,14 @@ Run `npm run lint:tokens` from the repo root for the live version of this list. 
 10. **`--radius-xl` collided with Tailwind's own radius scale.** Tailwind defines `--radius-xs/sm/md/lg/xl/2xl` itself. Declaring `--radius-xl: var(--radius-dialog)` in `:root` silently changed every `rounded-xl` in the library, which took `card.tsx` from its correct 12px to 28px with nobody editing card.tsx. **Fixed**, the alias is gone, `bottom-sheet.tsx` names `--radius-dialog` directly, and `card.tsx` and `list-item.tsx` name `--radius-card`. Note `--radius-sm` shares a name too but happens to hold the same 4px, so `rounded-sm` is unaffected, keep those values in step. Never add `--radius-md`, `--radius-lg`, `--radius-xl` or `--radius-2xl` here.
 11. **Nothing enforced any of this.** `npm run lint:tokens` now does, and fails a build on undefined variables, raw hex, or a radius name collision.
 
+12. **A bare `border` class drew in `currentColor`, and the page had no text colour or font.** Tailwind's preflight sets no border colour, so Card, Alert, Table, Accordion and Sheet edges came out near black, and text without a named class, plus everything in a Radix portal, rendered in a system font and plain black. **Fixed**, the base layer of `tokens.css` now defaults borders to `--outline-variant` and sets `font-family` and `color: var(--foreground)` on `:root` and every theme class. A control still names its own border, `border-outline`.
+
 ### Still open
 
-12. Messina Serif and Sands, LokalMat's fonts, are not licensed or loaded anywhere. `src/styles/tokens.css` falls back to Georgia so headings do not silently drop to a generic system sans. Cannot be fixed from here, it needs the real font files.
-13. **Around 40 radius usages are not on the four tokens**, `rounded-md` in 18 files, `rounded-lg` in 10, plus `rounded-2xl`, `rounded-xs`, `rounded-[2px]`, `rounded-[8px]` and `rounded-[16px]`. spacing.md's rule says four values only, so these are real violations, but which of the four each becomes is a per component design decision. The linter lists them.
-14. **25 components size text with Tailwind's `text-*` scale** instead of the named type classes, not six as this list previously claimed. They are almost all Radix primitives, so leaving them may be right, but it should be a decision rather than an accident.
-15. **Four spacing values sit off the scale**, `max-h-[300px]` in command.tsx, `max-w-[400px]` and `max-h-[320px]` in date-picker.tsx, and `py-[14px]` in tabs.tsx. The picker maximums are arguably fine, the tab padding is not.
-16. Vesentlig's main colour `#A84300` is still not wired into the live app, and one real component collapses Vesentlig and Mindre alvorlig into the same yellow icon colour. The three tier system is not fully implemented in the app UI. Different repo, this system cannot fix it.
-17. Beskyttede Betegnelser and Stiftelsen Norsk Mat have logos in `assets/` but no palette and no theme class. Do not build a themed screen for either until their tokens are decided.
+13. Messina Serif and Sands, LokalMat's fonts, are not licensed or loaded anywhere. `src/styles/tokens.css` falls back to Georgia so headings do not silently drop to a generic system sans. Cannot be fixed from here, it needs the real font files.
+14. **Around 40 radius usages are not on the radius tokens**, `rounded-md` in 18 files, `rounded-lg` in 10, plus `rounded-2xl`, `rounded-xs` and `rounded-[2px]`. spacing.md's rule says six values only, so these are real violations, but which token each becomes is a per component design decision, the Material 3 restyle settles most of them, docs/m3-audit.md. The linter lists them. Chip's `rounded-[8px]` and the extended FAB's `rounded-[16px]` now use `--radius-chip` and `--radius-fab`.
+15. **25 components size text with Tailwind's `text-*` scale** instead of the named type classes, not six as this list previously claimed. They are almost all Radix primitives, so leaving them may be right, but it should be a decision rather than an accident.
+16. **Four spacing values sit off the scale**, `max-h-[300px]` in command.tsx, `max-w-[400px]` and `max-h-[320px]` in date-picker.tsx, and `py-[14px]` in tabs.tsx. The picker maximums are arguably fine, the tab padding is not.
+17. Vesentlig's main colour `#A84300` is still not wired into the live app, and one real component collapses Vesentlig and Mindre alvorlig into the same yellow icon colour. The three tier system is not fully implemented in the app UI. Different repo, this system cannot fix it.
+18. Beskyttede Betegnelser and Stiftelsen Norsk Mat have logos in `assets/` but no palette and no theme class. Do not build a themed screen for either until their tokens are decided.
+19. **Spesialitet's inverse surface is bluish, #2E3039, the exact value of Nyt Norge's.** Every other Spesialitet neutral is warm, and the Spesialitet palette's own Neutral 20, which Material 3 derives inverse surface from, is #33302C. It looks like a copy from Nyt Norge in the Figma scheme. `tokens.css` uses the Figma value as it stands, change it in Figma first if #33302C is right, then here.
