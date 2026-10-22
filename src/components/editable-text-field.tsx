@@ -114,7 +114,7 @@ export function EditableTextField({
             <div className="content-stretch flex items-center justify-center relative shrink-0 size-12" data-name="Icon button">
               <div aria-hidden="true"
                 onClick={handleAdd}
-                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
                 data-name="Content"
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
@@ -134,7 +134,7 @@ export function EditableTextField({
               data-name="Content"
             >
               <div className="flex flex-col justify-center leading-[0] relative shrink-0 w-full">
-                <p className="body-large text-foreground leading-6 m-0">{label}</p>
+                <p className="body-large text-on-surface leading-6 m-0">{label}</p>
               </div>
             </button>
             
@@ -169,7 +169,7 @@ export function EditableTextField({
                   e.stopPropagation();
                   handleSave();
                 }}
-                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
                 data-name="Content"
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
@@ -191,7 +191,7 @@ export function EditableTextField({
                   onKeyDown={handleKeyDown}
                   onBlur={handleBlur}
                   placeholder={placeholder || `Skriv ${label.toLowerCase()}...`}
-                  className="w-full resize-none overflow-hidden body-large text-foreground bg-transparent border-none outline-none p-0"
+                  className="w-full resize-none overflow-hidden body-large text-on-surface bg-transparent border-none outline-none p-0"
                   rows={1}
                 />
               ) : (
@@ -204,7 +204,7 @@ export function EditableTextField({
                   onKeyDown={handleKeyDown}
                   onBlur={handleBlur}
                   placeholder={placeholder || `Skriv ${label.toLowerCase()}...`}
-                  className="w-full body-large text-foreground bg-transparent border-none outline-none p-0"
+                  className="w-full body-large text-on-surface bg-transparent border-none outline-none p-0"
                 />
               )}
             </div>
@@ -223,7 +223,7 @@ export function EditableTextField({
           <div className="content-stretch flex items-center justify-center relative shrink-0 size-12" data-name="Icon button">
             <div aria-hidden="true"
               onClick={handleEdit}
-              className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+              className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
               data-name="Content"
             >
               <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full" data-name="State-layer">
@@ -239,10 +239,10 @@ export function EditableTextField({
             className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
             data-name="Content"
           >
-            <div className="label-small text-muted-foreground w-full">
+            <div className="label-small text-on-surface-variant w-full">
               <p className="m-0">{label}</p>
             </div>
-            <div className="body-large text-foreground w-full">
+            <div className="body-large text-on-surface w-full">
               <p className="m-0">{value}</p>
             </div>
           </button>

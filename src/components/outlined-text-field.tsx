@@ -9,11 +9,22 @@ interface OutlinedTextFieldProps {
   icon?: React.ReactNode;
   required?: boolean;
   disabled?: boolean;
+  /** Error state, the outline, label and supporting text turn error. */
+  error?: boolean;
+  /** Helper or error text under the field. */
+  supportingText?: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
   className?: string;
 }
 
+/**
+ * Material 3 outlined text field. 56px, 4px corners, a 1px outline that
+ * turns 2px primary on focus, the label resting in the field and floating
+ * onto the outline. The outline is a fieldset whose legend cuts the notch the
+ * floating label sits in, so the field works on any surface, there is no
+ * background patch behind the label.
+ */
 export function OutlinedTextField({
   label,
   value,
@@ -23,6 +34,8 @@ export function OutlinedTextField({
   icon,
   required,
   disabled,
+  error,
+  supportingText,
   onKeyDown,
   autoFocus,
   className = '',
@@ -30,44 +43,61 @@ export function OutlinedTextField({
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
+  const helpId = useId();
 
   const isFloating = isFocused || value.length > 0;
 
-  return (
-    // Clicking the padding focuses the input, a mouse convenience only,
-    // keyboard users tab straight to the input, hence presentation.
-    <div
-      role="presentation"
-      className={`relative ${className}`}
-      onClick={() => inputRef.current?.focus()}
-    >
-      {/* Floating label — sits on the border when floating */}
-      <label
-        htmlFor={inputId}
-        className={`absolute left-3 pointer-events-none bg-background px-1 transition-all duration-150 leading-none
-          ${isFloating
-            ? 'top-0 -translate-y-1/2 label-small'
-            : 'top-1/2 -translate-y-1/2 body-large'
-          }
-          ${isFocused ? 'text-primary' : 'text-muted-foreground'}
-          ${icon && !isFloating ? 'left-10' : 'left-3'}
-        `}
-      >
-        {label}{required && <span className="text-error ml-0.5">*</span>}
-      </label>
+  const outline = disabled
+    ? 'border border-on-surface/12'
+    : error
+      ? isFocused ? 'border-2 border-error' : 'border border-error'
+      : isFocused ? 'border-2 border-primary' : 'border border-outline group-hover:border-on-surface';
 
-      {/* Input container */}
+  const labelColour = disabled
+    ? 'text-on-surface/38'
+    : error ? 'text-error' : isFocused ? 'text-primary' : 'text-on-surface-variant';
+
+  return (
+    <div className={`relative ${className}`}>
+      {/* Clicking the padding focuses the input, a mouse convenience only,
+          keyboard users tab straight to the input, hence presentation. */}
       <div
-        className={`flex items-center h-14 rounded-[var(--radius)] border px-3 gap-2 transition-colors cursor-text
-          ${isFocused
-            ? 'border-primary ring-[1.5px] ring-primary'
-            : 'border-outline'
-          }
-          ${disabled ? 'opacity-50 cursor-not-allowed bg-muted' : 'bg-background'}
-        `}
+        role="presentation"
+        className={`group relative flex items-center h-14 gap-2 ${icon ? 'px-3' : 'px-md'} ${disabled ? 'cursor-not-allowed' : 'cursor-text'}`}
+        onClick={() => inputRef.current?.focus()}
       >
+        {/* The outline. Its legend is the label's width when the label
+            floats, which cuts the notch, and zero wide when it rests. */}
+        <fieldset
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 m-0 px-3 rounded-[var(--radius-sm)] transition-colors ${outline}`}
+        >
+          <legend
+            className={`invisible h-0 overflow-hidden whitespace-nowrap body-small transition-[max-width] duration-150
+              ${isFloating ? 'max-w-full px-1' : 'max-w-[0.01px] px-0'}
+            `}
+          >
+            {label}{required && ' *'}
+          </legend>
+        </fieldset>
+
+        {/* Floating label, on the outline when floating */}
+        <label
+          htmlFor={inputId}
+          className={`absolute pointer-events-none px-1 transition-all duration-150 leading-none
+            ${isFloating
+              ? 'top-0 -translate-y-1/2 body-small'
+              : 'top-1/2 -translate-y-1/2 body-large'
+            }
+            ${labelColour}
+            ${icon && !isFloating ? 'left-10' : 'left-3'}
+          `}
+        >
+          {label}{required && <span className={disabled ? '' : 'text-error'}> *</span>}
+        </label>
+
         {icon && (
-          <span className="shrink-0 text-muted-foreground flex items-center">
+          <span className={`relative shrink-0 flex items-center ${disabled ? 'text-on-surface/38' : 'text-on-surface-variant'}`}>
             {icon}
           </span>
         )}
@@ -85,10 +115,17 @@ export function OutlinedTextField({
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={autoFocus}
           disabled={disabled}
+          aria-invalid={error || undefined}
+          aria-describedby={supportingText ? helpId : undefined}
           placeholder={isFloating ? (placeholder ?? '') : ''}
-          className="flex-1 bg-transparent outline-none border-none body-large text-foreground placeholder:text-muted-foreground/60 disabled:cursor-not-allowed"
+          className="relative flex-1 min-w-0 bg-transparent outline-none border-none body-large text-on-surface placeholder:text-on-surface-variant disabled:cursor-not-allowed disabled:text-on-surface/38"
         />
       </div>
+      {supportingText && (
+        <p id={helpId} className={`mt-xs px-md body-small ${error ? 'text-error' : 'text-on-surface-variant'}`}>
+          {supportingText}
+        </p>
+      )}
     </div>
   );
 }

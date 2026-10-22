@@ -17,7 +17,7 @@ export function MaterialCheckbox({
 }: MaterialCheckboxProps) {
   return (
     <label 
-      className={`flex items-center gap-4 cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      className={`flex items-center gap-4 cursor-pointer ${disabled ? 'opacity-(--disabled-content) cursor-not-allowed' : ''} ${className}`}
     >
       <div className="p-1">
         {/* The native input carries focus, keyboard toggling and the checkbox
@@ -33,19 +33,19 @@ export function MaterialCheckbox({
         />
         <div
           aria-hidden="true"
-          className={`w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 ${
+          className={`size-[18px] rounded-[var(--radius-sm)] border-2 flex items-center justify-center transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 ${
             checked
               ? 'bg-primary border-primary'
-              : 'border-foreground'
+              : 'border-outline'
           }`}
         >
           {checked && (
-            <Check className="w-4 h-4 text-white" strokeWidth={2} />
+            <Check className="w-3.5 h-3.5 text-primary-foreground" strokeWidth={3} />
           )}
         </div>
       </div>
       {label && (
-        <span className="body-medium text-foreground select-none">{label}</span>
+        <span className="body-medium text-on-surface select-none">{label}</span>
       )}
     </label>
   );

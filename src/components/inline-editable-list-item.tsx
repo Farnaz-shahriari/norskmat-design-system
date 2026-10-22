@@ -90,7 +90,7 @@ export function InlineEditableListItem({
         return 'bg-[var(--vesentlig-container)] text-[var(--vesentlig-container-foreground)] border-[var(--vesentlig)]';
       case 'info':
       default:
-        return 'bg-accent text-accent-foreground border-[var(--secondary)]';
+        return 'bg-secondary-container text-secondary-container-foreground border-secondary';
     }
   };
 
@@ -99,7 +99,7 @@ export function InlineEditableListItem({
     return (
       <div className={`flex items-start gap-2 ${className}`}>
         <div className="flex-1 relative">
-          <label htmlFor={fieldId} className="label-small text-muted-foreground block mb-1">
+          <label htmlFor={fieldId} className="label-small text-on-surface-variant block mb-1">
             {label}
             {required && <span className="text-[var(--error)] ml-1">*</span>}
           </label>
@@ -113,7 +113,7 @@ export function InlineEditableListItem({
               onBlur={handleSave}
               placeholder={placeholder}
               rows={1}
-              className="w-full px-4 py-3 body-large text-foreground bg-background border border-[var(--border)] rounded-[var(--radius)] focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none overflow-hidden"
+              className="w-full px-4 py-3 body-large text-on-surface bg-surface border border-outline rounded-[var(--radius)] focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary focus:border-primary transition-all resize-none overflow-hidden"
               style={{ minHeight: '48px' }}
             />
           </div>
@@ -125,10 +125,10 @@ export function InlineEditableListItem({
               e.preventDefault();
               handleCancel();
             }}
-            className="p-2 hover:bg-muted rounded-[var(--radius)] transition-colors"
+            className="state-layer p-2 text-on-surface-variant rounded-[var(--radius)] transition-colors"
             aria-label="Avbryt"
           >
-            <X className="w-5 h-5 text-muted-foreground" />
+            <X className="w-5 h-5 text-on-surface-variant" />
           </button>
           <button
             type="button"
@@ -136,7 +136,7 @@ export function InlineEditableListItem({
               e.preventDefault();
               handleSave();
             }}
-            className="p-2 hover:bg-muted rounded-[var(--radius)] transition-colors"
+            className="state-layer p-2 text-on-surface-variant rounded-[var(--radius)] transition-colors"
             aria-label="Lagre"
           >
             <Check className="w-5 h-5 text-primary" />
@@ -156,14 +156,14 @@ export function InlineEditableListItem({
       >
         <button
           type="button"
-          className="p-2 mt-4 hover:bg-muted rounded-[var(--radius)] transition-colors"
+          className="state-layer p-2 mt-4 text-on-surface-variant rounded-[var(--radius)] transition-colors"
           aria-label="Rediger"
         >
-          <Edit2 className="w-5 h-5 text-muted-foreground" />
+          <Edit2 className="w-5 h-5 text-on-surface-variant" />
         </button>
         <div className="flex-1 py-2">
-          <p className="label-small text-muted-foreground mb-1">{label}</p>
-          <p className="body-large text-foreground whitespace-pre-wrap">{value}</p>
+          <p className="label-small text-on-surface-variant mb-1">{label}</p>
+          <p className="body-large text-on-surface whitespace-pre-wrap">{value}</p>
         </div>
       </div>
     );
@@ -178,14 +178,14 @@ export function InlineEditableListItem({
     >
       <button
         type="button"
-        className="p-2 hover:bg-muted rounded-[var(--radius)] transition-colors"
+        className="state-layer p-2 text-on-surface-variant rounded-[var(--radius)] transition-colors"
         aria-label="Legg til"
       >
-        <Plus className="w-5 h-5 text-muted-foreground" />
+        <Plus className="w-5 h-5 text-on-surface-variant" />
       </button>
       <div className="flex-1">
-        <p className="label-small text-muted-foreground mb-1">{label}</p>
-        <p className="body-medium text-muted-foreground">
+        <p className="label-small text-on-surface-variant mb-1">{label}</p>
+        <p className="body-medium text-on-surface-variant">
           {required ? 'Påkrevd' : 'Valgfritt'}
         </p>
       </div>

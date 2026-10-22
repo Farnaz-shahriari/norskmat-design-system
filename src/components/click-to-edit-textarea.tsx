@@ -72,9 +72,9 @@ export function ClickToEditTextarea({
     <div ref={containerRef} className={cn("flex flex-col gap-2 w-full", className)}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-col">
-          <span id={labelId} className="label-small text-muted-foreground">{label}</span>
+          <span id={labelId} className="label-small text-on-surface-variant">{label}</span>
           {subtitle && (
-            <span className="label-small text-muted-foreground mt-0.5">{subtitle}</span>
+            <span className="label-small text-on-surface-variant mt-0.5">{subtitle}</span>
           )}
         </div>
         {showTrengerUtfylling && (
@@ -85,18 +85,18 @@ export function ClickToEditTextarea({
       {!value && !isEditing && (
         <button
           onClick={() => setIsEditing(true)}
-          className="w-full px-3 py-2 border border-dashed border-border rounded-[var(--radius)] bg-background hover:bg-muted transition-colors text-left"
+          className="w-full px-3 py-2 state-layer border border-dashed border-outline-variant rounded-[var(--radius)] bg-surface text-on-surface transition-colors text-left"
         >
-          <span className="body-medium text-muted-foreground">{placeholder}</span>
+          <span className="body-medium text-on-surface-variant">{placeholder}</span>
         </button>
       )}
 
       {value && !isEditing && (
         <button
           onClick={() => setIsEditing(true)}
-          className="w-full px-3 py-2 border border-border rounded-[var(--radius)] bg-background hover:bg-muted transition-colors text-left"
+          className="w-full px-3 py-2 state-layer border border-outline-variant rounded-[var(--radius)] bg-surface text-on-surface transition-colors text-left"
         >
-          <span className="body-medium text-foreground whitespace-pre-wrap">{value}</span>
+          <span className="body-medium text-on-surface whitespace-pre-wrap">{value}</span>
         </button>
       )}
 
@@ -110,7 +110,7 @@ export function ClickToEditTextarea({
             onKeyDown={handleKeyDown}
             rows={rows}
             placeholder="Skriv inn her..."
-            className="w-full px-3 py-2 border-2 border-primary rounded-[var(--radius)] bg-background body-medium text-foreground focus:outline-none resize-none"
+            className="w-full px-3 py-2 border border-outline focus:border-primary focus:ring-1 focus:ring-inset focus:ring-primary rounded-[var(--radius)] bg-surface body-medium text-on-surface focus:outline-none resize-none"
           />
           <div className="flex gap-2">
             <Button

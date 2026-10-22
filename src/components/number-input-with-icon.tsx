@@ -88,7 +88,7 @@ export function NumberInputWithIcon({
           {/* Trenger utfylling chip - Show above on small screens */}
           {required && (
             <div className="max-[400px]:flex max-[400px]:justify-start max-[400px]:mb-2 hidden">
-              <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
+              <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shrink-0">
                 <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                   <div className="relative shrink-0 w-[18px] h-[18px]">
                     <div className="absolute inset-[8.333%]">
@@ -97,7 +97,7 @@ export function NumberInputWithIcon({
                       </svg>
                     </div>
                   </div>
-                  <span className="label-medium text-foreground whitespace-nowrap">
+                  <span className="label-medium text-on-surface whitespace-nowrap">
                     Trenger utfylling
                   </span>
                 </div>
@@ -116,7 +116,7 @@ export function NumberInputWithIcon({
               ) : (
                 <div aria-hidden="true"
                   onClick={handleAdd}
-                  className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+                  className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
                 >
                   <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                     <div className="relative shrink-0 size-6">
@@ -137,19 +137,19 @@ export function NumberInputWithIcon({
               className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
             >
               <div className="flex flex-col justify-center leading-[0] relative shrink-0 w-full">
-                <p className="body-large text-foreground leading-6 m-0">{label}</p>
+                <p className="body-large text-on-surface leading-6 m-0">{label}</p>
               </div>
               {helpText !== undefined ? (
-                helpText && <p className="body-medium text-muted-foreground leading-5 m-0">{helpText}</p>
+                helpText && <p className="body-medium text-on-surface-variant leading-5 m-0">{helpText}</p>
               ) : (
-                <p className="body-medium text-muted-foreground leading-5 m-0">{required ? 'Påkrevd' : 'Valgfri'}</p>
+                <p className="body-medium text-on-surface-variant leading-5 m-0">{required ? 'Påkrevd' : 'Valgfri'}</p>
               )}
             </button>
             
             {/* Trenger utfylling chip - Show inline on larger screens */}
             {required && (
               <div className="max-[400px]:hidden">
-                <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shadow-[var(--elevation-sm)] shrink-0">
+                <div className="bg-[var(--primary-container)] box-border flex items-center justify-center overflow-clip relative rounded-[var(--radius)] shrink-0">
                   <div className="box-border flex gap-2 h-8 items-center justify-center pl-2 pr-4 py-1.5">
                     <div className="relative shrink-0 w-[18px] h-[18px]">
                       <div className="absolute inset-[8.333%]">
@@ -158,7 +158,7 @@ export function NumberInputWithIcon({
                         </svg>
                       </div>
                     </div>
-                    <span className="label-medium text-foreground whitespace-nowrap">
+                    <span className="label-medium text-on-surface whitespace-nowrap">
                       Trenger utfylling
                     </span>
                   </div>
@@ -190,7 +190,7 @@ export function NumberInputWithIcon({
                     e.stopPropagation();
                     handleSave();
                   }}
-                  className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+                  className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
                 >
                   <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                     <div className="relative shrink-0 size-6">
@@ -206,7 +206,7 @@ export function NumberInputWithIcon({
             </div>
             {/* Content */}
             <div className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0">
-              <div className="label-small text-muted-foreground w-full mb-1">
+              <div className="label-small text-on-surface-variant w-full mb-1">
                 <p id={labelId} className="m-0">{label}</p>
               </div>
               <div className="relative w-full">
@@ -219,11 +219,11 @@ export function NumberInputWithIcon({
                   onKeyDown={handleKeyDown}
                   onBlur={handleBlur}
                   placeholder={placeholder}
-                  className="w-full h-14 px-4 pr-12 border-2 border-primary rounded-[var(--radius)] body-large text-foreground focus:outline-none focus:border-primary"
+                  className="w-full h-14 px-4 pr-12 border border-outline focus:border-primary focus:ring-1 focus:ring-inset focus:ring-primary rounded-[var(--radius)] body-large text-on-surface focus:outline-none focus:border-primary"
                 />
                 {suffix && (
                   <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                    <span className="body-medium text-muted-foreground">{suffix}</span>
+                    <span className="body-medium text-on-surface-variant">{suffix}</span>
                   </div>
                 )}
               </div>
@@ -248,7 +248,7 @@ export function NumberInputWithIcon({
             ) : (
               <div aria-hidden="true"
                 onClick={handleEdit}
-                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 hover:bg-[var(--primary-container)] transition-colors"
+                className="content-stretch cursor-pointer flex flex-col items-center justify-center overflow-clip relative rounded-[var(--radius-button)] shrink-0 w-10 state-layer text-on-surface-variant transition-colors"
               >
                 <div className="content-stretch flex h-10 items-center justify-center relative shrink-0 w-full">
                   <div className="relative shrink-0 size-6">
@@ -265,13 +265,13 @@ export function NumberInputWithIcon({
             onClick={handleEdit}
             className="basis-0 content-stretch flex flex-col grow items-start justify-center min-h-px min-w-px overflow-clip relative shrink-0 text-left cursor-pointer"
           >
-            <div className="label-small text-muted-foreground w-full">
+            <div className="label-small text-on-surface-variant w-full">
               <p className="m-0">{label}</p>
             </div>
             {helpText && (
-              <p className="body-medium text-muted-foreground mb-1 m-0">{helpText}</p>
+              <p className="body-medium text-on-surface-variant mb-1 m-0">{helpText}</p>
             )}
-            <div className="body-large text-foreground w-full">
+            <div className="body-large text-on-surface w-full">
               <p className="m-0">{value} {suffix}</p>
             </div>
           </button>
