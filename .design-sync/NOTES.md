@@ -37,6 +37,7 @@ Repo-specific facts for the next /design-sync run. Read this first.
 
 ## Re-sync risks
 
+- The whole library was restyled to Material 3 on 2026-10-22 (journal phases 24 and 25, docs/m3-audit.md) and not yet synced. Every component's source changed, so the next sync re-grades all 30 documented ones from fresh captures; expect every preview to differ from what Claude Design holds. Story titles, groups and the `OpenKSL` exports are unchanged, so cards and overlay config carry over. The foundations and Theme explorer cards need rebuilding and re-uploading too (`npm run build:cards`, see the foundations note above).
 
 - [GENERAL] HTML/JS files under `guidelines/` stop the app's self-check. After the 2026-10-22 re-sync put the five design cards in `guidelines/design-cards/`, two full project reloads left `_ds_needs_recompile` in place and `_ds_manifest.json` stale (the old `components/components/` paths). Deleting only those five files and re-arming the sentinel let the next reload rebuild the index (six groups, 30 cards); the same cards then registered fine from `foundations/` with the script in `_preview/`. Never ship HTML or JS into `guidelines/`. After any upload, confirm the sentinel is gone and the manifest changed; a stale manifest is the only sign of this failure.
 - A re-sync may treat `foundations/*` and `_preview/ThemeExplorer.js` as files it doesn't know (they are not in ds-bundle or the `_ds_sync.json` anchor). Before approving a re-sync plan, check it deletes neither; afterwards, list the project and re-upload the cards if they're gone.

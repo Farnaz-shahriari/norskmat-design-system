@@ -1,6 +1,38 @@
 # Material 3 audit of `src/components/`
 
-Audited 2026-10-22 on `storybook-design-sync` at `c0c1016`. No code was changed. The goal behind it: every component Material 3, keeping the Radix + Tailwind + cva base (restyle, not rewrite), in all four brand themes from `tokens.css`.
+Audited 2026-10-22 on `storybook-design-sync` at `c0c1016`. The goal behind it: every component Material 3, keeping the Radix + Tailwind + cva base (restyle, not rewrite), in all four brand themes from `tokens.css`.
+
+## Restyle status, 2026-10-22
+
+The restyle below has been carried out: the Phase 0 foundations, then six groups. The status tables further down are the audit as it stood *before*; this section is the current state.
+
+| Group | Components | Main changes |
+|---|---|---|
+| 0 Foundations | `tokens.css` | Inverse roles and scrim; state-layer and disabled opacities; `--radius-chip` and `--radius-fab`; `title-small` and `body-small`; base layer with page font, text colour and default border colour; the `state-layer` class |
+| 1 Layout & info | Card, Table, Alert, Badge, Breadcrumb, Accordion | Card: outlined (default) and new `filled` variant, 16dp padding, title and description roles. Table: 56dp rows, title-small headers, selected rows tinted primary 12%. Alert: tonal containers. Badge: M3 large-badge shape used as a label. Accordion rows as list items with a state layer |
+| 2 Actions | Button, Pagination, Chip, ConnectedButtonGroup, Fab, ScrollingFab, Toggle, ToggleGroup | State layers and M3 disabled everywhere. Button: new `tonal` variant, primary label on the outlined variant. Fab: M3 corner per size, no shadow, an outline-variant border on the two light variants. ConnectedButtonGroup: `--outline` border, as M3 segmented buttons and the contrast rule ask. Pagination: 40dp, active page tonal |
+| 3 Navigation & selection | Tabs, ListItem, Switch, Progress, StatusChip, Slider, Separator, DividerWithSubtitle | Tabs: `tablist`/`tab` roles, `aria-selected`, arrow keys with Home and End, one Tab stop; TabLarge as M3 primary tab. Switch: 40dp halo, 28dp pressed handle. Progress: 4dp track. Slider: M3 2023 bar handle |
+| 4 Forms | Label, Input, Textarea, Select trigger, Checkbox, RadioGroup, MaterialCheckbox, RadioButton, OutlinedTextField, Form, InputOTP, the six inline-edit fields | Fields are M3 outlined: 56dp, 4dp, `--outline`, 2dp primary on focus, error when invalid. Checkbox 18dp and radio 20dp with a 40dp halo. OutlinedTextField cuts its label notch from the outline (fieldset and legend) and gains `error` and `supportingText`. Faint `--border` control borders in the inline-edit fields moved to `--outline` |
+| 5 Overlays | Dialog, AlertDialog, Sheet, DropdownMenu, ContextMenu, Menubar, Select menu, Popover, HoverCard, Tooltip, Sonner, Drawer, BottomSheet | 32% scrim; no shadows; dialogs 28dp on surface-container-high with headline-small; sheets with M3 corners; menus 4dp, 48dp label-large items, highlight as a 10% state layer; Tooltip is the M3 plain tooltip on inverse surface; Sonner is the M3 snackbar |
+| 6 Pickers & extras | Calendar, DatePicker, DateTimePicker, TimePicker, TimePickerDropdown, TimePickerWithIcon, Sidebar, NavigationMenu, Command, Chart, Avatar, Skeleton, Resizable, ScrollArea | Picker fields as outlined fields (their 2px `--border` outline was too faint for a control), picker surfaces surface-container-high without shadows, quick picks as chips. Calendar as the M3 date grid. DatePicker's calendar button gained an accessible name |
+
+**How each group was checked.** `lint:tokens`, `lint:a11y`, `lint:contrast`, the build and the type check, then a Storybook build with every story rendered headless and run through axe (WCAG 2.2 AA). Each run also checked controls on a too-faint border, inherited fonts, shadows and console errors, compared with a baseline taken before Group 1. Every group came back with no new problem. Across the whole run:
+
+- **axe:** `button-name` went from 16 nodes to 0. The only rule still failing is `aria-hidden-focus` on the open Select and DropdownMenu stories, which is Radix hiding the page behind a modal menu.
+- **Shadows:** component shadows in stories went from 48 to 0.
+- **`lint:tokens` warnings:** 41 to 5.
+- **Library scan:** shadcn role names went from 674 to 62. Those 62 are the focus-ring role, Button's outlined border kept by decision, M3's own secondary on Fab, and the Sidebar's `sidebar-*` aliases, which resolve to the surface family.
+- **Raw `text-*` sizes:** 69 to none.
+
+**Still not Material 3, deliberately or pending a decision:**
+
+- Spesialitet's secondary-container is #424242. Every M3 "selected" state (chips, list rows, segments, the active page, Toggle) renders dark grey there. Table rows use a primary tint instead, because their content keeps its own colours.
+- Badge is styled as an M3 large badge but still used as a tag. Whether it should become a count is a design call.
+- ListItem keeps its 12dp corners (a design call). Sidebar keeps its compact item heights: M3 navigation drawer items are 56dp, but its collapse logic depends on the current sizes.
+- The duplicates are restyled but not merged: MaterialCheckbox and Checkbox, RadioButton and RadioGroup, BottomSheet and Drawer, ScrollingFab and Fab, ConnectedButtonGroup and ToggleGroup. Merging changes APIs.
+- The custom pickers still lack grid and listbox semantics, and BottomSheet still has no dialog role or focus trap. Rebasing them on Calendar and Drawer is the fix.
+- Command, HoverCard, Menubar and NavigationMenu were restyled, not dropped. Dropping needs a check of the apps first.
+- Claude Design is not re-synced. Every component's source changed, so the next `/design-sync` re-grades all of them. Story titles and `OpenKSL` exports are unchanged.
 
 ## Summary
 

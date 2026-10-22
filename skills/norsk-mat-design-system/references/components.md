@@ -31,6 +31,10 @@ One underlying cause worth knowing, `--outline` did not exist as a variable anyw
 * **ListItem**, `src/components/list-item.tsx`, rebuilt in place of the older single variant version. Adds the `default` and `compact` densities that already existed as one off Figma exports, `0 Density` and `-4 Density`, plus an optional overline label, trailing text, trailing icon, and a selected state using `secondary-container`, matching the pattern used across `ConnectedButtonGroup` and elsewhere in the system.
 * **IconButton**, kept as is, per your call. The variant already exists inside `button.tsx`, `size="icon"`, `size="icon-sm"`, `size="icon-xs"`, it is simply under used today, 16 correct usages against 42 hand rolled copies. No new component needed, the fix going forward is discipline, point new icon buttons at the existing variant rather than hand rolling another one.
 
+## Tier 5, Material 3 restyle
+
+Every component was restyled to Material 3 on 2026-10-22, in six groups on top of the existing Radix, Tailwind and cva base, APIs kept. Added on the way, Card `variant="filled"`, Button `variant="tonal"`, OutlinedTextField `error` and `supportingText`, and real tab semantics in Tabs. `docs/m3-audit.md` has the per group changes and the list of what is still not M3, the Spesialitet selected colour, Badge as a tag, the unmerged duplicates and the picker semantics among them.
+
 ## Interaction states, Material 3
 
 Show hover, keyboard focus and press with the `state-layer` class from `tokens.css`, not by swapping the background, `hover:bg-muted`, `hover:bg-primary/90` and `hover:brightness-95` are the old pattern the Material 3 restyle replaces, docs/m3-audit.md. The class paints the element's own text colour over it, 8% on hover, 10% on focus and press, nothing when disabled, under the content and inside the corner radius. It uses `::before`, so the element cannot also use a `before:` utility. Keep the `focus-visible` ring from the WCAG pass alongside it, the layer is not a focus indicator on its own.

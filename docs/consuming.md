@@ -101,4 +101,4 @@ Fonts are not shipped. Manrope loads from Google Fonts. Messina Serif and Sands 
 
 `sidebar.tsx` uses `bg-sidebar`, `text-sidebar-foreground`, `bg-sidebar-accent`, `border-sidebar-border` and `ring-sidebar-ring`, none of which exist as tokens here, and it wraps one of them in `hsl(var(--sidebar-border))`, which expects an HSL triplet where this system uses hex. It will not theme correctly until the sidebar colors are decided. See colors.md's known gaps.
 
-Six components (`input`, `label`, `badge`, `select`, `dialog`, `alert`) size text with Tailwind's `text-*` scale instead of the named type classes. They are not wrong, just inconsistent with the rest.
+Every component sizes text with the named type classes, since the Material 3 restyle (docs/m3-audit.md) none uses Tailwind's `text-*` scale, which `tokens.css` partly redefines.

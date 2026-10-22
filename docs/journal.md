@@ -417,6 +417,22 @@ Files produced,
 - .storybook/preview.css, page background only
 - references colors.md, typography.md, spacing.md, components.md; .design-sync/conventions.md and NOTES.md
 
+## Phase 25, the library restyled to Material 3
+Status, done, not committed, not synced to Claude Design. Every component in src/components/ restyled to Material 3 on its existing Radix, Tailwind and cva base, in six groups, APIs kept, after the Phase 24 foundations. docs/m3-audit.md opens with the per group table and what is still not M3.
+
+Groups. Layout and info, Card, Table, Alert, Badge, Breadcrumb, Accordion. Actions, Button, Pagination, Chip, ConnectedButtonGroup, Fab, ScrollingFab, Toggle, ToggleGroup. Navigation and selection, Tabs, ListItem, Switch, Progress, StatusChip, Slider, the dividers. Forms, every field as an M3 outlined field, Checkbox, RadioGroup and their custom twins, OutlinedTextField, Form, InputOTP, the six inline edit fields. Overlays, dialogs, sheets, menus, Popover, HoverCard, Tooltip, Sonner, Drawer, BottomSheet. Pickers and extras, the five pickers, Calendar, Sidebar, NavigationMenu, Command, Chart, Avatar, Skeleton, Resizable, ScrollArea.
+
+Added on the way, all optional, Card `variant="filled"`, Button `variant="tonal"`, OutlinedTextField `error` and `supportingText`. Tabs gained what it lacked, tab roles, aria-selected, arrow keys, Home and End, one Tab stop, checked with a real keyboard in Playwright. OutlinedTextField now cuts its label notch out of the outline with a fieldset and legend instead of painting a background patch, so it works on any surface.
+
+Checked after every group, lint:tokens, lint:a11y, lint:contrast, build, types, then every story rendered headless through axe, WCAG 2.2 AA, plus faint control borders, fonts, shadows and console errors, against a baseline taken before the first group. No group added a problem. Over the whole run axe went from 16 button-name nodes to none, DatePicker's calendar button had no name, story shadows from 48 to 0, lint:tokens warnings from 41 to 5, shadcn role names in the library from 674 to 62, the rest intentional.
+
+Caught and fixed on the way. In Spesialitet a selected Table row in secondary-container, #424242, put primary links below 4.5 to 1, rows now take a 12% primary tint. lint:a11y refused a key handler on the tablist, the arrow keys moved onto the tabs. Four control borders were still the faint --border, the date and time picker fields at 2px, the inline list item's edit field and the click to edit boxes' neighbour, now --outline.
+
+Left open, see docs/m3-audit.md. Spesialitet's dark selected colour, Badge as tag or count, ListItem's corners, Sidebar's compact heights, the duplicates not merged, picker and BottomSheet semantics, the drop candidates kept.
+Files produced,
+- src/components/, 65 of the 68 component files, all but aspect-ratio and collapsible, which have no styling, and carousel, whose only visuals are its Buttons; src/index.ts, the barrel picks up `cardVariants`
+- docs/m3-audit.md, restyle status; docs/consuming.md; SKILL.md; references/components.md; .design-sync/NOTES.md
+
 ## Phase 7, assets
 Status, in progress. Logo files organized, one folder per platform, each with a README covering what we have, what is missing, and usage rules where confirmed.
 Files produced,
